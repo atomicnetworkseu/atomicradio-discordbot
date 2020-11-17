@@ -3,6 +3,11 @@ package eu.atomicnetworks.discordbot;
 import com.google.gson.Gson;
 import eu.atomicnetworks.discordbot.commands.HelpCommand;
 import eu.atomicnetworks.discordbot.commands.InfoCommand;
+import eu.atomicnetworks.discordbot.commands.JoinCommand;
+import eu.atomicnetworks.discordbot.commands.LeaveCommand;
+import eu.atomicnetworks.discordbot.commands.PlayCommand;
+import eu.atomicnetworks.discordbot.commands.SetupCommand;
+import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
@@ -42,6 +47,11 @@ public class DiscordBot {
     
     private HelpCommand helpCommand;
     private InfoCommand infoCommand;
+    private JoinCommand joinCommand;
+    private LeaveCommand leaveCommand;
+    private PlayCommand playCommand;
+    private SetupCommand setupCommand;
+    private VolumeCommand volumeCommand;
 
     public static void main(String[] args) {
         new DiscordBot().loadBanner();
@@ -59,6 +69,11 @@ public class DiscordBot {
         
         this.helpCommand = new HelpCommand(this);
         this.infoCommand = new InfoCommand(this);
+        this.joinCommand = new JoinCommand(this);
+        this.leaveCommand = new LeaveCommand(this);
+        this.playCommand = new PlayCommand(this);
+        this.setupCommand = new SetupCommand(this);
+        this.volumeCommand = new VolumeCommand(this);
 
         JDABuilder builder = JDABuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
         builder.setActivity(Activity.listening("atomicradio.eu"));
@@ -83,6 +98,16 @@ public class DiscordBot {
                     helpCommand.execute(event);
                 } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "info") || message.getContentRaw().toLowerCase().startsWith(prefix + "invite")) {
                     infoCommand.execute(event);
+                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "join")) {
+                    joinCommand.execute(event);
+                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "leave")) {
+                    leaveCommand.execute(event);
+                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "play")) {
+                    playCommand.execute(event);
+                } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "setup")) {
+                    setupCommand.execute(event);
+                } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "vol") || message.getContentRaw().toLowerCase().startsWith(prefix + "volume")) {
+                    volumeCommand.execute(event);
                 }
             }
 
@@ -127,7 +152,7 @@ public class DiscordBot {
             @Override
             public void onReady(ReadyEvent event) {
                 for (Guild guild : event.getJDA().getGuilds()) {
-                    if (backendManager.getRestart(guild)) {
+                    if (backendManager.getPlaying(guild)) {
                         if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
                             return;
                         }

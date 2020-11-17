@@ -100,12 +100,12 @@ public class BackendManager {
         this.discord.getGuildManager().saveGuild(this.getGuild(guild));
     }
     
-    public boolean getRestart(Guild guild) {
-        return this.getGuild(guild).isRestart();
+    public boolean getTag(Guild guild) {
+        return this.getGuild(guild).isTag();
     }
     
-    public void setRestart(Guild guild, boolean restart) {
-        this.getGuild(guild).setRestart(restart);
+    public void setTag(Guild guild, boolean restart) {
+        this.getGuild(guild).setTag(restart);
         this.discord.getGuildManager().saveGuild(this.getGuild(guild));
     }
     

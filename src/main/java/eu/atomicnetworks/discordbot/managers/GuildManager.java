@@ -27,7 +27,7 @@ public class GuildManager {
                 guildData.setPrefix(".");
                 guildData.setPlaying(false);
                 guildData.setMusic("");
-                guildData.setRestart(false);
+                guildData.setTag(false);
                 guildData.setChannelId("");
                 guildData.setVolume(10);
                 t = this.discord.getGson().fromJson(this.discord.getGson().toJson(guildData), Document.class);

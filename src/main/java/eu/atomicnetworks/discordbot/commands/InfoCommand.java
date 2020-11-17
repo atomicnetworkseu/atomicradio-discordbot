@@ -29,7 +29,6 @@ public class InfoCommand {
     public void execute(GuildMessageReceivedEvent event) {
         Message message = event.getMessage();
         String[] args = message.getContentRaw().split(" ");
-        event.getChannel().sendTyping().completeAfter(1, TimeUnit.SECONDS);
         
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));

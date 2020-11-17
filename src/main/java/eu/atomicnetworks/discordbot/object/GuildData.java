@@ -11,7 +11,7 @@ public class GuildData {
     private String channelId;
     private String music;
     private boolean playing;
-    private boolean restart;
+    private boolean tag;
     private int volume;
 
     public String getId() {
@@ -54,12 +54,12 @@ public class GuildData {
         this.playing = playing;
     }
 
-    public boolean isRestart() {
-        return restart;
+    public boolean isTag() {
+        return tag;
     }
 
-    public void setRestart(boolean restart) {
-        this.restart = restart;
+    public void setTag(boolean tag) {
+        this.tag = tag;
     }
 
     public int getVolume() {
