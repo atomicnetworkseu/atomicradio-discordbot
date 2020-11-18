@@ -73,6 +73,11 @@
             <artifactId>json</artifactId>
             <version>20200518</version>
         </dependency>
+        <dependency>
+            <groupId>club.minnced</groupId>
+            <artifactId>discord-webhooks</artifactId>
+            <version>0.5.0</version>
+        </dependency>
     </dependencies>
     
     <build>

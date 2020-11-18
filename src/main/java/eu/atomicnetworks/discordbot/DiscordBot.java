@@ -6,17 +6,21 @@ import eu.atomicnetworks.discordbot.commands.InfoCommand;
 import eu.atomicnetworks.discordbot.commands.JoinCommand;
 import eu.atomicnetworks.discordbot.commands.LeaveCommand;
 import eu.atomicnetworks.discordbot.commands.PlayCommand;
+import eu.atomicnetworks.discordbot.commands.SettingsCommand;
 import eu.atomicnetworks.discordbot.commands.SetupCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
+import eu.atomicnetworks.discordbot.managers.ApiManager;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
 import eu.atomicnetworks.discordbot.managers.MongoManager;
+import java.awt.Color;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -44,6 +48,7 @@ public class DiscordBot {
     private MongoManager mongoManager;
     private GuildManager guildManager;
     private BackendManager backendManager;
+    private ApiManager apiManager;
     
     private HelpCommand helpCommand;
     private InfoCommand infoCommand;
@@ -52,7 +57,8 @@ public class DiscordBot {
     private PlayCommand playCommand;
     private SetupCommand setupCommand;
     private VolumeCommand volumeCommand;
-
+    private SettingsCommand settingsCommand;
+    
     public static void main(String[] args) {
         new DiscordBot().loadBanner();
         new DiscordBot().init();
@@ -66,6 +72,7 @@ public class DiscordBot {
         this.mongoManager = new MongoManager(this);
         this.guildManager = new GuildManager(this);
         this.backendManager = new BackendManager(this);
+        this.apiManager = new ApiManager(this);
         
         this.helpCommand = new HelpCommand(this);
         this.infoCommand = new InfoCommand(this);
@@ -74,6 +81,7 @@ public class DiscordBot {
         this.playCommand = new PlayCommand(this);
         this.setupCommand = new SetupCommand(this);
         this.volumeCommand = new VolumeCommand(this);
+        this.settingsCommand = new SettingsCommand(this);
 
         JDABuilder builder = JDABuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
         builder.setActivity(Activity.listening("atomicradio.eu"));
@@ -85,7 +93,11 @@ public class DiscordBot {
                 String prefix = backendManager.getPrefix(event.getGuild());
                 
                 if(message.getMentionedUsers().stream().filter(t -> t.getId().equals(event.getGuild().getSelfMember().getId())).findFirst().orElse(null) != null) {
-                    helpCommand.execute(event);
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(new Color(149, 79, 180));
+                    embed.setDescription(":bird: Hi, I am " + getJda().getSelfUser().getAsMention() + ", your new favourite musicbot!\n\nYou can find out more about me with **"
+                            + getBackendManager().getPrefix(event.getGuild()) + "help**,\non **" + event.getGuild().getName() + "** you can control me with the prefix `" + getBackendManager().getPrefix(event.getGuild()) + "` ");
+                    event.getChannel().sendMessage(embed.build()).queue();
                     return;
                 }
                 
@@ -108,6 +120,8 @@ public class DiscordBot {
                     setupCommand.execute(event);
                 } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "vol") || message.getContentRaw().toLowerCase().startsWith(prefix + "volume")) {
                     volumeCommand.execute(event);
+                } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "settings")) {
+                    settingsCommand.execute(event);
                 }
             }
 
@@ -221,6 +235,10 @@ public class DiscordBot {
 
     public BackendManager getBackendManager() {
         return backendManager;
+    }
+
+    public ApiManager getApiManager() {
+        return apiManager;
     }
 
 }
