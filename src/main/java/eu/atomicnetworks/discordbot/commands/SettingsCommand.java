@@ -33,13 +33,13 @@ public class SettingsCommand {
 
         if (args.length == 1) {
             if (this.discord.getBackendManager().getTag(event.getGuild())) {
-                embed.setDescription("⚡ **Settings**\n** **\n**"
+                embed.setDescription("⚡ l **Settings**\n** **\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot will not change its name if the station is changed.\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
                 event.getChannel().sendMessage(embed.build()).queue();
             } else {
-                embed.setDescription("⚡ **Settings**\n** **\n**"
+                embed.setDescription("⚡ l **Settings**\n** **\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot changes its name again when the station is changed.\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
@@ -84,19 +84,19 @@ public class SettingsCommand {
             case "reset":
                 this.discord.getBackendManager().setPrefix(event.getGuild(), ".");
                 this.discord.getBackendManager().setMusic(event.getGuild(), "one");
-                this.discord.getBackendManager().setTag(event.getGuild(), false);
+                this.discord.getBackendManager().setTag(event.getGuild(), true);
                 embed.setDescription("**Successful**, the reset was executed successfully, there is no more tag and the prefix has been changed to `.`.");
                 event.getChannel().sendMessage(embed.build()).queue();
                 break;
             default:
                 if (this.discord.getBackendManager().getTag(event.getGuild())) {
-                    embed.setDescription("⚡ **Settings**\n** **\n**"
+                    embed.setDescription("⚡ l **Settings**\n** **\n**"
                             + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
                             + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot will not change its name if the station is changed.\n**"
                             + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
                     event.getChannel().sendMessage(embed.build()).queue();
                 } else {
-                    embed.setDescription("⚡ **Settings**\n** **\n**"
+                    embed.setDescription("⚡ l **Settings**\n** **\n**"
                             + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
                             + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot changes its name again when the station is changed.\n**"
                             + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");

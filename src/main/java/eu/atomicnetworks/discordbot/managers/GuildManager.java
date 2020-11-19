@@ -27,9 +27,9 @@ public class GuildManager {
                 guildData.setPrefix(".");
                 guildData.setPlaying(false);
                 guildData.setMusic("");
-                guildData.setTag(false);
+                guildData.setTag(true);
                 guildData.setChannelId("");
-                guildData.setVolume(10);
+                guildData.setVolume(25);
                 t = this.discord.getGson().fromJson(this.discord.getGson().toJson(guildData), Document.class);
                 this.discord.getMongoManager().getGuilds().insertOne(t, (Void t1, Throwable thrwbl1) -> {
                     consumer.accept(guildData);

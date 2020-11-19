@@ -6,8 +6,10 @@ import eu.atomicnetworks.discordbot.commands.InfoCommand;
 import eu.atomicnetworks.discordbot.commands.JoinCommand;
 import eu.atomicnetworks.discordbot.commands.LeaveCommand;
 import eu.atomicnetworks.discordbot.commands.PlayCommand;
+import eu.atomicnetworks.discordbot.commands.ReportCommand;
 import eu.atomicnetworks.discordbot.commands.SettingsCommand;
 import eu.atomicnetworks.discordbot.commands.SetupCommand;
+import eu.atomicnetworks.discordbot.commands.SongCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
 import eu.atomicnetworks.discordbot.managers.ApiManager;
@@ -16,13 +18,17 @@ import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
 import eu.atomicnetworks.discordbot.managers.MongoManager;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
+import javax.swing.Timer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
@@ -58,6 +64,8 @@ public class DiscordBot {
     private SetupCommand setupCommand;
     private VolumeCommand volumeCommand;
     private SettingsCommand settingsCommand;
+    private ReportCommand reportCommand;
+    private SongCommand songCommand;
     
     public static void main(String[] args) {
         new DiscordBot().loadBanner();
@@ -82,6 +90,8 @@ public class DiscordBot {
         this.setupCommand = new SetupCommand(this);
         this.volumeCommand = new VolumeCommand(this);
         this.settingsCommand = new SettingsCommand(this);
+        this.reportCommand = new ReportCommand(this);
+        this.songCommand = new SongCommand(this);
 
         JDABuilder builder = JDABuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
         builder.setActivity(Activity.listening("atomicradio.eu"));
@@ -122,6 +132,10 @@ public class DiscordBot {
                     volumeCommand.execute(event);
                 } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "settings")) {
                     settingsCommand.execute(event);
+                } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "report")) {
+                    reportCommand.execute(event);
+                } else if(message.getContentRaw().toLowerCase().startsWith(prefix + "song")) {
+                    songCommand.execute(event);
                 }
             }
 
@@ -141,6 +155,33 @@ public class DiscordBot {
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "one");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
+                                    if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
+                                        if(getBackendManager().getTag(event.getGuild())) {
+                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.one").queue();
+                                        }
+                                    }
+                                    break;
+                                case "dance":
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
+                                    backendManager.setPlaying(event.getGuild(), true);
+                                    backendManager.setMusic(event.getGuild(), "dance");
+                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
+                                    if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
+                                        if(getBackendManager().getTag(event.getGuild())) {
+                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                                        }
+                                    }
+                                    break;
+                                case "trap":
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
+                                    backendManager.setPlaying(event.getGuild(), true);
+                                    backendManager.setMusic(event.getGuild(), "trap");
+                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
+                                    if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
+                                        if(getBackendManager().getTag(event.getGuild())) {
+                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                                        }
+                                    }
                                     break;
                             }
                         }
@@ -186,6 +227,36 @@ public class DiscordBot {
         });
         try {
             this.jda = builder.build();
+            
+            Timer timer = new Timer(15000, (ActionEvent e) -> {
+                double rpfinal = (Math.floor(Math.random() * 7));
+                switch((int) rpfinal) {
+                    case 1:
+                        jda.getPresence().setActivity(Activity.streaming("🎶 atomicradio.eu", "https://www.twitch.tv/hyfm"));
+                        break;
+                    case 2:
+                        jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap zu"));
+                        break;
+                    case 3:
+                        jda.getPresence().setActivity(Activity.listening(this.apiManager.getArtist("one") + " - " + this.apiManager.getTitle("one") + " on atr.one"));
+                        break;
+                    case 4:
+                        jda.getPresence().setActivity(Activity.listening(".help"));
+                        break;
+                    case 5:
+                        jda.getPresence().setActivity(Activity.playing("for the best community ⚡"));
+                        break;
+                    case 6:
+                        jda.getPresence().setActivity(Activity.playing("on " + this.getJda().getGuilds().size() + " guilds"));
+                        break;
+                    case 7:
+                        jda.getPresence().setActivity(Activity.playing("for " + this.backendManager.getUserCount() + " users"));
+                        break;
+                }
+            });
+            timer.setInitialDelay(0);
+            timer.setRepeats(true);
+            timer.start();
         } catch (LoginException ex) {
             Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex);
         }
