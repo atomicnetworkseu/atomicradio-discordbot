@@ -93,7 +93,7 @@ public class DiscordBot {
         this.reportCommand = new ReportCommand(this);
         this.songCommand = new SongCommand(this);
 
-        JDABuilder builder = JDABuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
+        JDABuilder builder = JDABuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.drMraDnY2CynXXKO-0GM-mUscNI");
         builder.setActivity(Activity.listening("atomicradio.eu"));
         builder.addEventListeners(new ListenerAdapter() {
 
@@ -235,7 +235,7 @@ public class DiscordBot {
                         jda.getPresence().setActivity(Activity.streaming("🎶 atomicradio.eu", "https://www.twitch.tv/hyfm"));
                         break;
                     case 2:
-                        jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap zu"));
+                        jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
                         break;
                     case 3:
                         jda.getPresence().setActivity(Activity.listening(this.apiManager.getArtist("one") + " - " + this.apiManager.getTitle("one") + " on atr.one"));
