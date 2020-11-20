@@ -22,7 +22,10 @@ import net.dv8tion.jda.api.utils.AttachmentOption;
 
 /**
  *
- * @author kacpe
+ * @author Kacper Mura
+ * 2020 Copyright (c) by atomicradio.eu to present.
+ * All rights reserved. https://github.com/VocalZero
+ *
  */
 public class SongCommand {
 
@@ -41,7 +44,7 @@ public class SongCommand {
         InputStream inputStream = null;
         if (args.length == 1) {
             try {
-                URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), this.discord.getBackendManager().getMusic(event.getGuild()), "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString())));
+                URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), this.discord.getBackendManager().getMusic(event.getGuild()), "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString())));
                 inputStream = url.openStream();
                 event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
             } catch (MalformedURLException ex) {
@@ -56,7 +59,7 @@ public class SongCommand {
             case "one":
                 if (args.length == 2) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("one"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("one"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -69,7 +72,7 @@ public class SongCommand {
 
                 if (args[2].equalsIgnoreCase("now")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("one"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("one"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -79,7 +82,7 @@ public class SongCommand {
                     }
                 } else if (args[2].equalsIgnoreCase("last")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getLastArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "last", URLEncoder.encode(this.discord.getApiManager().getLast500Artwork("one"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getLastArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "last", URLEncoder.encode(this.discord.getApiManager().getLast500Artwork("one"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -89,7 +92,7 @@ public class SongCommand {
                     }
                 } else if (args[2].equalsIgnoreCase("next")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getNextArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "next", URLEncoder.encode(this.discord.getApiManager().getNext500Artwork("one"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getNextArtist("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextTitle("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestampNow("one"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestamp("one"), StandardCharsets.UTF_8.toString()), "one", "next", URLEncoder.encode(this.discord.getApiManager().getNext500Artwork("one"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -102,7 +105,7 @@ public class SongCommand {
             case "dance":
                 if (args.length == 2) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("dance"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("dance"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -115,7 +118,7 @@ public class SongCommand {
 
                 if (args[2].equalsIgnoreCase("now")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("dance"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("dance"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -125,7 +128,7 @@ public class SongCommand {
                     }
                 } else if (args[2].equalsIgnoreCase("last")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getLastArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "last", URLEncoder.encode(this.discord.getApiManager().getLast500Artwork("dance"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getLastArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "last", URLEncoder.encode(this.discord.getApiManager().getLast500Artwork("dance"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -135,7 +138,7 @@ public class SongCommand {
                     }
                 } else if (args[2].equalsIgnoreCase("next")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getNextArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "next", URLEncoder.encode(this.discord.getApiManager().getNext500Artwork("dance"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getNextArtist("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextTitle("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestampNow("dance"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestamp("dance"), StandardCharsets.UTF_8.toString()), "dance", "next", URLEncoder.encode(this.discord.getApiManager().getNext500Artwork("dance"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -148,7 +151,7 @@ public class SongCommand {
             case "trap":
                 if (args.length == 2) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("trap"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("trap"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -161,7 +164,7 @@ public class SongCommand {
 
                 if (args[2].equalsIgnoreCase("now")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("trap"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork("trap"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -171,7 +174,7 @@ public class SongCommand {
                     }
                 } else if (args[2].equalsIgnoreCase("last")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getLastArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "last", URLEncoder.encode(this.discord.getApiManager().getLast500Artwork("trap"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getLastArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getLastDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "last", URLEncoder.encode(this.discord.getApiManager().getLast500Artwork("trap"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -181,7 +184,7 @@ public class SongCommand {
                     }
                 } else if (args[2].equalsIgnoreCase("next")) {
                     try {
-                        URL url = new URL(MessageFormat.format("http://192.168.178.22:9000/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getNextArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "next", URLEncoder.encode(this.discord.getApiManager().getNext500Artwork("trap"), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getNextArtist("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextTitle("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestampNow("trap"), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getNextDurationTimestamp("trap"), StandardCharsets.UTF_8.toString()), "trap", "next", URLEncoder.encode(this.discord.getApiManager().getNext500Artwork("trap"), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {

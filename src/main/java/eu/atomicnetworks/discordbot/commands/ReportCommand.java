@@ -12,7 +12,10 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 /**
  *
- * @author kacpe
+ * @author Kacper Mura
+ * 2020 Copyright (c) by atomicradio.eu to present.
+ * All rights reserved. https://github.com/VocalZero
+ *
  */
 public class ReportCommand {
 
@@ -22,7 +25,7 @@ public class ReportCommand {
 
     public ReportCommand(DiscordBot discord) {
         this.discord = discord;
-        this.webhookClient = WebhookClient.withUrl("https://discordapp.com/api/webhooks/736961628075065395/7vkpQW0EhUR4oO_EFaJmWRHxeh0n1_Ov_eqcEd60KxLvOaB5tCl-KOj4CDaZMn6iU3h1");
+        this.webhookClient = WebhookClient.withUrl("https://discordapp.com/api/webhooks/778719403134418984/Vjg5mCIQ2ddODEhpy-WhTWvLvDT-vX7DJZvLLdJ8u_MK2Mmume5_3mZjdcJkmnCXf2nL");
         this.memberCooldown = new HashMap<>();
     }
 
