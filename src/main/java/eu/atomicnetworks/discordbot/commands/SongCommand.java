@@ -43,8 +43,12 @@ public class SongCommand {
 
         InputStream inputStream = null;
         if (args.length == 1) {
+            String channel = this.discord.getBackendManager().getMusic(event.getGuild());
+            if(channel.isEmpty()) {
+                channel = "one";
+            }
             try {
-                URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString()), this.discord.getBackendManager().getMusic(event.getGuild()), "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork(this.discord.getBackendManager().getMusic(event.getGuild())), StandardCharsets.UTF_8.toString())));
+                URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(this.discord.getApiManager().getArtist(channel), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getTitle(channel), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestampNow(channel), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.discord.getApiManager().getDurationTimestamp(channel), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(this.discord.getApiManager().get500Artwork(channel), StandardCharsets.UTF_8.toString())));
                 inputStream = url.openStream();
                 event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
             } catch (MalformedURLException ex) {

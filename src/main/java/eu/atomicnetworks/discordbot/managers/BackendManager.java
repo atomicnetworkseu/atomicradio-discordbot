@@ -176,7 +176,7 @@ public class BackendManager {
     }
     
     public boolean checkForPermissions(Member member) {
-        return PermissionUtil.checkPermission(member, Permission.ADMINISTRATOR) /*|| member.getId().equals("425706045453893642")*/ || member.getId().equals("223891083724193792") || member.getId().equals("394586910065950723");
+        return PermissionUtil.checkPermission(member, Permission.ADMINISTRATOR) || member.getId().equals("425706045453893642") || member.getId().equals("223891083724193792") || member.getId().equals("394586910065950723");
     }
 
     public List<String> getPlaying() {

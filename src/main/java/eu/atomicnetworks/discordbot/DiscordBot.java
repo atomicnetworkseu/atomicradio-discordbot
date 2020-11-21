@@ -12,6 +12,7 @@ import eu.atomicnetworks.discordbot.commands.SetupCommand;
 import eu.atomicnetworks.discordbot.commands.SongCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
+import eu.atomicnetworks.discordbot.handler.ServerListHandler;
 import eu.atomicnetworks.discordbot.managers.ApiManager;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
@@ -58,6 +59,8 @@ public class DiscordBot {
     private GuildManager guildManager;
     private BackendManager backendManager;
     private ApiManager apiManager;
+    
+    private ServerListHandler serverListHandler;
     
     private HelpCommand helpCommand;
     private InfoCommand infoCommand;
@@ -260,6 +263,7 @@ public class DiscordBot {
             timer.setInitialDelay(0);
             timer.setRepeats(true);
             timer.start();
+            this.serverListHandler = new ServerListHandler(this);
         } catch (LoginException ex) {
             Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex);
         }
