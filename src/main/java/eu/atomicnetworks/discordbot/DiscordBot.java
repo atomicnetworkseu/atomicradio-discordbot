@@ -238,7 +238,7 @@ public class DiscordBot {
                 double rpfinal = (Math.floor(Math.random() * 7));
                 switch((int) rpfinal) {
                     case 1:
-                        jda.getPresence().setActivity(Activity.streaming("🎶 atomicradio.eu", "https://www.twitch.tv/hyfm"));
+                        jda.getPresence().setActivity(Activity.streaming("🎶 atomicradio.eu", "https://www.twitch.tv/atomic"));
                         break;
                     case 2:
                         jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
