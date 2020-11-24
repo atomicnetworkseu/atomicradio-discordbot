@@ -128,7 +128,7 @@
                         </transformer>
                     </transformers>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>launcher</shadedClassifierName>
+                    <shadedClassifierName>dependencies</shadedClassifierName>
                 </configuration>
             </plugin>
         </plugins>
