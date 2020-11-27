@@ -60,6 +60,7 @@ public class ServerListHandler {
                     .addHeader("Content-Type", "application/json")
                     .build();
             Response response = client.newCall(request).execute();
+            response.close();
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ServerListHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
