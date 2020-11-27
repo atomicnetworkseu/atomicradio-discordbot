@@ -81,9 +81,13 @@ public class InfoCommand {
 
         long seconds = (time / 1000L) % 60;
         long minutes = (time / 60000L % 60L);
-        long hours = (time / 3600000L);
+        long hours = (time / 3600000L) % 24;
+        long days = (time / 86400000L);
         
         String onlineTime = "";
+        if(days > 0) {
+            onlineTime += days + " days, ";
+        }
         if(hours > 0) {
             onlineTime += hours + " hours, ";
         }
