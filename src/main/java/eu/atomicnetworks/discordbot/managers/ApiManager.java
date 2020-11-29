@@ -44,7 +44,7 @@ public class ApiManager {
     
     private JSONObject readJsonFromApi() {
         try {
-            InputStream inputStream = new URL("https://api.atomicradio.eu/channels").openStream();
+            InputStream inputStream = new URL("http://10.10.10.105:9000/channels").openStream();
             try {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
                 StringBuilder stringBuilder = new StringBuilder();
