@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 
 /**
  *
@@ -54,7 +55,14 @@ public class JoinCommand {
             AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
             audioHandler.stop();
         }
-        event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+        
+        try {
+            event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+        } catch (InsufficientPermissionException ex) {
+            embed.setDescription("I do not have permission to join the voice channel, please contact an administrator.");
+            event.getChannel().sendMessage(embed.build()).queue();
+            return;
+        }
         
         switch(this.discord.getBackendManager().getMusic(event.getGuild())) {
             case "one":

@@ -16,6 +16,7 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.utils.AttachmentOption;
@@ -40,6 +41,12 @@ public class SongCommand {
         String[] args = message.getContentRaw().split(" ");
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
+        
+        if(!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ATTACH_FILES)) {
+            embed.setDescription("I do not have permission to attach files, please contact an administrator.");
+            event.getChannel().sendMessage(embed.build()).queue();
+            return;
+        }
 
         InputStream inputStream = null;
         if (args.length == 1) {
