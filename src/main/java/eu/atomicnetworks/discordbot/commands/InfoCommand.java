@@ -94,7 +94,7 @@ public class InfoCommand {
         if(minutes > 0) {
             onlineTime += minutes + " minutes, ";
         }
-        if(seconds > 0) {
+        if(seconds > 0 && days == 0) {
             onlineTime += seconds + " seconds";
         }
         
