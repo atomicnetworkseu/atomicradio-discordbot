@@ -44,8 +44,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
  *
- * @author Kacper Mura 2020 Copyright (c) by atomicradio.eu to present. All
- * rights reserved. https://github.com/VocalZero
+ * @author Kacper Mura
+ * 2020 Copyright (c) by atomicradio.eu to present.
+ * All rights reserved. https://github.com/VocalZero
  *
  */
 public class DiscordBot {
@@ -81,6 +82,9 @@ public class DiscordBot {
     private void init() {
         this.gson = new Gson();
         this.startTimeMillis = System.currentTimeMillis();
+        
+        Logger jdaLogger = Logger.getLogger( "net.dv8tion" );
+        jdaLogger.setLevel(Level.SEVERE);
 
         this.loggerManager = new LoggerManager();
         this.mongoManager = new MongoManager(this);
@@ -157,7 +161,7 @@ public class DiscordBot {
                             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
                             switch (backendManager.getMusic(event.getGuild())) {
                                 case "one":
-                                    backendManager.startStream(event.getGuild(), "http://10.10.10.105:8000/one/highquality.mp3");
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "one");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
@@ -168,7 +172,7 @@ public class DiscordBot {
                                     }
                                     break;
                                 case "dance":
-                                    backendManager.startStream(event.getGuild(), "http://10.10.10.105:8010/dance/highquality.mp3");
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "dance");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
@@ -179,7 +183,7 @@ public class DiscordBot {
                                     }
                                     break;
                                 case "trap":
-                                    backendManager.startStream(event.getGuild(), "http://10.10.10.105:8020/trap/highquality.mp3");
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "trap");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
@@ -222,7 +226,7 @@ public class DiscordBot {
                             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
                             switch (backendManager.getMusic(event.getGuild())) {
                                 case "one":
-                                    backendManager.startStream(event.getGuild(), "http://10.10.10.105:8000/one/highquality.mp3");
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "one");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
@@ -233,7 +237,7 @@ public class DiscordBot {
                                     }
                                     break;
                                 case "dance":
-                                    backendManager.startStream(event.getGuild(), "http://10.10.10.105:8010/dance/highquality.mp3");
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "dance");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
@@ -244,7 +248,7 @@ public class DiscordBot {
                                     }
                                     break;
                                 case "trap":
-                                    backendManager.startStream(event.getGuild(), "http://10.10.10.105:8020/trap/highquality.mp3");
+                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
                                     backendManager.setPlaying(event.getGuild(), true);
                                     backendManager.setMusic(event.getGuild(), "trap");
                                     backendManager.setChannelId(event.getGuild(), voiceChannel.getId());

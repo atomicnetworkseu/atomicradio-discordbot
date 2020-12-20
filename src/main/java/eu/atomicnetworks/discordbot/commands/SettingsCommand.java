@@ -35,19 +35,12 @@ public class SettingsCommand {
         }
 
         if (args.length == 1) {
-            if (this.discord.getBackendManager().getTag(event.getGuild())) {
-                embed.setDescription("⚡ l **Settings**\n** **\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot will not change its name if the station is changed.\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
-                event.getChannel().sendMessage(embed.build()).queue();
-            } else {
-                embed.setDescription("⚡ l **Settings**\n** **\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot changes its name again when the station is changed.\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
-                event.getChannel().sendMessage(embed.build()).queue();
-            }
+            embed.setDescription("⚡ l **Settings**\n** **\n**"
+                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
+                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • " + (this.discord.getBackendManager().getTag(event.getGuild()) ? "The bot will not change its name if the station is changed." : "The bot changes its name again when the station is changed.") + "\n**"
+                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings rights** • " + (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild()) ? "Enables the ability for users to use commands to control the music." : "Disables the ability for users to use commands to control the music.") + "\n**"
+                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
+            event.getChannel().sendMessage(embed.build()).queue();
             return;
         }
 
@@ -84,27 +77,33 @@ public class SettingsCommand {
                     event.getChannel().sendMessage(embed.build()).queue();
                     return;
                 }
+            case "rights":
+                if (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild())) {
+                    this.discord.getBackendManager().setMusicCommands(event.getGuild(), false);
+                    embed.setDescription("**Successful**, the commands `.play`, `.vol` & .`join` can now be executed by all users again.");
+                    event.getChannel().sendMessage(embed.build()).queue();
+                    return;
+                } else {
+                    this.discord.getBackendManager().setMusicCommands(event.getGuild(), true);
+                    embed.setDescription("**Successful**, the commands `.play`, `.vol` & .`join` can now only be used by users with the administrator authorisation.");
+                    event.getChannel().sendMessage(embed.build()).queue();
+                    return;
+                }
             case "reset":
                 this.discord.getBackendManager().setPrefix(event.getGuild(), ".");
                 this.discord.getBackendManager().setMusic(event.getGuild(), "one");
                 this.discord.getBackendManager().setTag(event.getGuild(), true);
+                this.discord.getBackendManager().setMusicCommands(event.getGuild(), true);
                 embed.setDescription("**Successful**, the reset was executed successfully, there is no more tag and the prefix has been changed to `.`.");
                 event.getChannel().sendMessage(embed.build()).queue();
                 break;
             default:
-                if (this.discord.getBackendManager().getTag(event.getGuild())) {
-                    embed.setDescription("⚡ l **Settings**\n** **\n**"
-                            + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
-                            + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot will not change its name if the station is changed.\n**"
-                            + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
-                    event.getChannel().sendMessage(embed.build()).queue();
-                } else {
-                    embed.setDescription("⚡ l **Settings**\n** **\n**"
-                            + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
-                            + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • The bot changes its name again when the station is changed.\n**"
-                            + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
-                    event.getChannel().sendMessage(embed.build()).queue();
-                }
+                embed.setDescription("⚡ l **Settings**\n** **\n**"
+                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
+                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • " + (this.discord.getBackendManager().getTag(event.getGuild()) ? "The bot will not change its name if the station is changed." : "The bot changes its name again when the station is changed.") + "\n**"
+                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings rights** • " + (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild()) ? "Enables the ability for users to use commands to control the music." : "Disables the ability for users to use commands to control the music.") + "\n**"
+                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
+                event.getChannel().sendMessage(embed.build()).queue();
                 break;
         }
     }

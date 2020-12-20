@@ -15,6 +15,7 @@ public class GuildData {
     private String music;
     private boolean playing;
     private boolean tag;
+    private boolean musicCommands;
     private int volume;
 
     public String getId() {
@@ -71,6 +72,14 @@ public class GuildData {
 
     public void setVolume(int volume) {
         this.volume = volume;
+    }
+
+    public boolean isMusicCommandsDenied() {
+        return musicCommands;
+    }
+
+    public void setMusicCommands(boolean musicCommands) {
+        this.musicCommands = musicCommands;
     }
     
 }

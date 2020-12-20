@@ -130,6 +130,15 @@ public class BackendManager {
         this.discord.getGuildManager().saveGuild(this.getGuild(guild));
     }
     
+    public boolean isMusicCommandsDenied(Guild guild) {
+        return this.getGuild(guild).isMusicCommandsDenied();
+    }
+
+    public void setMusicCommands(Guild guild, boolean musicCommands) {
+        this.getGuild(guild).setMusicCommands(musicCommands);
+        this.discord.getGuildManager().saveGuild(this.getGuild(guild));
+    }
+    
     public void startStream(Guild guild, String url) {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
