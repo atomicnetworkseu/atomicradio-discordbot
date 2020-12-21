@@ -4,6 +4,7 @@ import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
 import eu.atomicnetworks.discordbot.DiscordBot;
+import eu.atomicradio.objects.Channel;
 import java.awt.Color;
 import java.util.HashMap;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -68,14 +69,14 @@ public class ReportCommand {
                 }
                 if(args[2].equalsIgnoreCase("now")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.one!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getApiManager().getArtist("one") + " - " + this.discord.getApiManager().getTitle("one") + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannelOne().getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannelOne().getSong().getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     event.getChannel().sendMessage(embed.build()).queue();
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
                     this.sendReportToTeam("one", "now", event);
                 } else if(args[2].equalsIgnoreCase("last")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.one!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getApiManager().getLastArtist("one") + " - " + this.discord.getApiManager().getLastTitle("one") + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannelOne().getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannelOne().getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     event.getChannel().sendMessage(embed.build()).queue();
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
@@ -94,14 +95,14 @@ public class ReportCommand {
                 }
                 if(args[2].equalsIgnoreCase("now")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.dance!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getApiManager().getArtist("dance") + " - " + this.discord.getApiManager().getTitle("dance") + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannelDance().getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannelDance().getSong().getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     event.getChannel().sendMessage(embed.build()).queue();
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
                     this.sendReportToTeam("dance", "now", event);
                 } else if(args[2].equalsIgnoreCase("last")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.dance!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getApiManager().getLastArtist("dance") + " - " + this.discord.getApiManager().getLastTitle("dance") + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannelDance().getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannelDance().getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     event.getChannel().sendMessage(embed.build()).queue();
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
@@ -111,14 +112,14 @@ public class ReportCommand {
             case "trap":
                 if(args[2].equalsIgnoreCase("now")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.trap!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getApiManager().getArtist("trap") + " - " + this.discord.getApiManager().getTitle("trap") + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannelTrap().getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannelTrap().getSong().getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     event.getChannel().sendMessage(embed.build()).queue();
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
                     this.sendReportToTeam("trap", "now", event);
                 } else if(args[2].equalsIgnoreCase("last")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.trap!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getApiManager().getLastArtist("trap") + " - " + this.discord.getApiManager().getLastTitle("trap") + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannelTrap().getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannelTrap().getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     event.getChannel().sendMessage(embed.build()).queue();
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
@@ -131,16 +132,34 @@ public class ReportCommand {
     private void sendReportToTeam(String channel, String song, GuildMessageReceivedEvent event) {
         WebhookEmbedBuilder webhookEmbedBuilder = new WebhookEmbedBuilder();
         webhookEmbedBuilder.setColor(9785268);
+        
+        Channel targetChannel = null;
+        switch(channel.toLowerCase()) {
+            case "one":
+                targetChannel = this.discord.getAtomicClient().getChannelOne();
+                break;
+            case "dance":
+                targetChannel = this.discord.getAtomicClient().getChannelDance();
+                break;
+            case "trap":
+                targetChannel = this.discord.getAtomicClient().getChannelTrap();
+                break;
+        }
+        
+        if(targetChannel == null) {
+            return;
+        }
+        
         if(song.equalsIgnoreCase("now")) {
-            webhookEmbedBuilder.setAuthor(new WebhookEmbed.EmbedAuthor("atr." + channel + " - " + this.discord.getApiManager().getPlaylist(channel), null, null));
-            webhookEmbedBuilder.setDescription("**Lied:** " + this.discord.getApiManager().getTitle(channel) + "\n"
-                    + "**Interpret:** " + this.discord.getApiManager().getArtist(channel));
+            webhookEmbedBuilder.setAuthor(new WebhookEmbed.EmbedAuthor("atr." + channel + " - " + targetChannel.getSong().getPlaylist().toLowerCase(), null, null));
+            webhookEmbedBuilder.setDescription("**Lied:** " + targetChannel.getSong().getTitle() + "\n"
+                    + "**Interpret:** " + targetChannel.getSong().getArtist());
             webhookEmbedBuilder.setFooter(new WebhookEmbed.EmbedFooter(event.getAuthor().getAsTag(), event.getAuthor().getAvatarUrl()));
             this.webhookClient.send(webhookEmbedBuilder.build());
         } else if(song.equalsIgnoreCase("last")) {
-            webhookEmbedBuilder.setAuthor(new WebhookEmbed.EmbedAuthor("atr." + channel + " - " + this.discord.getApiManager().getLastPlaylist(channel), null, null));
-            webhookEmbedBuilder.setDescription("**Lied:** " + this.discord.getApiManager().getLastTitle(channel) + "\n"
-                    + "**Interpret:** " + this.discord.getApiManager().getLastArtist(channel));
+            webhookEmbedBuilder.setAuthor(new WebhookEmbed.EmbedAuthor("atr." + channel + " - " + targetChannel.getHistory().stream().findFirst().orElse(null).getPlaylist().toLowerCase(), null, null));
+            webhookEmbedBuilder.setDescription("**Lied:** " + targetChannel.getHistory().stream().findFirst().orElse(null).getTitle() + "\n"
+                    + "**Interpret:** " + targetChannel.getHistory().stream().findFirst().orElse(null).getArtist());
             webhookEmbedBuilder.setFooter(new WebhookEmbed.EmbedFooter(event.getAuthor().getAsTag(), event.getAuthor().getAvatarUrl()));
             this.webhookClient.send(webhookEmbedBuilder.build());
         }

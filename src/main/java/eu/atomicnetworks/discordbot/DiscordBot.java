@@ -1,6 +1,7 @@
 package eu.atomicnetworks.discordbot;
 
 import com.google.gson.Gson;
+import eu.atomicradio.AtomicClient;
 import eu.atomicnetworks.discordbot.commands.HelpCommand;
 import eu.atomicnetworks.discordbot.commands.InfoCommand;
 import eu.atomicnetworks.discordbot.commands.JoinCommand;
@@ -13,7 +14,6 @@ import eu.atomicnetworks.discordbot.commands.SongCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
 import eu.atomicnetworks.discordbot.handler.ServerListHandler;
-import eu.atomicnetworks.discordbot.managers.ApiManager;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
@@ -21,7 +21,6 @@ import eu.atomicnetworks.discordbot.managers.MongoManager;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
@@ -53,13 +52,13 @@ public class DiscordBot {
 
     private Gson gson;
     private JDA jda;
+    private AtomicClient atomicClient;
     private long startTimeMillis;
 
     private LoggerManager loggerManager;
     private MongoManager mongoManager;
     private GuildManager guildManager;
     private BackendManager backendManager;
-    private ApiManager apiManager;
 
     private ServerListHandler serverListHandler;
 
@@ -81,6 +80,7 @@ public class DiscordBot {
 
     private void init() {
         this.gson = new Gson();
+        this.atomicClient = new AtomicClient();
         this.startTimeMillis = System.currentTimeMillis();
         
         Logger jdaLogger = Logger.getLogger( "net.dv8tion" );
@@ -90,7 +90,6 @@ public class DiscordBot {
         this.mongoManager = new MongoManager(this);
         this.guildManager = new GuildManager(this);
         this.backendManager = new BackendManager(this);
-        this.apiManager = new ApiManager(this);
 
         this.helpCommand = new HelpCommand(this);
         this.infoCommand = new InfoCommand(this);
@@ -306,7 +305,7 @@ public class DiscordBot {
                         jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
                         break;
                     case 3:
-                        jda.getPresence().setActivity(Activity.listening(this.apiManager.getArtist("one") + " - " + this.apiManager.getTitle("one") + " on atr.one"));
+                        jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
                         break;
                     case 4:
                         jda.getPresence().setActivity(Activity.listening(".help"));
@@ -345,6 +344,10 @@ public class DiscordBot {
         return gson;
     }
 
+    public AtomicClient getAtomicClient() {
+        return atomicClient;
+    }
+
     public JDA getJda() {
         return jda;
     }
@@ -375,10 +378,6 @@ public class DiscordBot {
 
     public BackendManager getBackendManager() {
         return backendManager;
-    }
-
-    public ApiManager getApiManager() {
-        return apiManager;
     }
 
 }

@@ -93,7 +93,7 @@ public class SettingsCommand {
                 this.discord.getBackendManager().setPrefix(event.getGuild(), ".");
                 this.discord.getBackendManager().setMusic(event.getGuild(), "one");
                 this.discord.getBackendManager().setTag(event.getGuild(), true);
-                this.discord.getBackendManager().setMusicCommands(event.getGuild(), true);
+                this.discord.getBackendManager().setMusicCommands(event.getGuild(), false);
                 embed.setDescription("**Successful**, the reset was executed successfully, there is no more tag and the prefix has been changed to `.`.");
                 event.getChannel().sendMessage(embed.build()).queue();
                 break;

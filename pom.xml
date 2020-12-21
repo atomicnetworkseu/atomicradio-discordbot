@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.atomicnetworks</groupId>
     <artifactId>DiscordBot</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -86,6 +86,11 @@
             <groupId>org.discordbots</groupId>
             <artifactId>DBL-Java-Library</artifactId>
             <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.atomicnetworks</groupId>
+            <artifactId>atomicradio-java</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
     
