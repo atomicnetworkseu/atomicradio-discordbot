@@ -28,7 +28,7 @@ public class HelpCommand {
         
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
-        embed.setAuthor("Helpdesk", null, "https://cdn.atomicnetworks.eu/atnw/logo/logo_white.png");
+        embed.setAuthor("Helpdesk", null, "https://cdn.atomicnetworks.eu/logo/coloured_backround.png");
         embed.setTitle("Hello, we are happy to see you. You can see all the available commands below.");
         if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setDescription(MessageFormat.format("** **\n"
@@ -57,10 +57,10 @@ public class HelpCommand {
                 + "** **\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**  • Let the bot disconnect with this command.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**  • Define the channel where the bot should join automatically.\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings**  • With this command you can make small adjustments.\n\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings**  • With this command you can make advanced adjustments.\n\n"
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));
         }
-        embed.setFooter("If you have a suggestion for improvement,\ncriticism or something similar, just contact us!" , "https://cdn.atomicnetworks.eu/atnw/logo/logo.png");
+        embed.setFooter("If you have a suggestion for improvement,\ncriticism or something similar, just contact us!" , "https://cdn.atomicnetworks.eu/logo/coloured.png");
         event.getChannel().sendMessage(embed.build()).queue();
     } 
     

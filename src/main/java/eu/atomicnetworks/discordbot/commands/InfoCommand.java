@@ -34,7 +34,7 @@ public class InfoCommand {
         
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
-        embed.setAuthor("Helpdesk » Information", null, "https://cdn.atomicnetworks.eu/atnw/logo/logo_white.png");
+        embed.setAuthor("Helpdesk » Information", null, "https://cdn.atomicnetworks.eu/logo/coloured_backround.png");
         embed.setDescription("** **\nFirst of all, thank you for using our bot and supporting our radio station,\nwe are constantly working to improve the experience with the Musicbot and are happy that there are people who like what we do.\n\n:heart: Thanks\n\n** **");
         embed.addField("Invite & Support", "[Invitelink](https://atomicradio.eu/bot)\n[Supportdiscord](https://discord.com/invite/5JVZr6c)\n\n** **", true);
         embed.addField("Social Media", "[Twitter](https://go.atomicnetworks.eu/radio/twitter)\n[Website](https://go.atomicnetworks.eu/radio)\n\n** **", true);
