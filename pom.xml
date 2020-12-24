@@ -21,10 +21,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <repository>
-            <id>musikbotsnet</id>
-            <url>http://116.203.52.17:8081/repository/atomicradio</url>
-        </repository>
     </repositories>
     
     <dependencies>

@@ -47,7 +47,7 @@ public class SettingsCommand {
         switch (args[1].toLowerCase()) {
             case "prefix":
                 if (args.length == 3) {
-                    if (args[2].length() < 4) {
+                    if (args[2].length() < 6) {
                         if (this.discord.getBackendManager().getPrefix(event.getGuild()).equalsIgnoreCase(args[2])) {
                             embed.setDescription("That is the same prefix.");
                             event.getChannel().sendMessage(embed.build()).queue();
@@ -57,7 +57,7 @@ public class SettingsCommand {
                         embed.setDescription("**Successful**, the new prefix of the server is `" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "`.");
                         event.getChannel().sendMessage(embed.build()).queue();
                     } else {
-                        embed.setDescription("The word is too long. You can use 3 letters.");
+                        embed.setDescription("The word is too long. You can use 5 letters.");
                         event.getChannel().sendMessage(embed.build()).queue();
                     }
                     return;

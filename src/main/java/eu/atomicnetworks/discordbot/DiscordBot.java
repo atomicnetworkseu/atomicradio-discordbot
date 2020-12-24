@@ -78,11 +78,11 @@ public class DiscordBot {
         new DiscordBot().init();
     }
 
-    private void init() {
+    private void init() {        
         this.gson = new Gson();
         this.atomicClient = new AtomicClient();
         this.startTimeMillis = System.currentTimeMillis();
-        
+                
         Logger jdaLogger = Logger.getLogger( "net.dv8tion" );
         jdaLogger.setLevel(Level.SEVERE);
 

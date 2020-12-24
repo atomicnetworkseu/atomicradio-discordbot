@@ -56,7 +56,7 @@ public class VolumeCommand {
         }
         
         if(args.length != 2) {
-            embed.setDescription("You must enter a valid number between **1-35**!");
+            embed.setDescription("You must enter a valid number between **1-100**!");
             event.getChannel().sendMessage(embed.build()).queue();
             return;
         }
@@ -67,7 +67,7 @@ public class VolumeCommand {
             return;
         }
         
-        if(Integer.valueOf(args[1]) >= 1 && Integer.valueOf(args[1]) <= 35) {
+        if(Integer.valueOf(args[1]) >= 1 && Integer.valueOf(args[1]) <= 100) {
             if (event.getGuild().getAudioManager().getSendingHandler() != null) {
                 AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                 audioHandler.getPlayer().setVolume(Integer.valueOf(args[1]));
@@ -77,7 +77,7 @@ public class VolumeCommand {
             embed.setDescription("You have successfully set the volume to **" + Integer.valueOf(args[1]) + "**.");
             event.getChannel().sendMessage(embed.build()).queue();
         } else {
-            embed.setDescription("You must enter a valid number between **1-35**!");
+            embed.setDescription("You must enter a valid number between **1-100**!");
             event.getChannel().sendMessage(embed.build()).queue();
         }
     }
