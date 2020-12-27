@@ -56,6 +56,7 @@ public class HelpCommand {
                 + "Which can only be used by members with the `administrator` authorization.\n"
                 + "** **\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**  • Let the bot disconnect with this command.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "bass** • With this setting, you can finally enjoy your songs with more bass.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**  • Define the channel where the bot should join automatically.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings**  • With this command you can make advanced adjustments.\n\n"
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));

@@ -130,6 +130,15 @@ public class BackendManager {
         this.discord.getGuildManager().saveGuild(this.getGuild(guild));
     }
     
+    public int getBassLevel(Guild guild) {
+        return this.getGuild(guild).getBassLevel();
+    }
+    
+    public void setBassLevel(Guild guild, int bass) {
+        this.getGuild(guild).setBassLevel(bass);
+        this.discord.getGuildManager().saveGuild(this.getGuild(guild));
+    }
+    
     public boolean isMusicCommandsDenied(Guild guild) {
         return this.getGuild(guild).isMusicCommandsDenied();
     }
@@ -142,11 +151,33 @@ public class BackendManager {
     public void startStream(Guild guild, String url) {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
+        playerManager.getConfiguration().setFilterHotSwapEnabled(true);
         AudioPlayer player = playerManager.createPlayer();
         AudioHandler trackScheduler = new AudioHandler(this.discord, player, guild);
         player.addListener(trackScheduler);
         guild.getAudioManager().setSendingHandler(trackScheduler);
         player.setVolume(this.getVolume(guild));
+        
+        if(this.getBassLevel(guild) != 0) {
+            switch(this.getBassLevel(guild)) {
+                case 1:
+                    trackScheduler.bassFilter(20);
+                    break;
+                case 2:
+                    trackScheduler.bassFilter(40);
+                    break;
+                case 3:
+                    trackScheduler.bassFilter(60);
+                    break;
+                case 4:
+                    trackScheduler.bassFilter(80);
+                    break;
+                case 5:
+                    trackScheduler.bassFilter(100);
+                    break;
+            }
+        }
+        
         playerManager.loadItem(url, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack at) {

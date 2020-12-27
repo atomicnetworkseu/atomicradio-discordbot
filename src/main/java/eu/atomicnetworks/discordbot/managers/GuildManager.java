@@ -33,6 +33,7 @@ public class GuildManager {
                 guildData.setTag(true);
                 guildData.setChannelId("");
                 guildData.setVolume(25);
+                guildData.setBassLevel(0);
                 guildData.setMusicCommands(false);
                 t = this.discord.getGson().fromJson(this.discord.getGson().toJson(guildData), Document.class);
                 this.discord.getMongoManager().getGuilds().insertOne(t, (Void t1, Throwable thrwbl1) -> {

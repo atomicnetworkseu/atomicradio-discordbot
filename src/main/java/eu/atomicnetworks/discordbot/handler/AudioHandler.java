@@ -1,5 +1,8 @@
 package eu.atomicnetworks.discordbot.handler;
 
+import com.sedmelluq.discord.lavaplayer.filter.AudioFilter;
+import com.sedmelluq.discord.lavaplayer.filter.FloatPcmAudioFilter;
+import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
@@ -9,6 +12,8 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import eu.atomicnetworks.discordbot.DiscordBot;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -75,6 +80,28 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     public void stop() {
         player.stopTrack();
         player.destroy();
+    }
+    
+    public void bassFilter(float percentage) {
+        float[] gainFrequency = { -0.05f, 0.07f, 0.16f, 0.03f, -0.05f, -0.11f };
+        float multiplier = percentage / 100;
+        
+        player.setFilterFactory((track, format, output)->{
+            List<AudioFilter> audioFilterList = new ArrayList<>();
+            
+            FloatPcmAudioFilter floatPcmAudioFilter = output;
+            Equalizer equalizer = new Equalizer(format.channelCount, floatPcmAudioFilter);
+            for (int i = 0; i < gainFrequency.length; i++) {
+                equalizer.setGain(i, gainFrequency[i]*multiplier);
+            }
+            floatPcmAudioFilter = equalizer;
+            audioFilterList.add(equalizer);
+            return audioFilterList;
+        });
+    }
+    
+    public void removeFilter() {
+        player.setFilterFactory(null);
     }
 
     public AudioPlayer getPlayer() {

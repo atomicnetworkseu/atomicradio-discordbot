@@ -1,6 +1,7 @@
 package eu.atomicnetworks.discordbot;
 
 import com.google.gson.Gson;
+import eu.atomicnetworks.discordbot.commands.BassCommand;
 import eu.atomicradio.AtomicClient;
 import eu.atomicnetworks.discordbot.commands.HelpCommand;
 import eu.atomicnetworks.discordbot.commands.InfoCommand;
@@ -72,6 +73,7 @@ public class DiscordBot {
     private SettingsCommand settingsCommand;
     private ReportCommand reportCommand;
     private SongCommand songCommand;
+    private BassCommand bassCommand;
 
     public static void main(String[] args) {
         new DiscordBot().loadBanner();
@@ -101,10 +103,32 @@ public class DiscordBot {
         this.settingsCommand = new SettingsCommand(this);
         this.reportCommand = new ReportCommand(this);
         this.songCommand = new SongCommand(this);
+        this.bassCommand = new BassCommand(this);
 
         JDABuilder builder = JDABuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.drMraDnY2CynXXKO-0GM-mUscNI");
         builder.setActivity(Activity.listening("atomicradio.eu"));
         builder.addEventListeners(new ListenerAdapter() {
+            
+            @Override
+            public void onReady(ReadyEvent event) {
+                for (Guild guild : event.getJDA().getGuilds()) {
+                    if (backendManager.getPlaying(guild)) {
+                        consoleInfo("Reconnecting to the guild " + guild.getName());
+                        if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
+                            return;
+                        }
+                        VoiceChannel voiceChannel = guild.getVoiceChannelById(backendManager.getChannelId(guild));
+                        if (voiceChannel != null) {
+                            try {
+                                guild.getAudioManager().openAudioConnection(voiceChannel);
+                            } catch (InsufficientPermissionException ex) {
+                                consoleInfo("Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
+                            }
+                            consoleInfo("Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
+                        }
+                    }
+                }
+            }
 
             @Override
             public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
@@ -145,6 +169,8 @@ public class DiscordBot {
                     reportCommand.execute(event);
                 } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "song")) {
                     songCommand.execute(event);
+                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "bass")) {
+                    bassCommand.execute(event);
                 }
             }
 
@@ -271,26 +297,6 @@ public class DiscordBot {
                 }
             }
 
-            @Override
-            public void onReady(ReadyEvent event) {
-                for (Guild guild : event.getJDA().getGuilds()) {
-                    if (backendManager.getPlaying(guild)) {
-                        if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
-                            return;
-                        }
-                        VoiceChannel voiceChannel = guild.getVoiceChannelById(backendManager.getChannelId(guild));
-                        if (voiceChannel != null) {
-                            try {
-                                guild.getAudioManager().openAudioConnection(voiceChannel);
-                            } catch (InsufficientPermissionException ex) {
-                                consoleInfo("Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
-                            }
-                            consoleInfo("Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
-                        }
-                    }
-                }
-            }
-
         });
         try {
             this.jda = builder.build();
@@ -324,6 +330,29 @@ public class DiscordBot {
             timer.setInitialDelay(0);
             timer.setRepeats(true);
             timer.start();
+            
+            /*Timer reconnectTimer = new Timer(1, (ActionEvent e) -> {
+            for (Guild guild : this.jda.getGuilds()) {
+            if (backendManager.getPlaying(guild)) {
+            if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
+            return;
+            }
+            VoiceChannel voiceChannel = guild.getVoiceChannelById(backendManager.getChannelId(guild));
+            if (voiceChannel != null) {
+            try {
+            guild.getAudioManager().openAudioConnection(voiceChannel);
+            } catch (InsufficientPermissionException ex) {
+            consoleInfo("Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
+            }
+            consoleInfo("Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
+            }
+            }
+            }
+            });
+            reconnectTimer.setInitialDelay(10000);
+            reconnectTimer.setRepeats(false);
+            reconnectTimer.start();*/
+            
             this.serverListHandler = new ServerListHandler(this);
         } catch (LoginException ex) {
             Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex);

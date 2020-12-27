@@ -61,24 +61,31 @@ public class VolumeCommand {
             return;
         }
         
-        if(this.discord.getBackendManager().getVolume(event.getGuild()) == Integer.valueOf(args[1])) {
-            embed.setDescription("This volume is already set.");
-            event.getChannel().sendMessage(embed.build()).queue();
-            return;
-        }
-        
-        if(Integer.valueOf(args[1]) >= 1 && Integer.valueOf(args[1]) <= 100) {
-            if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                audioHandler.getPlayer().setVolume(Integer.valueOf(args[1]));
+        try {
+            
+            if(this.discord.getBackendManager().getVolume(event.getGuild()) == Integer.valueOf(args[1])) {
+                embed.setDescription("This volume is already set.");
+                event.getChannel().sendMessage(embed.build()).queue();
+                return;
             }
+            
+            if(Integer.valueOf(args[1]) >= 1 && Integer.valueOf(args[1]) <= 100) {
+                if (event.getGuild().getAudioManager().getSendingHandler() != null) {
+                    AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+                    audioHandler.getPlayer().setVolume(Integer.valueOf(args[1]));
+                }
 
-            this.discord.getBackendManager().setVolume(event.getGuild(), Integer.valueOf(args[1]));
-            embed.setDescription("You have successfully set the volume to **" + Integer.valueOf(args[1]) + "**.");
-            event.getChannel().sendMessage(embed.build()).queue();
-        } else {
+                this.discord.getBackendManager().setVolume(event.getGuild(), Integer.valueOf(args[1]));
+                embed.setDescription("You have successfully set the volume to **" + Integer.valueOf(args[1]) + "**.");
+                event.getChannel().sendMessage(embed.build()).queue();
+            } else {
+                embed.setDescription("You must enter a valid number between **1-100**!");
+                event.getChannel().sendMessage(embed.build()).queue();
+            }
+        } catch(NumberFormatException ex) {
             embed.setDescription("You must enter a valid number between **1-100**!");
             event.getChannel().sendMessage(embed.build()).queue();
+            return;
         }
     }
     

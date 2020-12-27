@@ -17,6 +17,7 @@ public class GuildData {
     private boolean tag;
     private boolean musicCommands;
     private int volume;
+    private int bassLevel;
 
     public String getId() {
         return id;
@@ -80,6 +81,14 @@ public class GuildData {
 
     public void setMusicCommands(boolean musicCommands) {
         this.musicCommands = musicCommands;
+    }
+
+    public int getBassLevel() {
+        return bassLevel;
+    }
+
+    public void setBassLevel(int bassLevel) {
+        this.bassLevel = bassLevel;
     }
     
 }
