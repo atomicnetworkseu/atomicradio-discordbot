@@ -105,7 +105,7 @@ public class DiscordBot {
         this.songCommand = new SongCommand(this);
         this.bassCommand = new BassCommand(this);
 
-        JDABuilder builder = JDABuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.drMraDnY2CynXXKO-0GM-mUscNI");
+        JDABuilder builder = JDABuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.54Yw6XMf12AUUGg5cpGEu9XpckY");
         builder.setActivity(Activity.listening("atomicradio.eu"));
         builder.addEventListeners(new ListenerAdapter() {
             
