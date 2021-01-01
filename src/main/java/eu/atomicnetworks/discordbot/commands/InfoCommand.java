@@ -34,11 +34,11 @@ public class InfoCommand {
         
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
-        embed.setAuthor("Helpdesk » Information", null, "https://cdn.atomicnetworks.eu/logo/coloured_backround.png");
+        embed.setAuthor("Helpdesk » Information", null, "https://images.discordapp.net/avatars/697517106287345737/07be164c270546a8c976063bc71939fc.png?size=512");
         embed.setDescription("** **\nFirst of all, thank you for using our bot and supporting our radio station,\nwe are constantly working to improve the experience with the Musicbot and are happy that there are people who like what we do.\n\n:heart: Thanks\n\n** **");
         embed.addField("Invite & Support", "[Invitelink](https://atomicradio.eu/bot)\n[Supportdiscord](https://discord.com/invite/5JVZr6c)\n\n** **", true);
         embed.addField("Social Media", "[Twitter](https://go.atomicnetworks.eu/radio/twitter)\n[Website](https://go.atomicnetworks.eu/radio)\n\n** **", true);
-        embed.addField("Newsfeed", "Our [Alexa Skill](https://amazon.com/dp/B08CN8VD1F) was\nreleased.\n\n** **", true);
+        embed.addField("Newsfeed", "We have published our new [website](https://atomicradio.eu)!\n\n** **", true);
         embed.addField("Legal & Datasecurity", "We comply with all\nGerman laws and have the\nnecessary [licenses](https://go.atomicnetworks.eu/radio/license), we\nonly store the selected\nstandard channels.\n\n** **", true);
         embed.addField("Station", MessageFormat.format("{0}\n** **", this.getChannel(event.getGuild())), true);
         embed.addField("Statistics", MessageFormat.format("Guilds: {0}\n"

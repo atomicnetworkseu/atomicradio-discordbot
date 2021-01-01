@@ -28,7 +28,7 @@ public class HelpCommand {
         
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
-        embed.setAuthor("Helpdesk", null, "https://cdn.atomicnetworks.eu/logo/coloured_backround.png");
+        embed.setAuthor("Helpdesk", null, "https://images.discordapp.net/avatars/697517106287345737/07be164c270546a8c976063bc71939fc.png?size=512");
         embed.setTitle("Hello, we are happy to see you. You can see all the available commands below.");
         if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setDescription(MessageFormat.format("** **\n"
