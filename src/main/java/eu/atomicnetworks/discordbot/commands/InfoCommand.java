@@ -85,13 +85,13 @@ public class InfoCommand {
         
         String onlineTime = "";
         if(days > 0) {
-            onlineTime += days + " days";
+            onlineTime += days + " days, ";
         }
         if(hours > 0) {
-            onlineTime += ", " + hours + " hours";
+            onlineTime += hours + " hours, ";
         }
         if(minutes > 0) {
-            onlineTime += ", " + minutes + " minutes";
+            onlineTime += minutes + " minutes";
         }
         if(seconds > 0 && days == 0) {
             onlineTime += ", " + seconds + " seconds";
