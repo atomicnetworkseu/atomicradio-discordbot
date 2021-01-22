@@ -29,35 +29,35 @@ public class HelpCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
         embed.setAuthor("Helpdesk", null, "https://cdn.atomicnetworks.eu/discord/icon.png");
-        embed.setTitle("Hello, we are happy to see you. You can see all the available commands below.");
+        /*embed.setTitle("Hello, we are happy to see you. You can see all the available commands below.");*/
         if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setDescription(MessageFormat.format("** **\n"
                 + ":gear: | **Commands**\n\n"
-                + "**{0}help**  • This gives you an overview of all available commands.\n"
-                + "**{0}join**  • With this command you can connect the bot to the channel.\n"
-                + "**{0}play**  • If you prefer to listen to another station from us.\n"
-                + "**{0}song**  • You want to know which song is playing?, with this command you can easily find out.\n"
-                + "**{0}vol**  • This allows you to adjust the volume.\n"
-                + "**{0}report**  • You don't like a song? then let us know and we will improve the playlist!\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "info**  • Here you can find information about our stations and the Musicbot.\n\n"
+                + "**{0}help**  • Informs you about all available commands.\n"
+                + "**{0}join**  • Connects the bot to the specified channel.\n"
+                + "**{0}play**  • Changes the currently playing station in your channel.\n"
+                + "**{0}song**  • Informs you about the currently played song.\n"
+                + "**{0}vol**  • Lets you adjust the current volume.\n"
+                + "**{0}report**  • With this command it is possible to report songs that you do not like.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "info**  • Sends you information about our radio station and the Discordbot.\n\n"
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));
         } else {
             embed.setDescription(MessageFormat.format("** **\n"
                 + ":gear: | **Commands**\n\n"
-                + "**{0}help**  • This gives you an overview of all available commands.\n"
-                + "**{0}join**  • With this command you can connect the bot to the channel.\n"
-                + "**{0}play**  • If you prefer to listen to another station from us.\n"
-                + "**{0}song**  • You want to know which song is playing?, with this command you can easily find out.\n"
-                + "**{0}vol**  • This allows you to adjust the volume.\n"
-                + "**{0}report**  • You don't like a song? then let us know and we will improve the playlist!\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "info**  • Here you can find information about our stations and the Musicbot.\n\n"
+                + "**{0}help**  • Informs you about all available commands.\n"
+                + "**{0}join**  • Connects the bot to the specified channel.\n"
+                + "**{0}play**  • Changes the currently playing station in your channel.\n"
+                + "**{0}song**  • Informs you about the currently played song.\n"
+                + "**{0}vol**  • Lets you adjust the current volume.\n"
+                + "**{0}report**  • With this command it is possible to report songs that you do not like.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "info**  • Sends you information about our radio station and the Discordbot.\n\n"
                 + "** **\n"
                 + ":hammer_pick: | ** Extended commands**\n"
                 + "Which can only be used by members with the `administrator` authorization.\n"
                 + "** **\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**  • Let the bot disconnect with this command.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**  • Disconnects the bot from the channel.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "bass** • With this setting, you can finally enjoy your songs with more bass.\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**  • Define the channel where the bot should join automatically.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**  • Defines the channel where the bot should join automatically.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings**  • With this command you can make advanced adjustments.\n\n"
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));
         }

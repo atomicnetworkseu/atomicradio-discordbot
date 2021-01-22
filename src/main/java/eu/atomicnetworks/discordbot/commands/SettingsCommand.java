@@ -35,11 +35,11 @@ public class SettingsCommand {
         }
 
         if (args.length == 1) {
-            embed.setDescription("⚡ l **Settings**\n** **\n**"
-                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
+            embed.setDescription("✨ l **Settings**\n** **\n**"
+                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set your own command prefix for the server.\n**"
                     + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • " + (this.discord.getBackendManager().getTag(event.getGuild()) ? "The bot will not change its name if the station is changed." : "The bot changes its name again when the station is changed.") + "\n**"
                     + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings rights** • " + (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild()) ? "Enables the ability for users to use commands to control the music." : "Disables the ability for users to use commands to control the music.") + "\n**"
-                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
+                    + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Resets all settings made for this server.");
             event.getChannel().sendMessage(embed.build()).queue();
             return;
         }
@@ -62,7 +62,7 @@ public class SettingsCommand {
                     }
                     return;
                 }
-                embed.setDescription("With this command you can select a new command prefix via **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix <prefix>**.\n\nCurrent prefix: `" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "`");
+                embed.setDescription("With **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix <prefix>** you can set which prefix the bot should react to in the future.\n\nCurrent prefix: `" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "`");
                 event.getChannel().sendMessage(embed.build()).queue();
                 break;
             case "nick":
@@ -94,15 +94,15 @@ public class SettingsCommand {
                 this.discord.getBackendManager().setMusic(event.getGuild(), "one");
                 this.discord.getBackendManager().setTag(event.getGuild(), true);
                 this.discord.getBackendManager().setMusicCommands(event.getGuild(), false);
-                embed.setDescription("**Successful**, the reset was executed successfully, there is no more tag and the prefix has been changed to `.`.");
+                embed.setDescription("**Successful**, the name of the bot changes again, the music commands can be executed by everyone again and the tag is `.` again.");
                 event.getChannel().sendMessage(embed.build()).queue();
                 break;
             default:
-                embed.setDescription("⚡ l **Settings**\n** **\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set a different command prefix.\n**"
+                embed.setDescription("✨ l **Settings**\n** **\n**"
+                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix** • Set your own command prefix for the server.\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • " + (this.discord.getBackendManager().getTag(event.getGuild()) ? "The bot will not change its name if the station is changed." : "The bot changes its name again when the station is changed.") + "\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings rights** • " + (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild()) ? "Enables the ability for users to use commands to control the music." : "Disables the ability for users to use commands to control the music.") + "\n**"
-                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Reset all settings.");
+                        + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Resets all settings made for this server.");
                 event.getChannel().sendMessage(embed.build()).queue();
                 break;
         }
