@@ -113,7 +113,6 @@ public class DiscordBot {
             public void onReady(ReadyEvent event) {
                 for (Guild guild : event.getJDA().getGuilds()) {
                     if (backendManager.getPlaying(guild)) {
-                        consoleInfo("Reconnecting to the guild " + guild.getName());
                         if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
                             return;
                         }
@@ -131,6 +130,7 @@ public class DiscordBot {
                                                 backendManager.setPlaying(guild, true);
                                                 backendManager.setMusic(guild, "one");
                                                 backendManager.setChannelId(guild, voiceChannel.getId());
+                                                consoleInfo("Restarting stream on " + guild.getName() + " with atr.one.");
                                                 if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                                     if (getBackendManager().getTag(guild)) {
                                                         guild.getSelfMember().modifyNickname("atomicradio » atr.one").queue();
@@ -142,6 +142,7 @@ public class DiscordBot {
                                                 backendManager.setPlaying(guild, true);
                                                 backendManager.setMusic(guild, "dance");
                                                 backendManager.setChannelId(guild, voiceChannel.getId());
+                                                consoleInfo("Restarting stream on " + guild.getName() + " with atr.dance.");
                                                 if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                                     if (getBackendManager().getTag(guild)) {
                                                         guild.getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
@@ -153,6 +154,7 @@ public class DiscordBot {
                                                 backendManager.setPlaying(guild, true);
                                                 backendManager.setMusic(guild, "trap");
                                                 backendManager.setChannelId(guild, voiceChannel.getId());
+                                                consoleInfo("Restarting stream on " + guild.getName() + " with atr.trap.");
                                                 if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                                     if (getBackendManager().getTag(guild)) {
                                                         guild.getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
