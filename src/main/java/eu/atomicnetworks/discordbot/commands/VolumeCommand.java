@@ -33,7 +33,7 @@ public class VolumeCommand {
             if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
                 embed.setTitle("Insufficient Rights");
                 embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
         }
@@ -41,23 +41,23 @@ public class VolumeCommand {
         VoiceChannel voiceChannel = event.getChannel().getJDA().getVoiceChannelById(this.discord.getBackendManager().getChannelId(event.getGuild()));
         if (!event.getMember().getVoiceState().inVoiceChannel()) {
             embed.setDescription("You have to be in the channel **" + voiceChannel.getName() + "** to change the volume.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         if (!event.getMember().getVoiceState().getChannel().getId().equals(voiceChannel.getId())) {
             embed.setDescription("You have to be in the channel **" + voiceChannel.getName() + "** to change the volume.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         if(!event.getGuild().getAudioManager().isConnected()) {
             embed.setDescription("The bot must be connected to the channel, you can do this with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "join**.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         if(args.length != 2) {
             embed.setDescription("You must enter a valid number between **1-100**!");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
@@ -65,7 +65,7 @@ public class VolumeCommand {
             
             if(this.discord.getBackendManager().getVolume(event.getGuild()) == Integer.valueOf(args[1])) {
                 embed.setDescription("This volume is already set.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
             
@@ -77,15 +77,14 @@ public class VolumeCommand {
 
                 this.discord.getBackendManager().setVolume(event.getGuild(), Integer.valueOf(args[1]));
                 embed.setDescription("You have successfully set the volume to **" + Integer.valueOf(args[1]) + "**.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
             } else {
                 embed.setDescription("You must enter a valid number between **1-100**!");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
             }
         } catch(NumberFormatException ex) {
             embed.setDescription("You must enter a valid number between **1-100**!");
-            event.getChannel().sendMessage(embed.build()).queue();
-            return;
+            this.discord.getBackendManager().sendMessage(event, embed.build());
         }
     }
     

@@ -22,6 +22,9 @@ import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 
 /**
@@ -217,6 +220,23 @@ public class BackendManager {
     
     public boolean checkForPermissions(Member member) {
         return PermissionUtil.checkPermission(member, Permission.ADMINISTRATOR) || member.getId().equals("425706045453893642") || member.getId().equals("223891083724193792") || member.getId().equals("394586910065950723");
+    }
+    
+    public void sendMessage(GuildMessageReceivedEvent event, MessageEmbed messageEmbed) {
+        try {
+            event.getChannel().sendMessage(messageEmbed).queue();
+        } catch(InsufficientPermissionException ex) {
+            try {
+                event.getChannel().sendMessage("I do not have permissions for **" + ex.getPermission().getName() + "**, please contact an administrator.").queue();
+            } catch (InsufficientPermissionException ex1) {
+                event.getAuthor().openPrivateChannel().queue((channel) -> {
+                    try {
+                        channel.sendMessage("I do not have permissions for **" + ex.getPermission().getName() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.").queue();
+                    } catch (InsufficientPermissionException ex2) {
+                    }
+                });
+            }
+        }
     }
 
     public List<String> getPlaying() {

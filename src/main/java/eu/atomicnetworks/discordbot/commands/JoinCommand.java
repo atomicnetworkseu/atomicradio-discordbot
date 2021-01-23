@@ -34,27 +34,27 @@ public class JoinCommand {
             if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
                 embed.setTitle("Insufficient Rights");
                 embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
         }
         
         if(this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
             embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         if(event.getGuild().getAudioManager().isConnected()) {
             embed.setDescription("**The bot is already in a channel**,\nbut a member with the permission **administrator** can disconnect the bot from the channel with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         VoiceChannel voiceChannel = event.getChannel().getJDA().getVoiceChannelById(this.discord.getBackendManager().getChannelId(event.getGuild()));
         if(voiceChannel == null) {
             embed.setDescription("The channel has been deleted or the bot no longer has permission to enter it.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
@@ -67,7 +67,7 @@ public class JoinCommand {
             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
         } catch (InsufficientPermissionException ex) {
             embed.setDescription("I do not have permission to join the voice channel, please contact an administrator.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
@@ -99,7 +99,7 @@ public class JoinCommand {
         }
         
         embed.setDescription("The bot has successfully joined the channel,\nthe last played stream will be loaded which you can change with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play**.");
-        event.getChannel().sendMessage(embed.build()).queue();
+        this.discord.getBackendManager().sendMessage(event, embed.build());
     } 
     
 }

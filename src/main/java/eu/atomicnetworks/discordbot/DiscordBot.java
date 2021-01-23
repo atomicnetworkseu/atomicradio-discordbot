@@ -184,7 +184,7 @@ public class DiscordBot {
                     embed.setColor(new Color(149, 79, 180));
                     embed.setDescription(":bird: Hi, I am " + getJda().getSelfUser().getAsMention() + ", your new favourite musicbot!\n\nYou can find out more about me with **"
                             + getBackendManager().getPrefix(event.getGuild()) + "help**,\non **" + event.getGuild().getName() + "** you can control me with the prefix `" + getBackendManager().getPrefix(event.getGuild()) + "` ");
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    backendManager.sendMessage(event, embed.build());
                     return;
                 }
 

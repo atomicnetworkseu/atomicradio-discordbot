@@ -32,7 +32,7 @@ public class BassCommand {
         if (!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setTitle("Insufficient Rights");
             embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
 
@@ -40,7 +40,7 @@ public class BassCommand {
             embed.setDescription(":cloud_tornado: l **Bass**\n\n"
                     + "If you love bass as much as we do, you've come to the right place.\n"
                     + "You can increase it with the command **.bass <level>** and reset it with **.bass reset**.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
 
@@ -52,7 +52,7 @@ public class BassCommand {
                     audioHandler.removeFilter();
                 }
                 embed.setDescription("**Successful**, the bass boost has been deactivated.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
             
@@ -67,7 +67,7 @@ public class BassCommand {
                             }
                             this.discord.getBackendManager().setBassLevel(event.getGuild(), 0);
                             embed.setDescription("**Successful**, the bass boost has been deactivated.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             break;
                         case 1:
                             if (audioHandler != null) {
@@ -75,7 +75,7 @@ public class BassCommand {
                             }
                             this.discord.getBackendManager().setBassLevel(event.getGuild(), 1);
                             embed.setDescription("**Successful**, the level is now **1**.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             break;
                         case 2:
                             if (audioHandler != null) {
@@ -83,7 +83,7 @@ public class BassCommand {
                             }
                             this.discord.getBackendManager().setBassLevel(event.getGuild(), 2);
                             embed.setDescription("**Successful**, the level is now **2**.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             break;
                         case 3:
                             if (audioHandler != null) {
@@ -91,7 +91,7 @@ public class BassCommand {
                             }
                             this.discord.getBackendManager().setBassLevel(event.getGuild(), 3);
                             embed.setDescription("**Successful**, the level is now **3**.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             break;
                         case 4:
                             if (audioHandler != null) {
@@ -99,7 +99,7 @@ public class BassCommand {
                             }
                             this.discord.getBackendManager().setBassLevel(event.getGuild(), 4);
                             embed.setDescription("**Successful**, the level is now **4**.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             break;
                         case 5:
                             if (audioHandler != null) {
@@ -107,16 +107,16 @@ public class BassCommand {
                             }
                             this.discord.getBackendManager().setBassLevel(event.getGuild(), 5);
                             embed.setDescription("**Successful**, the level is now **5**.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             break;
                     }
                 } else {
                     embed.setDescription("You must enter a valid number between **1-5**.");
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
                 }
             } catch (NumberFormatException ex) {
                 embed.setDescription("You must enter a valid number between **1-5**.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
             }
         }
     }

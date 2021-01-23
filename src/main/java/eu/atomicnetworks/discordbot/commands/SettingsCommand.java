@@ -30,7 +30,7 @@ public class SettingsCommand {
         if (!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setTitle("Insufficient Rights");
             embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
 
@@ -40,7 +40,7 @@ public class SettingsCommand {
                     + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • " + (this.discord.getBackendManager().getTag(event.getGuild()) ? "The bot will not change its name if the station is changed." : "The bot changes its name again when the station is changed.") + "\n**"
                     + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings rights** • " + (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild()) ? "Enables the ability for users to use commands to control the music." : "Disables the ability for users to use commands to control the music.") + "\n**"
                     + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Resets all settings made for this server.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
 
@@ -50,43 +50,43 @@ public class SettingsCommand {
                     if (args[2].length() < 6) {
                         if (this.discord.getBackendManager().getPrefix(event.getGuild()).equalsIgnoreCase(args[2])) {
                             embed.setDescription("That is the same prefix.");
-                            event.getChannel().sendMessage(embed.build()).queue();
+                            this.discord.getBackendManager().sendMessage(event, embed.build());
                             return;
                         }
                         this.discord.getBackendManager().setPrefix(event.getGuild(), args[2].toLowerCase());
                         embed.setDescription("**Successful**, the new prefix of the server is `" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "`.");
-                        event.getChannel().sendMessage(embed.build()).queue();
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     } else {
                         embed.setDescription("The word is too long. You can use 5 letters.");
-                        event.getChannel().sendMessage(embed.build()).queue();
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     }
                     return;
                 }
                 embed.setDescription("With **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings prefix <prefix>** you can set which prefix the bot should react to in the future.\n\nCurrent prefix: `" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "`");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 break;
             case "nick":
                 if (this.discord.getBackendManager().getTag(event.getGuild())) {
                     this.discord.getBackendManager().setTag(event.getGuild(), false);
                     embed.setDescription("**Successful**, the bot now no longer changes its name when the station is changed.");
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
                     return;
                 } else {
                     this.discord.getBackendManager().setTag(event.getGuild(), true);
                     embed.setDescription("**Successful**, the bot will change its name again when the station is changed.");
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
                     return;
                 }
             case "rights":
                 if (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild())) {
                     this.discord.getBackendManager().setMusicCommands(event.getGuild(), false);
                     embed.setDescription("**Successful**, the commands `.play`, `.vol` & `.join` can now be executed by all users again.");
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
                     return;
                 } else {
                     this.discord.getBackendManager().setMusicCommands(event.getGuild(), true);
                     embed.setDescription("**Successful**, the commands `.play`, `.vol` & `.join` can now only be used by users with the administrator authorisation.");
-                    event.getChannel().sendMessage(embed.build()).queue();
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
                     return;
                 }
             case "reset":
@@ -95,7 +95,7 @@ public class SettingsCommand {
                 this.discord.getBackendManager().setTag(event.getGuild(), true);
                 this.discord.getBackendManager().setMusicCommands(event.getGuild(), false);
                 embed.setDescription("**Successful**, the name of the bot changes again, the music commands can be executed by everyone again and the tag is `.` again.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 break;
             default:
                 embed.setDescription("✨ l **Settings**\n** **\n**"
@@ -103,7 +103,7 @@ public class SettingsCommand {
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings nick** • " + (this.discord.getBackendManager().getTag(event.getGuild()) ? "The bot will not change its name if the station is changed." : "The bot changes its name again when the station is changed.") + "\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings rights** • " + (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild()) ? "Enables the ability for users to use commands to control the music." : "Disables the ability for users to use commands to control the music.") + "\n**"
                         + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings reset** • Resets all settings made for this server.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 break;
         }
     }

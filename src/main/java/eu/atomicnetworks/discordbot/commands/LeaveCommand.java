@@ -31,7 +31,7 @@ public class LeaveCommand {
         if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setTitle("Insufficient Rights");
             embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
@@ -43,7 +43,7 @@ public class LeaveCommand {
         event.getGuild().getAudioManager().closeAudioConnection();
         
         embed.setDescription("The bot has successfully left the voice channel.");
-        event.getChannel().sendMessage(embed.build()).queue();
+        this.discord.getBackendManager().sendMessage(event, embed.build());
     } 
     
 }

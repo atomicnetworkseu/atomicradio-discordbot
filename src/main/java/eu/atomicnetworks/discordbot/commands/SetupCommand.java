@@ -30,25 +30,25 @@ public class SetupCommand {
         if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setTitle("Insufficient Rights");
             embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         if(!event.getMember().getVoiceState().inVoiceChannel()) {
             embed.setDescription("You must join a channel in which the bot can also join to create a link.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         if(this.discord.getBackendManager().getChannelId(event.getGuild()).equals(event.getMember().getVoiceState().getChannel().getId())) {
             embed.setDescription("The channel is already the standard channel.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         this.discord.getBackendManager().setChannelId(event.getGuild(), event.getMember().getVoiceState().getChannel().getId());
         embed.setDescription("From now on the bot will automatically connect to this voice channel **" + event.getMember().getVoiceState().getChannel().getName() + "** when a member writes **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "join** as well when our Discordbots have to be restarted due to an update or a failure.");
-        event.getChannel().sendMessage(embed.build()).queue();
+        this.discord.getBackendManager().sendMessage(event, embed.build());
     }
     
 }

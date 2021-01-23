@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 
 /**
  *
@@ -34,40 +35,46 @@ public class PlayCommand {
             if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
                 embed.setTitle("Insufficient Rights");
                 embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
         }
         
         if (this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
             embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         VoiceChannel voiceChannel = event.getChannel().getJDA().getVoiceChannelById(this.discord.getBackendManager().getChannelId(event.getGuild()));
         if(voiceChannel == null) {
             embed.setDescription("The channel has been deleted or the bot no longer has permission to enter it.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         if (!event.getMember().getVoiceState().inVoiceChannel()) {
             embed.setDescription("You have to be in the channel **" + voiceChannel.getName() + "** to change the station.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         if (!event.getMember().getVoiceState().getChannel().getId().equals(voiceChannel.getId())) {
             embed.setDescription("You have to be in the channel **" + voiceChannel.getName() + "** to change the station.");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
         if(!event.getGuild().getAudioManager().isConnected()) {
-            event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+            try {
+                event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+            } catch (InsufficientPermissionException ex) {
+                embed.setDescription("I do not have permission to join the voice channel, please contact an administrator.");
+                this.discord.getBackendManager().sendMessage(event, embed.build());
+                return;
+            }
         }
 
         if (args.length != 2) {
             embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
-            event.getChannel().sendMessage(embed.build()).queue();
+            this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
 
@@ -76,7 +83,7 @@ public class PlayCommand {
                 if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("one")) {
                     if (this.discord.getBackendManager().getPlaying(event.getGuild())) {
                         embed.setDescription("The station is already being played.");
-                        event.getChannel().sendMessage(embed.build()).queue();
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                         return;
                     }
                 }
@@ -91,7 +98,7 @@ public class PlayCommand {
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
 
                 embed.setDescription("Now **atr.one** is played.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
 
                 if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                     if(this.discord.getBackendManager().getTag(event.getGuild())) {
@@ -103,7 +110,7 @@ public class PlayCommand {
                 if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("dance")) {
                     if (this.discord.getBackendManager().getPlaying(event.getGuild())) {
                         embed.setDescription("The station is already being played.");
-                        event.getChannel().sendMessage(embed.build()).queue();
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                         return;
                     }
                 }
@@ -118,7 +125,7 @@ public class PlayCommand {
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
 
                 embed.setDescription("Now **atr.dance** is played.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
 
                 if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                     if(this.discord.getBackendManager().getTag(event.getGuild())) {
@@ -130,7 +137,7 @@ public class PlayCommand {
                 if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("trap")) {
                     if (this.discord.getBackendManager().getPlaying(event.getGuild())) {
                         embed.setDescription("The station is already being played.");
-                        event.getChannel().sendMessage(embed.build()).queue();
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                         return;
                     }
                 }
@@ -145,7 +152,7 @@ public class PlayCommand {
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
 
                 embed.setDescription("Now **atr.trap** is played.");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
 
                 if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                     if(this.discord.getBackendManager().getTag(event.getGuild())) {
@@ -155,7 +162,7 @@ public class PlayCommand {
                 break;
             default:
                 embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
-                event.getChannel().sendMessage(embed.build()).queue();
+                this.discord.getBackendManager().sendMessage(event, embed.build());
                 break;
         }
 

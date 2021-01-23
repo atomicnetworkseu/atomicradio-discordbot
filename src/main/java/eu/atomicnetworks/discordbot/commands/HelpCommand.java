@@ -62,7 +62,7 @@ public class HelpCommand {
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));
         }
         embed.setFooter("If you have a suggestion for improvement,\ncriticism or something similar, just contact us!" , "https://cdn.atomicnetworks.eu/discord/transparent.png");
-        event.getChannel().sendMessage(embed.build()).queue();
+        this.discord.getBackendManager().sendMessage(event, embed.build());
     } 
     
 }

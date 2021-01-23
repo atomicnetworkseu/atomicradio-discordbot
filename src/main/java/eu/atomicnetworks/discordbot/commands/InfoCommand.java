@@ -48,7 +48,7 @@ public class InfoCommand {
         embed.addField("Connection", MessageFormat.format("Uptime: {0}\n"
                 + "Ping: {1}ms\n"
                 + "Ram: {2}%\n\n** **", getOnlineTime(), getPing(), getMemory()), true);
-        event.getChannel().sendMessage(embed.build()).queue();
+        this.discord.getBackendManager().sendMessage(event, embed.build());
     } 
     
     private String getChannel(Guild guild) {
