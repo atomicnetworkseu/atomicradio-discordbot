@@ -122,7 +122,7 @@ public class SongCommand {
 
             }
         } catch (InsufficientPermissionException ex) {
-            embed.setDescription("I do not have permission to attach files, please contact an administrator.");
+            embed.setDescription("I do not have permission to **attach files**, please contact an administrator.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
         }
     }

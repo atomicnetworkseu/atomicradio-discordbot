@@ -227,11 +227,11 @@ public class BackendManager {
             event.getChannel().sendMessage(messageEmbed).queue();
         } catch(InsufficientPermissionException ex) {
             try {
-                event.getChannel().sendMessage("I do not have permissions for **" + ex.getPermission().getName() + "**, please contact an administrator.").queue();
+                event.getChannel().sendMessage("I do not have permissions for **" + ex.getPermission().getName().toLowerCase() + "**, please contact an administrator.").queue();
             } catch (InsufficientPermissionException ex1) {
                 event.getAuthor().openPrivateChannel().queue((channel) -> {
                     try {
-                        channel.sendMessage("I do not have permissions for **" + ex.getPermission().getName() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.").queue();
+                        embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.").queue();
                     } catch (InsufficientPermissionException ex2) {
                     }
                 });

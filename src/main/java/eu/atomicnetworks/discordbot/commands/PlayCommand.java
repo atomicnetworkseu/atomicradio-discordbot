@@ -66,7 +66,7 @@ public class PlayCommand {
             try {
                 event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
             } catch (InsufficientPermissionException ex) {
-                embed.setDescription("I do not have permission to join the voice channel, please contact an administrator.");
+                embed.setDescription("I do not have permission to **join** the voice channel, please contact an administrator.");
                 this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
