@@ -367,7 +367,7 @@ public class DiscordBot {
                         jda.getPresence().setActivity(Activity.listening(".help"));
                         break;
                     case 7:
-                        jda.getPresence().setActivity(Activity.listening("to the difference 🔊"));
+                        jda.getPresence().setActivity(Activity.listening("the difference 🔊"));
                         break;
                     case 8:
                         jda.getPresence().setActivity(Activity.playing("on " + this.getJda().getGuilds().size() + " guilds"));
