@@ -302,10 +302,10 @@ public class DiscordBot {
             this.jda = builder.build();
 
             Timer timer = new Timer(15000, (ActionEvent e) -> {
-                double rpfinal = (Math.floor(Math.random() * 7));
+                double rpfinal = (Math.floor(Math.random() * 9));
                 switch ((int) rpfinal) {
                     case 1:
-                        jda.getPresence().setActivity(Activity.streaming("🎶 atomicradio.eu", "https://www.twitch.tv/atomic"));
+                        jda.getPresence().setActivity(Activity.streaming("atomicradio.eu 🎶", "https://www.twitch.tv/atomic"));
                         break;
                     case 2:
                         jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
@@ -313,16 +313,22 @@ public class DiscordBot {
                     case 3:
                         jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
                         break;
-                    case 4:
+					case 4:
+                        jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelDance().getSong().getArtist() + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
+                        break;
+					case 5:
+                        jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelTrap().getSong().getArtist() + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
+                        break;			
+                    case 6:
                         jda.getPresence().setActivity(Activity.listening(".help"));
                         break;
-                    case 5:
-                        jda.getPresence().setActivity(Activity.playing("for the best community ⚡"));
+                    case 7:
+                        jda.getPresence().setActivity(Activity.listening("to the difference 🔊"));
                         break;
-                    case 6:
+                    case 8:
                         jda.getPresence().setActivity(Activity.playing("on " + this.getJda().getGuilds().size() + " guilds"));
                         break;
-                    case 7:
+                    case 9:
                         jda.getPresence().setActivity(Activity.playing("for " + this.backendManager.getUserCount() + " users"));
                         break;
                 }
