@@ -19,6 +19,7 @@ import eu.atomicnetworks.discordbot.managers.BackendManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
 import eu.atomicnetworks.discordbot.managers.MongoManager;
+import eu.atomicnetworks.discordbot.webapi.ApiServer;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -62,6 +63,7 @@ public class DiscordBot {
     private BackendManager backendManager;
 
     private ServerListHandler serverListHandler;
+    private ApiServer apiServer;
 
     private HelpCommand helpCommand;
     private InfoCommand infoCommand;
@@ -92,6 +94,8 @@ public class DiscordBot {
         this.mongoManager = new MongoManager(this);
         this.guildManager = new GuildManager(this);
         this.backendManager = new BackendManager(this);
+        
+        this.apiServer = new ApiServer(this, 9091);
 
         this.helpCommand = new HelpCommand(this);
         this.infoCommand = new InfoCommand(this);
@@ -121,9 +125,12 @@ public class DiscordBot {
                             try {
                                 guild.getAudioManager().openAudioConnection(voiceChannel);
                                 
-                                if(voiceChannel.getMembers().size() >= 2) {
+                                voiceChannel.getMembers().stream().forEach((t) -> {
+                                    backendManager.addListener(guild, t, voiceChannel.getId());
+                                });
+                                
+                                if(voiceChannel.getMembers().size() >= 1) {
                                     if (guild.getAudioManager().getSendingHandler() == null) {
-                                        guild.getAudioManager().openAudioConnection(voiceChannel);
                                         switch (backendManager.getMusic(guild)) {
                                             case "one":
                                                 backendManager.startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
@@ -225,6 +232,9 @@ public class DiscordBot {
                         if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
                             return;
                         }
+                        
+                        backendManager.addListener(event.getGuild(), event.getMember(), event.getChannelJoined().getId());
+                        
                         if (event.getGuild().getAudioManager().getSendingHandler() == null) {
                             VoiceChannel voiceChannel = event.getChannelJoined();
                             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
@@ -272,6 +282,7 @@ public class DiscordBot {
             public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
                 if (backendManager.getPlaying(event.getGuild())) {
                     if (event.getChannelLeft().getId().equals(backendManager.getChannelId(event.getGuild()))) {
+                        backendManager.removeListener(event.getGuild(), event.getMember());
                         if (event.getChannelLeft().getMembers().size() == 1) {
                             if (event.getGuild().getAudioManager().getSendingHandler() != null) {
                                 AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
@@ -290,6 +301,7 @@ public class DiscordBot {
                         if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
                             return;
                         }
+                        backendManager.addListener(event.getGuild(), event.getMember(), event.getChannelJoined().getId());
                         if (event.getGuild().getAudioManager().getSendingHandler() == null) {
                             VoiceChannel voiceChannel = event.getChannelJoined();
                             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
@@ -330,6 +342,7 @@ public class DiscordBot {
                             }
                         }
                     } else if (event.getChannelLeft().getId().equals(backendManager.getChannelId(event.getGuild()))) {
+                        backendManager.removeListener(event.getGuild(), event.getMember());
                         if (event.getChannelLeft().getMembers().size() == 1) {
                             if (event.getGuild().getAudioManager().getSendingHandler() != null) {
                                 AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
@@ -380,28 +393,6 @@ public class DiscordBot {
             timer.setInitialDelay(0);
             timer.setRepeats(true);
             timer.start();
-            
-            /*Timer reconnectTimer = new Timer(1, (ActionEvent e) -> {
-            for (Guild guild : this.jda.getGuilds()) {
-            if (backendManager.getPlaying(guild)) {
-            if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
-            return;
-            }
-            VoiceChannel voiceChannel = guild.getVoiceChannelById(backendManager.getChannelId(guild));
-            if (voiceChannel != null) {
-            try {
-            guild.getAudioManager().openAudioConnection(voiceChannel);
-            } catch (InsufficientPermissionException ex) {
-            consoleInfo("Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
-            }
-            consoleInfo("Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
-            }
-            }
-            }
-            });
-            reconnectTimer.setInitialDelay(10000);
-            reconnectTimer.setRepeats(false);
-            reconnectTimer.start();*/
             
             this.serverListHandler = new ServerListHandler(this);
         } catch (LoginException ex) {

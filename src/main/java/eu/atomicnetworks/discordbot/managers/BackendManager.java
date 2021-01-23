@@ -14,8 +14,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import eu.atomicnetworks.discordbot.DiscordBot;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
 import eu.atomicnetworks.discordbot.object.GuildData;
+import eu.atomicnetworks.discordbot.object.Listeners;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -40,10 +42,12 @@ public class BackendManager {
     
     private final DiscordBot discord;
     private LoadingCache<String, GuildData> guildCache;
+    private HashMap<String, Listeners> listeners;
     private List<String> playing;
 
     public BackendManager(DiscordBot discord) {
         this.discord = discord;
+        this.listeners = new HashMap<>();
         this.playing = new ArrayList<>();
         initCache();
     }
@@ -246,6 +250,35 @@ public class BackendManager {
 
     public List<String> getPlaying() {
         return playing;
+    }
+
+    public HashMap<String, Listeners> getListeners() {
+        return listeners;
+    }
+    
+    public void addListener(Guild guild, Member member, String channelId) {
+        Listeners.Listener listener = new Listeners.Listener();
+        listener.setUsername(member.getUser().getName());
+        listener.setId(member.getUser().getId());
+        listener.setAvatar(member.getUser().getAvatarUrl());
+        listener.setChannelId(channelId);
+        if(this.listeners.containsKey(guild.getId())) {
+            this.listeners.get(guild.getId()).getListener().put(member.getUser().getId(), listener);
+        } else {
+            Listeners serverListeners = new Listeners();
+            serverListeners.setGuildId(guild.getId());
+            serverListeners.setListener(new HashMap<>());
+            serverListeners.getListener().put(member.getUser().getId(), listener);
+            this.listeners.put(guild.getId(), serverListeners);
+        }
+        this.listeners.get(guild.getId()).setListenerCount(this.listeners.get(guild.getId()).getListener().size());
+    }
+    
+    public void removeListener(Guild guild, Member member) {
+        if(this.listeners.containsKey(guild.getId())) {
+            this.listeners.get(guild.getId()).getListener().remove(member.getUser().getId());
+        }
+        this.listeners.get(guild.getId()).setListenerCount(this.listeners.get(guild.getId()).getListener().size());
     }
     
 }
