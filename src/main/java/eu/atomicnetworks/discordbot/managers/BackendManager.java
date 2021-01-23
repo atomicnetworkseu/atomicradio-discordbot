@@ -14,11 +14,13 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import eu.atomicnetworks.discordbot.DiscordBot;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
 import eu.atomicnetworks.discordbot.object.GuildData;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -231,7 +233,10 @@ public class BackendManager {
             } catch (InsufficientPermissionException ex1) {
                 event.getAuthor().openPrivateChannel().queue((channel) -> {
                     try {
-                        embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.").queue();
+                        EmbedBuilder embed = new EmbedBuilder();
+                        embed.setColor(new Color(149, 79, 180));
+                        embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.");
+                        channel.sendMessage(embed.build()).queue();
                     } catch (InsufficientPermissionException ex2) {
                     }
                 });
