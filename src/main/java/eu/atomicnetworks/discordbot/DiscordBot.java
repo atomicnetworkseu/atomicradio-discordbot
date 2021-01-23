@@ -121,6 +121,48 @@ public class DiscordBot {
                         if (voiceChannel != null) {
                             try {
                                 guild.getAudioManager().openAudioConnection(voiceChannel);
+                                
+                                if(voiceChannel.getMembers().size() >= 2) {
+                                    if (guild.getAudioManager().getSendingHandler() == null) {
+                                        guild.getAudioManager().openAudioConnection(voiceChannel);
+                                        switch (backendManager.getMusic(guild)) {
+                                            case "one":
+                                                backendManager.startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
+                                                backendManager.setPlaying(guild, true);
+                                                backendManager.setMusic(guild, "one");
+                                                backendManager.setChannelId(guild, voiceChannel.getId());
+                                                if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
+                                                    if (getBackendManager().getTag(guild)) {
+                                                        guild.getSelfMember().modifyNickname("atomicradio » atr.one").queue();
+                                                    }
+                                                }
+                                                break;
+                                            case "dance":
+                                                backendManager.startStream(guild, "https://listen.atomicradio.eu/dance/highquality.mp3");
+                                                backendManager.setPlaying(guild, true);
+                                                backendManager.setMusic(guild, "dance");
+                                                backendManager.setChannelId(guild, voiceChannel.getId());
+                                                if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
+                                                    if (getBackendManager().getTag(guild)) {
+                                                        guild.getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                                                    }
+                                                }
+                                                break;
+                                            case "trap":
+                                                backendManager.startStream(guild, "https://listen.atomicradio.eu/trap/highquality.mp3");
+                                                backendManager.setPlaying(guild, true);
+                                                backendManager.setMusic(guild, "trap");
+                                                backendManager.setChannelId(guild, voiceChannel.getId());
+                                                if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
+                                                    if (getBackendManager().getTag(guild)) {
+                                                        guild.getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                                                    }
+                                                }
+                                                break;
+                                        }
+                                    }
+                                }
+                                
                             } catch (InsufficientPermissionException ex) {
                                 consoleInfo("Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
                             }
@@ -313,12 +355,12 @@ public class DiscordBot {
                     case 3:
                         jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
                         break;
-					case 4:
+                    case 4:
                         jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelDance().getSong().getArtist() + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
                         break;
-					case 5:
+                    case 5:
                         jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelTrap().getSong().getArtist() + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
-                        break;			
+                        break;
                     case 6:
                         jda.getPresence().setActivity(Activity.listening(".help"));
                         break;
