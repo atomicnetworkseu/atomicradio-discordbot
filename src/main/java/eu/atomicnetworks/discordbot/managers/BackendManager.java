@@ -277,12 +277,11 @@ public class BackendManager {
     public void removeListener(Guild guild, Member member) {
         if(this.listeners.containsKey(guild.getId())) {
             this.listeners.get(guild.getId()).getListener().remove(member.getUser().getId());
+            this.listeners.get(guild.getId()).setListenerCount(this.listeners.get(guild.getId()).getListener().size());
+            if(this.listeners.get(guild.getId()).getListener().isEmpty()) {
+                this.listeners.remove(guild.getId());
+            }
         }
-        if(this.listeners.get(guild.getId()).getListener().isEmpty()) {
-            this.listeners.remove(guild.getId());
-            return;
-        }
-        this.listeners.get(guild.getId()).setListenerCount(this.listeners.get(guild.getId()).getListener().size());
     }
     
 }
