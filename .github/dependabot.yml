@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "VocalZero"
+      - "InstabilSpielt"
+    commit-message:
+      prefix: "⚠️"
+      prefix-development: "⚠️"
+    labels:
+      - "enhancement"
+    open-pull-requests-limit: 10
