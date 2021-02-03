@@ -44,7 +44,7 @@ public class InfoCommand {
         embed.addField("Statistics", MessageFormat.format("Guilds: {0}\n"
                 + "Members: {1}\n"
                 + "Playing: {2}\n"
-                + "\n** **", event.getJDA().getGuilds().size(), this.discord.getBackendManager().getUserCount(), String.valueOf(this.discord.getBackendManager().getConnectionCount())), true);
+                + "\n** **", this.discord.getBackendManager().getGuildCount(), this.discord.getBackendManager().getUserCount(), String.valueOf(this.discord.getBackendManager().getConnectionCount())), true);
         embed.addField("Connection", MessageFormat.format("Uptime: {0}\n"
                 + "Ping: {1}ms\n"
                 + "Ram: {2}%\n\n** **", getOnlineTime(), getPing(), getMemory()), true);

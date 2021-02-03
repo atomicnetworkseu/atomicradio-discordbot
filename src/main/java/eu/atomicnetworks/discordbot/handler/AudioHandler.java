@@ -49,26 +49,26 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
 
     @Override
     public void onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track) {
-        this.discord.consoleInfo("Stream started playing on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        this.discord.consoleInfo("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream started playing on guild " + guild.getName() + ". (" + guild.getId() + ")");
         this.discord.getBackendManager().getPlaying().add(guild.getId());
-        this.discord.consoleInfo(MessageFormat.format("Playing now on {0} guilds.", this.discord.getBackendManager().getPlaying().size()));
+        this.discord.consoleInfo(MessageFormat.format("[SHARD {0}] Playing now on {0} guilds.", guild.getJDA().getShardInfo().getShardId(), this.discord.getBackendManager().getPlaying().size()));
     }
 
     @Override
     public void onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        this.discord.consoleInfo("Stream reached end on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        this.discord.consoleInfo("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream reached end on guild " + guild.getName() + ". (" + guild.getId() + ")");
         this.discord.getBackendManager().getPlaying().remove(guild.getId());
-        this.discord.consoleInfo(MessageFormat.format("Playing now on {0} guilds.", this.discord.getBackendManager().getPlaying().size()));
+        this.discord.consoleInfo(MessageFormat.format("[SHARD {0}] Playing now on {1} guilds.", guild.getJDA().getShardInfo().getShardId(), this.discord.getBackendManager().getPlaying().size()));
     }
 
     @Override
     public void onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, FriendlyException exception) {
-        this.discord.consoleError("Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
     }
 
     @Override
     public void onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, long thresholdMs) {
-        System.out.println("Stream stuck! " + thresholdMs + "ms.");
+        System.out.println("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream stuck! " + thresholdMs + "ms.");
     }
 
     @Override

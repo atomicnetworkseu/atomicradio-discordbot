@@ -11,6 +11,7 @@ import eu.atomicnetworks.discordbot.commands.PlayCommand;
 import eu.atomicnetworks.discordbot.commands.ReportCommand;
 import eu.atomicnetworks.discordbot.commands.SettingsCommand;
 import eu.atomicnetworks.discordbot.commands.SetupCommand;
+import eu.atomicnetworks.discordbot.commands.ShardCommand;
 import eu.atomicnetworks.discordbot.commands.SongCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
@@ -42,6 +43,11 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 /**
  *
@@ -52,8 +58,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
  */
 public class DiscordBot {
 
+    private ShardManager shardManager;
     private Gson gson;
-    private JDA jda;
     private AtomicClient atomicClient;
     private long startTimeMillis;
 
@@ -76,6 +82,7 @@ public class DiscordBot {
     private ReportCommand reportCommand;
     private SongCommand songCommand;
     private BassCommand bassCommand;
+    private ShardCommand shardCommand;
 
     public static void main(String[] args) {
         new DiscordBot().loadBanner();
@@ -108,8 +115,15 @@ public class DiscordBot {
         this.reportCommand = new ReportCommand(this);
         this.songCommand = new SongCommand(this);
         this.bassCommand = new BassCommand(this);
+        this.shardCommand = new ShardCommand(this);
 
-        JDABuilder builder = JDABuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.54Yw6XMf12AUUGg5cpGEu9XpckY");
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
+        builder.setChunkingFilter(ChunkingFilter.NONE);
+        builder.enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
+        builder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE);
+        builder.setBulkDeleteSplittingEnabled(true);
+        builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER));
+        builder.setLargeThreshold(50);
         builder.setActivity(Activity.listening("atomicradio.eu"));
         builder.addEventListeners(new ListenerAdapter() {
             
@@ -137,7 +151,7 @@ public class DiscordBot {
                                                 backendManager.setPlaying(guild, true);
                                                 backendManager.setMusic(guild, "one");
                                                 backendManager.setChannelId(guild, voiceChannel.getId());
-                                                consoleInfo("Restarting stream on " + guild.getName() + " with atr.one.");
+                                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.one.");
                                                 if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                                     if (getBackendManager().getTag(guild)) {
                                                         guild.getSelfMember().modifyNickname("atomicradio » atr.one").queue();
@@ -149,7 +163,7 @@ public class DiscordBot {
                                                 backendManager.setPlaying(guild, true);
                                                 backendManager.setMusic(guild, "dance");
                                                 backendManager.setChannelId(guild, voiceChannel.getId());
-                                                consoleInfo("Restarting stream on " + guild.getName() + " with atr.dance.");
+                                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.dance.");
                                                 if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                                     if (getBackendManager().getTag(guild)) {
                                                         guild.getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
@@ -161,7 +175,7 @@ public class DiscordBot {
                                                 backendManager.setPlaying(guild, true);
                                                 backendManager.setMusic(guild, "trap");
                                                 backendManager.setChannelId(guild, voiceChannel.getId());
-                                                consoleInfo("Restarting stream on " + guild.getName() + " with atr.trap.");
+                                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.trap.");
                                                 if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                                     if (getBackendManager().getTag(guild)) {
                                                         guild.getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
@@ -173,9 +187,9 @@ public class DiscordBot {
                                 }
                                 
                             } catch (InsufficientPermissionException ex) {
-                                consoleInfo("Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
+                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
                             }
-                            consoleInfo("Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
+                            consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
                         }
                     }
                 }
@@ -189,7 +203,7 @@ public class DiscordBot {
                 if (message.getMentionedUsers().stream().filter(t -> t.getId().equals(event.getGuild().getSelfMember().getId())).findFirst().orElse(null) != null) {
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(149, 79, 180));
-                    embed.setDescription(":bird: Hi, I am " + getJda().getSelfUser().getAsMention() + ", your new favourite musicbot!\n\nYou can find out more about me with **"
+                    embed.setDescription(":bird: Hi, I am " + event.getJDA().getSelfUser().getAsMention() + ", your new favourite musicbot!\n\nYou can find out more about me with **"
                             + getBackendManager().getPrefix(event.getGuild()) + "help**,\non **" + event.getGuild().getName() + "** you can control me with the prefix `" + getBackendManager().getPrefix(event.getGuild()) + "` ");
                     backendManager.sendMessage(event, embed.build());
                     return;
@@ -198,7 +212,7 @@ public class DiscordBot {
                 if (!message.getContentRaw().toLowerCase().startsWith(prefix)) {
                     return;
                 }
-                consoleInfo(MessageFormat.format("{0} ({1}) ran command {2} in {3} (#{4})", event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
+                consoleInfo(MessageFormat.format("[SHARD {0}] {1} ({2}) ran command {3} in {4} (#{5})", event.getJDA().getShardInfo().getShardId(), event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
 
                 if (message.getContentRaw().toLowerCase().startsWith(prefix + "help")) {
                     helpCommand.execute(event);
@@ -222,6 +236,8 @@ public class DiscordBot {
                     songCommand.execute(event);
                 } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "bass")) {
                     bassCommand.execute(event);
+                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "shard")) {
+                    shardCommand.execute(event);
                 }
             }
 
@@ -356,39 +372,43 @@ public class DiscordBot {
 
         });
         try {
-            this.jda = builder.build();
-
+            builder.setShardsTotal(6);
+            builder.setShards(1, 5);
+            this.shardManager = builder.build();
+            
             Timer timer = new Timer(15000, (ActionEvent e) -> {
-                double rpfinal = (Math.floor(Math.random() * 9));
-                switch ((int) rpfinal) {
-                    case 1:
-                        jda.getPresence().setActivity(Activity.streaming("atomicradio.eu 🎶", "https://www.twitch.tv/atomic"));
-                        break;
-                    case 2:
-                        jda.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
-                        break;
-                    case 3:
-                        jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
-                        break;
-                    case 4:
-                        jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelDance().getSong().getArtist() + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
-                        break;
-                    case 5:
-                        jda.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelTrap().getSong().getArtist() + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
-                        break;
-                    case 6:
-                        jda.getPresence().setActivity(Activity.listening(".help"));
-                        break;
-                    case 7:
-                        jda.getPresence().setActivity(Activity.listening("the difference 🔊"));
-                        break;
-                    case 8:
-                        jda.getPresence().setActivity(Activity.playing("on " + this.getJda().getGuilds().size() + " guilds"));
-                        break;
-                    case 9:
-                        jda.getPresence().setActivity(Activity.playing("for " + this.backendManager.getUserCount() + " users"));
-                        break;
-                }
+                this.shardManager.getShards().stream().forEach((shard) -> {
+                    double rpfinal = (Math.floor(Math.random() * 9));
+                    switch ((int) rpfinal) {
+                        case 1:
+                            shard.getPresence().setActivity(Activity.streaming("atomicradio.eu 🎶", "https://www.twitch.tv/atomic"));
+                            break;
+                        case 2:
+                            shard.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
+                            break;
+                        case 3:
+                            shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
+                            break;
+                        case 4:
+                            shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelDance().getSong().getArtist() + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
+                            break;
+                        case 5:
+                            shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelTrap().getSong().getArtist() + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
+                            break;
+                        case 6:
+                            shard.getPresence().setActivity(Activity.listening(".help"));
+                            break;
+                        case 7:
+                            shard.getPresence().setActivity(Activity.listening("the difference 🔊"));
+                            break;
+                        case 8:
+                            shard.getPresence().setActivity(Activity.playing("on " + this.backendManager.getGuildCount() + " guilds"));
+                            break;
+                        case 9:
+                            shard.getPresence().setActivity(Activity.playing("for " + this.backendManager.getUserCount() + " users"));
+                            break;
+                    }
+                });
             });
             timer.setInitialDelay(0);
             timer.setRepeats(true);
@@ -418,10 +438,6 @@ public class DiscordBot {
         return atomicClient;
     }
 
-    public JDA getJda() {
-        return jda;
-    }
-
     public long getStartTimeMillis() {
         return startTimeMillis;
     }
@@ -448,6 +464,10 @@ public class DiscordBot {
 
     public BackendManager getBackendManager() {
         return backendManager;
+    }
+
+    public ShardManager getShardManager() {
+        return shardManager;
     }
 
 }

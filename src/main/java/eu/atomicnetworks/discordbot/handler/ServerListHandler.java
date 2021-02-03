@@ -34,19 +34,19 @@ public class ServerListHandler {
             sendTopGGUpdate();
             sendDiscordBotList();
         });
-        timer.setInitialDelay(60000);
+        timer.setInitialDelay(300000);
         timer.setRepeats(true);
         timer.start();
     }
 
     private void sendTopGGUpdate() {
-        this.discordBotListAPI.setStats(this.discord.getJda().getGuilds().size());
+        this.discordBotListAPI.setStats(this.discord.getBackendManager().getGuildCount());
     }
 
     private void sendDiscordBotList() {
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("guilds", this.discord.getJda().getGuilds().size());
+            jsonObject.addProperty("guilds", this.discord.getBackendManager().getGuildCount());
             jsonObject.addProperty("users", this.discord.getBackendManager().getUserCount());
             jsonObject.addProperty("voice_connections", this.discord.getBackendManager().getConnectionCount());
 

@@ -23,6 +23,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -191,7 +192,7 @@ public class BackendManager {
             @Override
             public void trackLoaded(AudioTrack at) {
                 player.playTrack(at);
-                discord.consoleInfo("Stream loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
+                discord.consoleInfo("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
             }
 
             @Override
@@ -200,27 +201,37 @@ public class BackendManager {
 
             @Override
             public void noMatches() {
-                discord.consoleError("Stream not found on guild " + guild.getName() + ". (" + guild.getId() + ")");
+                discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream not found on guild " + guild.getName() + ". (" + guild.getId() + ")");
             }
 
             @Override
             public void loadFailed(FriendlyException fe) {
-                discord.consoleError("Stream failed to loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
+                discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream failed to loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
             }
         });
+    }
+    
+    public int getGuildCount() {
+        int count = 0;
+        for (JDA shard : this.discord.getShardManager().getShards()) {
+            count = count+shard.getGuilds().size();
+        }
+        return count;
     }
         
     public int getUserCount() {
         int count = 0;
-        for(Guild guild : this.discord.getJda().getGuilds()) {
-            count = count+guild.getMemberCount();
+        for (JDA shard : this.discord.getShardManager().getShards()) {
+            count = shard.getGuilds().stream().map(guild -> guild.getMemberCount()).reduce(count, Integer::sum);
         }
         return count;
     }
     
     public int getConnectionCount() {
         int count = 0;
-        count = this.discord.getJda().getGuilds().stream().filter(guild -> (guild.getAudioManager().isConnected())).map(_item -> 1).reduce(count, Integer::sum);
+        for (JDA shard : this.discord.getShardManager().getShards()) {
+            count = shard.getGuilds().stream().filter(guild -> (guild.getAudioManager().isConnected())).map(_item -> 1).reduce(count, Integer::sum);
+        }
         return count;
     }
     
