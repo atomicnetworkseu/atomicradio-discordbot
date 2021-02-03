@@ -117,7 +117,7 @@ public class DiscordBot {
         this.bassCommand = new BassCommand(this);
         this.shardCommand = new ShardCommand(this);
 
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.54Yw6XMf12AUUGg5cpGEu9XpckY");
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
         builder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE);
