@@ -1,19 +1,7 @@
 package eu.atomicnetworks.discordbot;
 
 import com.google.gson.Gson;
-import eu.atomicnetworks.discordbot.commands.BassCommand;
 import eu.atomicradio.AtomicClient;
-import eu.atomicnetworks.discordbot.commands.HelpCommand;
-import eu.atomicnetworks.discordbot.commands.InfoCommand;
-import eu.atomicnetworks.discordbot.commands.JoinCommand;
-import eu.atomicnetworks.discordbot.commands.LeaveCommand;
-import eu.atomicnetworks.discordbot.commands.PlayCommand;
-import eu.atomicnetworks.discordbot.commands.ReportCommand;
-import eu.atomicnetworks.discordbot.commands.SettingsCommand;
-import eu.atomicnetworks.discordbot.commands.SetupCommand;
-import eu.atomicnetworks.discordbot.commands.ShardCommand;
-import eu.atomicnetworks.discordbot.commands.SongCommand;
-import eu.atomicnetworks.discordbot.commands.VolumeCommand;
 import eu.atomicnetworks.discordbot.handler.EventHandler;
 import eu.atomicnetworks.discordbot.handler.ServerListHandler;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
@@ -75,7 +63,7 @@ public class DiscordBot {
         
         this.apiServer = new ApiServer(this, 9091);
 
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.54Yw6XMf12AUUGg5cpGEu9XpckY");
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
         builder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE);
