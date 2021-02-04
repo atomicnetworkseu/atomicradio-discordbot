@@ -14,35 +14,19 @@ import eu.atomicnetworks.discordbot.commands.SetupCommand;
 import eu.atomicnetworks.discordbot.commands.ShardCommand;
 import eu.atomicnetworks.discordbot.commands.SongCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
-import eu.atomicnetworks.discordbot.handler.AudioHandler;
+import eu.atomicnetworks.discordbot.handler.EventHandler;
 import eu.atomicnetworks.discordbot.handler.ServerListHandler;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
 import eu.atomicnetworks.discordbot.managers.MongoManager;
 import eu.atomicnetworks.discordbot.webapi.ApiServer;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
 import javax.swing.Timer;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
@@ -71,19 +55,6 @@ public class DiscordBot {
     private ServerListHandler serverListHandler;
     private ApiServer apiServer;
 
-    private HelpCommand helpCommand;
-    private InfoCommand infoCommand;
-    private JoinCommand joinCommand;
-    private LeaveCommand leaveCommand;
-    private PlayCommand playCommand;
-    private SetupCommand setupCommand;
-    private VolumeCommand volumeCommand;
-    private SettingsCommand settingsCommand;
-    private ReportCommand reportCommand;
-    private SongCommand songCommand;
-    private BassCommand bassCommand;
-    private ShardCommand shardCommand;
-
     public static void main(String[] args) {
         new DiscordBot().loadBanner();
         new DiscordBot().init();
@@ -104,20 +75,7 @@ public class DiscordBot {
         
         this.apiServer = new ApiServer(this, 9091);
 
-        this.helpCommand = new HelpCommand(this);
-        this.infoCommand = new InfoCommand(this);
-        this.joinCommand = new JoinCommand(this);
-        this.leaveCommand = new LeaveCommand(this);
-        this.playCommand = new PlayCommand(this);
-        this.setupCommand = new SetupCommand(this);
-        this.volumeCommand = new VolumeCommand(this);
-        this.settingsCommand = new SettingsCommand(this);
-        this.reportCommand = new ReportCommand(this);
-        this.songCommand = new SongCommand(this);
-        this.bassCommand = new BassCommand(this);
-        this.shardCommand = new ShardCommand(this);
-
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.54Yw6XMf12AUUGg5cpGEu9XpckY");
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Nzc3OTU0NTg0MDEzOTYzMjY1.X7K8qg.f7kbG0-yhaYy6WBfJiPrEf1DaO4");
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
         builder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE);
@@ -125,257 +83,10 @@ public class DiscordBot {
         builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER));
         builder.setLargeThreshold(50);
         builder.setActivity(Activity.listening("atomicradio.eu"));
-        builder.addEventListeners(new ListenerAdapter() {
-            
-            @Override
-            public void onReady(ReadyEvent event) {
-                for (Guild guild : event.getJDA().getGuilds()) {
-                    if (backendManager.getPlaying(guild)) {
-                        if (backendManager.getChannelId(guild).isEmpty() || backendManager.getChannelId(guild) == null) {
-                            return;
-                        }
-                        VoiceChannel voiceChannel = guild.getVoiceChannelById(backendManager.getChannelId(guild));
-                        if (voiceChannel != null) {
-                            try {
-                                guild.getAudioManager().openAudioConnection(voiceChannel);
-                                
-                                voiceChannel.getMembers().stream().forEach((t) -> {
-                                    backendManager.addListener(guild, t, voiceChannel.getId());
-                                });
-                                
-                                if(voiceChannel.getMembers().size() >= 1) {
-                                    if (guild.getAudioManager().getSendingHandler() == null) {
-                                        switch (backendManager.getMusic(guild)) {
-                                            case "one":
-                                                backendManager.startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
-                                                backendManager.setPlaying(guild, true);
-                                                backendManager.setMusic(guild, "one");
-                                                backendManager.setChannelId(guild, voiceChannel.getId());
-                                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.one.");
-                                                if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                                    if (getBackendManager().getTag(guild)) {
-                                                        guild.getSelfMember().modifyNickname("atomicradio » atr.one").queue();
-                                                    }
-                                                }
-                                                break;
-                                            case "dance":
-                                                backendManager.startStream(guild, "https://listen.atomicradio.eu/dance/highquality.mp3");
-                                                backendManager.setPlaying(guild, true);
-                                                backendManager.setMusic(guild, "dance");
-                                                backendManager.setChannelId(guild, voiceChannel.getId());
-                                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.dance.");
-                                                if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                                    if (getBackendManager().getTag(guild)) {
-                                                        guild.getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
-                                                    }
-                                                }
-                                                break;
-                                            case "trap":
-                                                backendManager.startStream(guild, "https://listen.atomicradio.eu/trap/highquality.mp3");
-                                                backendManager.setPlaying(guild, true);
-                                                backendManager.setMusic(guild, "trap");
-                                                backendManager.setChannelId(guild, voiceChannel.getId());
-                                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.trap.");
-                                                if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                                    if (getBackendManager().getTag(guild)) {
-                                                        guild.getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
-                                                    }
-                                                }
-                                                break;
-                                        }
-                                    }
-                                }
-                                
-                            } catch (InsufficientPermissionException ex) {
-                                consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
-                            }
-                            consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-                Message message = event.getMessage();
-                String prefix = backendManager.getPrefix(event.getGuild());
-
-                if (message.getMentionedUsers().stream().filter(t -> t.getId().equals(event.getGuild().getSelfMember().getId())).findFirst().orElse(null) != null) {
-                    EmbedBuilder embed = new EmbedBuilder();
-                    embed.setColor(new Color(149, 79, 180));
-                    embed.setDescription(":bird: Hi, I am " + event.getJDA().getSelfUser().getAsMention() + ", your new favourite musicbot!\n\nYou can find out more about me with **"
-                            + getBackendManager().getPrefix(event.getGuild()) + "help**,\non **" + event.getGuild().getName() + "** you can control me with the prefix `" + getBackendManager().getPrefix(event.getGuild()) + "` ");
-                    backendManager.sendMessage(event, embed.build());
-                    return;
-                }
-
-                if (!message.getContentRaw().toLowerCase().startsWith(prefix)) {
-                    return;
-                }
-
-                if (message.getContentRaw().toLowerCase().startsWith(prefix + "help")) {
-                    helpCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "info") || message.getContentRaw().toLowerCase().startsWith(prefix + "invite")) {
-                    infoCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "join")) {
-                    joinCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "leave")) {
-                    leaveCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "play")) {
-                    playCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "setup")) {
-                    setupCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "vol") || message.getContentRaw().toLowerCase().startsWith(prefix + "volume")) {
-                    volumeCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "settings")) {
-                    settingsCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "report")) {
-                    reportCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "song")) {
-                    songCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "bass")) {
-                    bassCommand.execute(event);
-                } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "shard")) {
-                    shardCommand.execute(event);
-                } else {
-                    return;
-                }
-                consoleInfo(MessageFormat.format("[SHARD {0}] {1} ({2}) ran command {3} in {4} (#{5})", event.getJDA().getShardInfo().getShardId(), event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
-            }
-
-            @Override
-            public void onGuildVoiceJoin(GuildVoiceJoinEvent event) {
-                if (backendManager.getPlaying(event.getGuild())) {
-                    if (event.getChannelJoined().getId().equals(backendManager.getChannelId(event.getGuild()))) {
-                        if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
-                            return;
-                        }
-                        
-                        backendManager.addListener(event.getGuild(), event.getMember(), event.getChannelJoined().getId());
-                        
-                        if (event.getGuild().getAudioManager().getSendingHandler() == null) {
-                            VoiceChannel voiceChannel = event.getChannelJoined();
-                            event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
-                            switch (backendManager.getMusic(event.getGuild())) {
-                                case "one":
-                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
-                                    backendManager.setPlaying(event.getGuild(), true);
-                                    backendManager.setMusic(event.getGuild(), "one");
-                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
-                                    if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                        if (getBackendManager().getTag(event.getGuild())) {
-                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.one").queue();
-                                        }
-                                    }
-                                    break;
-                                case "dance":
-                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
-                                    backendManager.setPlaying(event.getGuild(), true);
-                                    backendManager.setMusic(event.getGuild(), "dance");
-                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
-                                    if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                        if (getBackendManager().getTag(event.getGuild())) {
-                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
-                                        }
-                                    }
-                                    break;
-                                case "trap":
-                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
-                                    backendManager.setPlaying(event.getGuild(), true);
-                                    backendManager.setMusic(event.getGuild(), "trap");
-                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
-                                    if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                        if (getBackendManager().getTag(event.getGuild())) {
-                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
-                                        }
-                                    }
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
-                if (backendManager.getPlaying(event.getGuild())) {
-                    if (event.getChannelLeft().getId().equals(backendManager.getChannelId(event.getGuild()))) {
-                        backendManager.removeListener(event.getGuild(), event.getMember());
-                        if (event.getChannelLeft().getMembers().size() == 1) {
-                            if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                                AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                                audioHandler.stop();
-                                event.getGuild().getAudioManager().setSendingHandler(null);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onGuildVoiceMove(GuildVoiceMoveEvent event) {
-                if (backendManager.getPlaying(event.getGuild())) {
-                    if (event.getChannelJoined().getId().equals(backendManager.getChannelId(event.getGuild()))) {
-                        if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
-                            return;
-                        }
-                        backendManager.addListener(event.getGuild(), event.getMember(), event.getChannelJoined().getId());
-                        if (event.getGuild().getAudioManager().getSendingHandler() == null) {
-                            VoiceChannel voiceChannel = event.getChannelJoined();
-                            event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
-                            switch (backendManager.getMusic(event.getGuild())) {
-                                case "one":
-                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
-                                    backendManager.setPlaying(event.getGuild(), true);
-                                    backendManager.setMusic(event.getGuild(), "one");
-                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
-                                    if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                        if (getBackendManager().getTag(event.getGuild())) {
-                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.one").queue();
-                                        }
-                                    }
-                                    break;
-                                case "dance":
-                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
-                                    backendManager.setPlaying(event.getGuild(), true);
-                                    backendManager.setMusic(event.getGuild(), "dance");
-                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
-                                    if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                        if (getBackendManager().getTag(event.getGuild())) {
-                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
-                                        }
-                                    }
-                                    break;
-                                case "trap":
-                                    backendManager.startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
-                                    backendManager.setPlaying(event.getGuild(), true);
-                                    backendManager.setMusic(event.getGuild(), "trap");
-                                    backendManager.setChannelId(event.getGuild(), voiceChannel.getId());
-                                    if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                                        if (getBackendManager().getTag(event.getGuild())) {
-                                            event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
-                                        }
-                                    }
-                                    break;
-                            }
-                        }
-                    } else if (event.getChannelLeft().getId().equals(backendManager.getChannelId(event.getGuild()))) {
-                        backendManager.removeListener(event.getGuild(), event.getMember());
-                        if (event.getChannelLeft().getMembers().size() == 1) {
-                            if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                                AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                                audioHandler.stop();
-                                event.getGuild().getAudioManager().setSendingHandler(null);
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
+        builder.addEventListeners(new EventHandler(this));
         try {
-            builder.setShardsTotal(6);
-            builder.setShards(0, 5);
+            builder.setShardsTotal(2);
+            builder.setShards(0, 1);
             this.shardManager = builder.build();
             
             Timer timer = new Timer(15000, (ActionEvent e) -> {

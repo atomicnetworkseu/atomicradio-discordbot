@@ -44,12 +44,10 @@ public class BackendManager {
     private final DiscordBot discord;
     private LoadingCache<String, GuildData> guildCache;
     private HashMap<String, Listeners> listeners;
-    private List<String> playing;
 
     public BackendManager(DiscordBot discord) {
         this.discord = discord;
         this.listeners = new HashMap<>();
-        this.playing = new ArrayList<>();
         initCache();
     }
     
@@ -235,6 +233,14 @@ public class BackendManager {
         return count;
     }
     
+    public int getPlayingCount() {
+        int count = 0;
+        for (JDA shard : this.discord.getShardManager().getShards()) {
+            count = shard.getGuilds().stream().filter(guild -> (guild.getAudioManager().getSendingHandler() != null)).map(_item -> 1).reduce(count, Integer::sum);
+        }
+        return count;
+    }
+    
     public boolean checkForPermissions(Member member) {
         return PermissionUtil.checkPermission(member, Permission.ADMINISTRATOR) || member.getId().equals("425706045453893642") || member.getId().equals("223891083724193792") || member.getId().equals("394586910065950723");
     }
@@ -257,10 +263,6 @@ public class BackendManager {
                 });
             }
         }
-    }
-
-    public List<String> getPlaying() {
-        return playing;
     }
 
     public HashMap<String, Listeners> getListeners() {
