@@ -36,7 +36,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
  *
  */
 public class EventHandler extends ListenerAdapter {
-    
+
     private final DiscordBot discordBot;
     private final HelpCommand helpCommand;
     private final InfoCommand infoCommand;
@@ -188,8 +188,12 @@ public class EventHandler extends ListenerAdapter {
         if (this.discordBot.getBackendManager().getPlaying(event.getGuild())) {
             VoiceChannel voiceChannel = event.getGuild().getAudioManager().getConnectedChannel();
             if (voiceChannel == null) {
-                event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
-                voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
+                try {
+                    event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
+                    voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
+                } catch (InsufficientPermissionException ex) {
+                    return;
+                }
             }
 
             if (event.getChannelJoined().getId().equals(voiceChannel.getId())) {
@@ -200,7 +204,11 @@ public class EventHandler extends ListenerAdapter {
                 this.discordBot.getBackendManager().addListener(event.getGuild(), event.getMember(), event.getChannelJoined().getId());
 
                 if (event.getGuild().getAudioManager().getSendingHandler() == null) {
-                    event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+                    try {
+                        event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+                    } catch (InsufficientPermissionException ex) {
+                        return;
+                    }
                     switch (this.discordBot.getBackendManager().getMusic(event.getGuild())) {
                         case "one":
                             this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
@@ -315,8 +323,12 @@ public class EventHandler extends ListenerAdapter {
         if (this.discordBot.getBackendManager().getPlaying(event.getGuild())) {
             VoiceChannel voiceChannel = event.getGuild().getAudioManager().getConnectedChannel();
             if (voiceChannel == null) {
-                event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
-                voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
+                try {
+                    event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
+                    voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
+                } catch (InsufficientPermissionException ex) {
+                    return;
+                }
             }
 
             if (event.getChannelJoined().getId().equals(voiceChannel.getId())) {
