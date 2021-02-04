@@ -33,11 +33,11 @@ public class ShardCommand {
 
         if (event.getAuthor().getId().equals("223891083724193792") || event.getAuthor().getId().equals("425706045453893642")) {
             if (args.length == 1) {
-                String description = MessageFormat.format("** **\nThis server is assigned to the **shard {0}**.\n\n", event.getJDA().getShardInfo().getShardId());
+                String description = MessageFormat.format("This guild is assigned to the **shard {0}**.\n\n", event.getJDA().getShardInfo().getShardId());
                 for (JDA shard : this.discord.getShardManager().getShards()) {
                     int memberCount = 0;
                     memberCount = shard.getGuilds().stream().map(guild -> guild.getMemberCount()).reduce(memberCount, Integer::sum);
-                    description += "**👾 Shard " + shard.getShardInfo().getShardId() + "**\n" + MessageFormat.format("In total, over **{0} users** are served here on **{1} guilds**. Currently the bot is **{2}** and has a ping of **{3}ms** to Discord.\n\n", memberCount, shard.getGuilds().size(), shard.getStatus().name(), shard.getGatewayPing());
+                    description += "**👾 Shard " + shard.getShardInfo().getShardId() + "**\n" + MessageFormat.format("In total, over **{0} users** are served here on **{1} guilds**.\nCurrently the bot is **{2}** and has a ping of **{3}ms** to the gateaway.\n\n", memberCount, shard.getGuilds().size(), shard.getStatus().name(), shard.getGatewayPing());
                 }
                 embed.setDescription(description);
                 this.discord.getBackendManager().sendMessage(event, embed.build());
