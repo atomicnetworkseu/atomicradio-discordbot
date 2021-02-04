@@ -379,8 +379,8 @@ public class DiscordBot {
             this.shardManager = builder.build();
             
             Timer timer = new Timer(15000, (ActionEvent e) -> {
+                double rpfinal = (Math.floor(Math.random() * 9));
                 this.shardManager.getShards().stream().forEach((shard) -> {
-                    double rpfinal = (Math.floor(Math.random() * 9));
                     switch ((int) rpfinal) {
                         case 1:
                             shard.getPresence().setActivity(Activity.streaming("atomicradio.eu 🎶", "https://www.twitch.tv/atomic"));
