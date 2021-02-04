@@ -36,7 +36,7 @@ public class ShardCommand {
                 String description = MessageFormat.format("** **\nThis server is assigned to the **shard {0}**.\n\n", event.getJDA().getShardInfo().getShardId());
                 for (JDA shard : this.discord.getShardManager().getShards()) {
                     int memberCount = 0;
-                    memberCount = shard.getGuilds().stream().map(guild -> guild.getMembers().size()).reduce(memberCount, Integer::sum);
+                    memberCount = shard.getGuilds().stream().map(guild -> guild.getMemberCount()).reduce(memberCount, Integer::sum);
                     description += "**👾 Shard " + shard.getShardInfo().getShardId() + "**\n" + MessageFormat.format("In total, over **{0} users** are served here on **{1} guilds**. Currently the bot is **{2}** and has a ping of **{3}ms** to Discord.\n\n", memberCount, shard.getGuilds().size(), shard.getStatus().name(), shard.getGatewayPing());
                 }
                 embed.setDescription(description);

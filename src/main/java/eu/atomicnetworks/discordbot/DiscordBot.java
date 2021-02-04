@@ -212,7 +212,6 @@ public class DiscordBot {
                 if (!message.getContentRaw().toLowerCase().startsWith(prefix)) {
                     return;
                 }
-                consoleInfo(MessageFormat.format("[SHARD {0}] {1} ({2}) ran command {3} in {4} (#{5})", event.getJDA().getShardInfo().getShardId(), event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
 
                 if (message.getContentRaw().toLowerCase().startsWith(prefix + "help")) {
                     helpCommand.execute(event);
@@ -238,7 +237,10 @@ public class DiscordBot {
                     bassCommand.execute(event);
                 } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "shard")) {
                     shardCommand.execute(event);
+                } else {
+                    return;
                 }
+                consoleInfo(MessageFormat.format("[SHARD {0}] {1} ({2}) ran command {3} in {4} (#{5})", event.getJDA().getShardInfo().getShardId(), event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
             }
 
             @Override
