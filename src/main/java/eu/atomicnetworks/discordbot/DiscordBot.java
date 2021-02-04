@@ -375,7 +375,7 @@ public class DiscordBot {
         });
         try {
             builder.setShardsTotal(6);
-            builder.setShards(1, 5);
+            builder.setShards(0, 5);
             this.shardManager = builder.build();
             
             Timer timer = new Timer(15000, (ActionEvent e) -> {

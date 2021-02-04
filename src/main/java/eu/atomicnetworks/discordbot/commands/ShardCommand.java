@@ -50,9 +50,6 @@ public class ShardCommand {
             
             try {
                 int id = Integer.valueOf(args[2]);
-                if(id == 0) {
-                    return;
-                }
 
                 switch (args[1].toLowerCase()) {
                     case "stop":
