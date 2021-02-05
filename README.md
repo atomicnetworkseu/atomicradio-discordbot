@@ -8,9 +8,12 @@
 </h1>
 
 <p align="center">
-  Discord Musicbot with LavaPlayer for atomicradio.eu.
+  Discord musicbot for atomicradio.eu made with JDA & LavaPlayer.
 </p>
 <p align="center">
+  <a href="https://github.com/atomicnetworkseu/discord-bot/actions">
+      <img src="https://github.com/atomicnetworkseu/discord-bot/workflows/Java%20CI%20with%20Maven/badge.svg" alt="Workflow">
+  </a> 
   <a href="https://gitmoji.carloscuesta.me">
       <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square" alt="Gitmoji">
   </a>  
@@ -47,15 +50,18 @@
 ```
 .settings • With this command you can make advanced adjustments.
 ````
+```
+.bass • With this setting, you can finally enjoy your songs with more bass.
+````
 
-## Start using on Ubuntu/Debain 🔌
-Requirements:
+## Getting Started ✨
+#### Prerequisites
 * Make sure that you have Java v8.x or later installed.
-* You also need your bot's token. Check this <a href="https://anidiots.guide/getting-started/getting-started-long-version">page</a> for more information.
+* You also need your bot's token. Check this <a href="https://anidiots.guide/getting-started/getting-started-long-version">Guide</a> for more informations.
 
-Installation:
-* Download our build discord bot jar from here <a href="https://github.com/atomicnetworkseu/discord-bot/releases">https://github.com/atomicnetworkseu/discord-bot/releases</a>
-* Run `java -jar DiscordBot-X.X.X-dependencies.jar` from the project folder to start the bot.
+#### Installation:
+1. Download our build discord bot jar from here <a href="https://github.com/atomicnetworkseu/discord-bot/releases">https://github.com/atomicnetworkseu/discord-bot/releases</a>
+2. Run `java -jar DiscordBot-X.X.X-dependencies.jar` from the project folder to start the bot.
 
 ## Invite your bot to a guild 📨
 To add the bot to your guild, you have to get an oauth link. This <a href="https://finitereality.github.io/permissions-calculator/?v=0">page</a> can help you generate a full oauth link.
