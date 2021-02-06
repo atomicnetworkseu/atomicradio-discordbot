@@ -33,14 +33,38 @@ public class ServerListHandler {
         Timer timer = new Timer(3600000, (ActionEvent e) -> {
             sendTopGGUpdate();
             sendDiscordBotList();
+            sendBoatsUpdate();
         });
-        timer.setInitialDelay(300000);
+        timer.setInitialDelay(180000);
         timer.setRepeats(true);
         timer.start();
     }
 
     private void sendTopGGUpdate() {
         this.discordBotListAPI.setStats(this.discord.getBackendManager().getGuildCount());
+    }
+    
+    private void sendBoatsUpdate() {
+        try {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("server_count", this.discord.getBackendManager().getGuildCount());
+
+            OkHttpClient client = new OkHttpClient().newBuilder().build();
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
+            Request request = new Request.Builder()
+                    .url("https://discord.boats/api/bot/697517106287345737")
+                    .method("POST", body)
+                    .addHeader("Authorization", "I2zTsNS7kjIHlEVqoMiw4U09vdNmJ5Z3xLD2XLdYv8F6zzGnjgYbdJh8VE8Ntn9CTSEYU1iLFN3T6EMGU6MUlyeW3iiUoamTEL9Vty2uVwIz19tYm0iwOcGxYT4H941hFgfMIVAATYcAHKlIeDNexSbhmS9")
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+            Response response = client.newCall(request).execute();
+            response.close();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ServerListHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerListHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void sendDiscordBotList() {
