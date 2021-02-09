@@ -38,6 +38,11 @@ public class VolumeCommand {
             }
         }
         
+        if (this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
+            embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**.");
+            this.discord.getBackendManager().sendMessage(event, embed.build());
+            return;
+        }
         VoiceChannel voiceChannel = event.getChannel().getJDA().getVoiceChannelById(this.discord.getBackendManager().getChannelId(event.getGuild()));
         if (!event.getMember().getVoiceState().inVoiceChannel()) {
             embed.setDescription("You have to be in the channel **" + voiceChannel.getName() + "** to change the volume.");
@@ -51,6 +56,12 @@ public class VolumeCommand {
         }
         if(!event.getGuild().getAudioManager().isConnected()) {
             embed.setDescription("The bot must be connected to the channel, you can do this with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "join**.");
+            this.discord.getBackendManager().sendMessage(event, embed.build());
+            return;
+        }
+        
+        if(args.length == 1) {
+            embed.setDescription("The current volume is **" + this.discord.getBackendManager().getVolume(event.getGuild()) + "**,\nwith **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "vol** and a number between **1-100** you can adjust it.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
