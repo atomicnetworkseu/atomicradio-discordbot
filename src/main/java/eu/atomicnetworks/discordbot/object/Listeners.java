@@ -11,8 +11,6 @@ import java.util.HashMap;
  */
 public class Listeners {
     
-    private String guildId;
-    private int listenerCount;
     private HashMap<String, Listener> listener;
     
     public static class Listener {
@@ -54,22 +52,6 @@ public class Listeners {
             this.channelId = channelId;
         }
         
-    }
-
-    public String getGuildId() {
-        return guildId;
-    }
-
-    public void setGuildId(String guildId) {
-        this.guildId = guildId;
-    }
-
-    public int getListenerCount() {
-        return listenerCount;
-    }
-
-    public void setListenerCount(int listenerCount) {
-        this.listenerCount = listenerCount;
     }
 
     public HashMap<String, Listener> getListener() {

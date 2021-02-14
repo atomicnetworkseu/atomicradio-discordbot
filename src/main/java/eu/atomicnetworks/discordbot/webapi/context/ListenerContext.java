@@ -34,8 +34,7 @@ public class ListenerContext {
             }
             
             JSONObject json = new JSONObject(this.apiServer.getDiscordBot().getGson().toJson(this.apiServer.getDiscordBot().getBackendManager().getListeners()));
-            int listener = 0;
-            listener = this.apiServer.getDiscordBot().getBackendManager().getListeners().entrySet().stream().map(entry -> entry.getValue().getListenerCount()).reduce(listener, Integer::sum);
+            int listener = this.apiServer.getDiscordBot().getBackendManager().getListeners().getListener().size();
             json.put("listeners", listener);
             this.apiServer.sendResponseJson(he, 200, json);
         });
