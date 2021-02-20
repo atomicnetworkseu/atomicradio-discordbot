@@ -189,6 +189,9 @@ public class EventHandler extends ListenerAdapter {
             VoiceChannel voiceChannel = event.getGuild().getAudioManager().getConnectedChannel();
             if (voiceChannel == null) {
                 try {
+                    if(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())) == null) {
+                        return;
+                    }
                     event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
                     voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                 } catch (InsufficientPermissionException ex) {
@@ -324,6 +327,9 @@ public class EventHandler extends ListenerAdapter {
             VoiceChannel voiceChannel = event.getGuild().getAudioManager().getConnectedChannel();
             if (voiceChannel == null) {
                 try {
+                    if(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())) == null) {
+                        return;
+                    }
                     event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
                     voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                 } catch (InsufficientPermissionException ex) {
