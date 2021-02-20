@@ -28,6 +28,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.ContextException;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 
@@ -242,6 +243,9 @@ public class BackendManager {
     }
     
     public boolean checkForPermissions(Member member) {
+        if(member == null) {
+            return false;
+        }
         return PermissionUtil.checkPermission(member, Permission.ADMINISTRATOR) || member.getId().equals("425706045453893642") || member.getId().equals("223891083724193792") || member.getId().equals("394586910065950723");
     }
     
@@ -257,7 +261,10 @@ public class BackendManager {
                         EmbedBuilder embed = new EmbedBuilder();
                         embed.setColor(new Color(149, 79, 180));
                         embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.");
-                        channel.sendMessage(embed.build()).queue();
+                        try {
+                            channel.sendMessage(embed.build()).queue();
+                        } catch (Exception ex2) {
+                        }
                     });
                 } catch (InsufficientPermissionException ex2) {
                 }
