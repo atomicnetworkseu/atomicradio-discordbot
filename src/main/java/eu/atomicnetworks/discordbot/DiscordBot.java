@@ -78,38 +78,48 @@ public class DiscordBot {
             this.shardManager = builder.build();
             
             Timer timer = new Timer(15000, (ActionEvent e) -> {
-                double rpfinal = (Math.floor(Math.random() * 9));
-                this.shardManager.getShards().stream().forEach((shard) -> {
-                    switch ((int) rpfinal) {
-                        case 1:
-                            shard.getPresence().setActivity(Activity.streaming("atomicradio.eu 🎶", "https://www.twitch.tv/atomic"));
-                            break;
-                        case 2:
-                            shard.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
-                            break;
-                        case 3:
-                            shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
-                            break;
-                        case 4:
-                            shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelDance().getSong().getArtist() + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
-                            break;
-                        case 5:
-                            shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelTrap().getSong().getArtist() + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
-                            break;
-                        case 6:
-                            shard.getPresence().setActivity(Activity.listening(".help"));
-                            break;
-                        case 7:
-                            shard.getPresence().setActivity(Activity.listening("the difference 🔊"));
-                            break;
-                        case 8:
-                            shard.getPresence().setActivity(Activity.playing("on " + this.backendManager.getGuildCount() + " guilds"));
-                            break;
-                        case 9:
-                            shard.getPresence().setActivity(Activity.playing("for " + this.backendManager.getUserCount() + " users"));
-                            break;
-                    }
-                });
+                if(this.atomicClient.isLive()) {
+                    this.shardManager.getShards().stream().forEach((shard) -> {
+                        String streamer = this.atomicClient.getStreamer();
+                        if(streamer.split(" ").length == 2) {
+                            streamer = streamer.split(" ")[0];
+                        }
+                        shard.getPresence().setActivity(Activity.streaming("live with " + streamer + " on atr.one", "https://www.twitch.tv/atomic"));
+                    });
+                } else {
+                    double rpfinal = (Math.floor(Math.random() * 9));
+                    this.shardManager.getShards().stream().forEach((shard) -> {
+                        switch ((int) rpfinal) {
+                            case 1:
+                                shard.getPresence().setActivity(Activity.streaming("atomicradio.eu 🎶", "https://www.twitch.tv/atomic"));
+                                break;
+                            case 2:
+                                shard.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
+                                break;
+                            case 3:
+                                shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelOne().getSong().getArtist() + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
+                                break;
+                            case 4:
+                                shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelDance().getSong().getArtist() + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
+                                break;
+                            case 5:
+                                shard.getPresence().setActivity(Activity.listening(this.atomicClient.getChannelTrap().getSong().getArtist() + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
+                                break;
+                            case 6:
+                                shard.getPresence().setActivity(Activity.listening(".help"));
+                                break;
+                            case 7:
+                                shard.getPresence().setActivity(Activity.listening("the difference 🔊"));
+                                break;
+                            case 8:
+                                shard.getPresence().setActivity(Activity.playing("on " + this.backendManager.getGuildCount() + " guilds"));
+                                break;
+                            case 9:
+                                shard.getPresence().setActivity(Activity.playing("for " + this.backendManager.getUserCount() + " users"));
+                                break;
+                        }
+                    });
+                }
             });
             timer.setInitialDelay(0);
             timer.setRepeats(true);
