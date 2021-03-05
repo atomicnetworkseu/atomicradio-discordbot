@@ -29,7 +29,6 @@ public class HelpCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
         embed.setAuthor("Helpdesk", null, "https://cdn.atomicnetworks.eu/discord/icon.png");
-        /*embed.setTitle("Hello, we are happy to see you. You can see all the available commands below.");*/
         if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             embed.setDescription(MessageFormat.format("** **\n"
                 + ":gear: | **Commands**\n\n"
@@ -61,7 +60,6 @@ public class HelpCommand {
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings**  • With this command you can make advanced adjustments.\n\n"
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));
         }
-        embed.setFooter("If you have a suggestion for improvement,\ncriticism or something similar, just contact us!" , "https://cdn.atomicnetworks.eu/discord/transparent.png");
         this.discord.getBackendManager().sendMessage(event, embed.build());
     } 
     
