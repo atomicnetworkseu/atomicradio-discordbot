@@ -263,7 +263,7 @@ public class BackendManager {
                         embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.");
                         try {
                             channel.sendMessage(embed.build()).queue();
-                        } catch (Exception ex2) {
+                        } catch (InsufficientPermissionException ex2) {
                         }
                     });
                 } catch (InsufficientPermissionException ex2) {
