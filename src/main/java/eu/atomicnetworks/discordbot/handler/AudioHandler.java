@@ -62,6 +62,20 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     @Override
     public void onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, FriendlyException exception) {
         this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        switch(this.discord.getBackendManager().getMusic(guild)) {
+            case "one":
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
+                break;
+            case "dance":
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality.mp3");
+                break;
+            case "trap":
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality.mp3");
+                break;
+            default:
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
+                break;
+        }
     }
 
     @Override
