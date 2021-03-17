@@ -67,4 +67,4 @@
 To add the bot to your guild, you have to get an oauth link. This <a href="https://finitereality.github.io/permissions-calculator/?v=0">page</a> can help you generate a full oauth link.
 
 ## License 📑
-This code is available under the <a href="https://github.com/atomicnetworkseu/discord-bot/blob/master/LICENSE">MIT License</a>.
+This code is available under the <a href="https://github.com/atomicnetworkseu/discord-bot/blob/master/LICENSE">Mozilla Public License Version 2.0</a>.
