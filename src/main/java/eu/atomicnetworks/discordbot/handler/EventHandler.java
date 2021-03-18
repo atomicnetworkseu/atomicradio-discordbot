@@ -87,7 +87,7 @@ public class EventHandler extends ListenerAdapter {
                             if (guild.getAudioManager().getSendingHandler() == null) {
                                 switch (this.discordBot.getBackendManager().getMusic(guild)) {
                                     case "one":
-                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
+                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");
                                         this.discordBot.getBackendManager().setPlaying(guild, true);
                                         this.discordBot.getBackendManager().setMusic(guild, "one");
                                         this.discordBot.getBackendManager().setChannelId(guild, voiceChannel.getId());
@@ -99,7 +99,7 @@ public class EventHandler extends ListenerAdapter {
                                         }
                                         break;
                                     case "dance":
-                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality.mp3");
+                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality");
                                         this.discordBot.getBackendManager().setPlaying(guild, true);
                                         this.discordBot.getBackendManager().setMusic(guild, "dance");
                                         this.discordBot.getBackendManager().setChannelId(guild, voiceChannel.getId());
@@ -111,7 +111,7 @@ public class EventHandler extends ListenerAdapter {
                                         }
                                         break;
                                     case "trap":
-                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality.mp3");
+                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality");
                                         this.discordBot.getBackendManager().setPlaying(guild, true);
                                         this.discordBot.getBackendManager().setMusic(guild, "trap");
                                         this.discordBot.getBackendManager().setChannelId(guild, voiceChannel.getId());
@@ -214,7 +214,7 @@ public class EventHandler extends ListenerAdapter {
                     }
                     switch (this.discordBot.getBackendManager().getMusic(event.getGuild())) {
                         case "one":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                             this.discordBot.getBackendManager().setMusic(event.getGuild(), "one");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -224,7 +224,7 @@ public class EventHandler extends ListenerAdapter {
                             }
                             break;
                         case "dance":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                             this.discordBot.getBackendManager().setMusic(event.getGuild(), "dance");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -234,7 +234,7 @@ public class EventHandler extends ListenerAdapter {
                             }
                             break;
                         case "trap":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                             this.discordBot.getBackendManager().setMusic(event.getGuild(), "trap");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -287,7 +287,7 @@ public class EventHandler extends ListenerAdapter {
                     if (event.getGuild().getAudioManager().getSendingHandler() == null) {
                         switch (this.discordBot.getBackendManager().getMusic(event.getGuild())) {
                             case "one":
-                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
+                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality");
                                 this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                                 this.discordBot.getBackendManager().setMusic(event.getGuild(), "one");
                                 if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -297,7 +297,7 @@ public class EventHandler extends ListenerAdapter {
                                 }
                                 break;
                             case "dance":
-                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
+                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
                                 this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                                 this.discordBot.getBackendManager().setMusic(event.getGuild(), "dance");
                                 if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -307,7 +307,7 @@ public class EventHandler extends ListenerAdapter {
                                 }
                                 break;
                             case "trap":
-                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
+                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
                                 this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                                 this.discordBot.getBackendManager().setMusic(event.getGuild(), "trap");
                                 if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -345,7 +345,7 @@ public class EventHandler extends ListenerAdapter {
                 if (event.getGuild().getAudioManager().getSendingHandler() == null) {
                     switch (this.discordBot.getBackendManager().getMusic(event.getGuild())) {
                         case "one":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                             this.discordBot.getBackendManager().setMusic(event.getGuild(), "one");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -355,7 +355,7 @@ public class EventHandler extends ListenerAdapter {
                             }
                             break;
                         case "dance":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                             this.discordBot.getBackendManager().setMusic(event.getGuild(), "dance");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
@@ -365,7 +365,7 @@ public class EventHandler extends ListenerAdapter {
                             }
                             break;
                         case "trap":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                             this.discordBot.getBackendManager().setMusic(event.getGuild(), "trap");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
