@@ -53,9 +53,9 @@ public class InfoCommand {
     
     private String getChannel(Guild guild) {
         if(this.discord.getBackendManager().getMusic(guild).isEmpty()) {
-            return "https://listen.atomicradio.eu/one/highquality.mp3";
+            return "https://listen.atomicradio.eu/one/highquality";
         }
-        return "https://listen.atomicradio.eu/" + this.discord.getBackendManager().getMusic(guild) + "/highquality.mp3";
+        return "https://listen.atomicradio.eu/" + this.discord.getBackendManager().getMusic(guild) + "/highquality";
     }
     
     private long getMemory() {
