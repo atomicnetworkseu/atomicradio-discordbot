@@ -64,16 +64,16 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
         this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
         switch(this.discord.getBackendManager().getMusic(guild)) {
             case "one":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");
                 break;
             case "dance":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality.mp3");
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality");
                 break;
             case "trap":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality.mp3");
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality");
                 break;
             default:
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality.mp3");
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");
                 break;
         }
     }

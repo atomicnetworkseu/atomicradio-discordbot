@@ -92,7 +92,7 @@ public class PlayCommand {
                     AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                     audioHandler.stop();
                 }
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality.mp3");
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
                 this.discord.getBackendManager().setMusic(event.getGuild(), "one");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
@@ -119,7 +119,7 @@ public class PlayCommand {
                     AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                     audioHandler.stop();
                 }
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality.mp3");
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
                 this.discord.getBackendManager().setMusic(event.getGuild(), "dance");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
@@ -146,7 +146,7 @@ public class PlayCommand {
                     AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                     audioHandler.stop();
                 }
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality.mp3");
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
                 this.discord.getBackendManager().setMusic(event.getGuild(), "trap");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
