@@ -19,6 +19,7 @@ public class Listeners {
         private String avatar;
         private String id;
         private String channelId;
+        private String station;
 
         public String getUsername() {
             return username;
@@ -50,6 +51,14 @@ public class Listeners {
 
         public void setChannelId(String channelId) {
             this.channelId = channelId;
+        }
+
+        public String getStation() {
+            return station;
+        }
+
+        public void setStation(String station) {
+            this.station = station;
         }
         
     }

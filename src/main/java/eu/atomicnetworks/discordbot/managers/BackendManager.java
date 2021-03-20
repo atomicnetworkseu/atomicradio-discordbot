@@ -282,6 +282,9 @@ public class BackendManager {
         listener.setId(member.getUser().getId());
         listener.setAvatar(member.getUser().getAvatarUrl());
         listener.setChannelId(channelId);
+        
+        String station = this.getMusic(member.getGuild());
+        listener.setStation(station);
         this.listeners.getListener().put(member.getUser().getId(), listener);
     }
     
