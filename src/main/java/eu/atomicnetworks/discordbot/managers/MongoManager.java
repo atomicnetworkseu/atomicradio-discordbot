@@ -30,8 +30,8 @@ public class MongoManager {
         Logger mongoLogger = Logger.getLogger( "com.mongodb" );
         mongoLogger.setLevel(Level.SEVERE);
         try {
-            this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
-            this.database = client.getDatabase("discordbot");
+            this.client = MongoClients.create(new ConnectionString("mongodb://10.10.10.108"));
+            this.database = client.getDatabase("atomicradio-discordbot");
             this.guilds = this.database.getCollection("guilds");
             this.discord.consoleInfo("The connection to the MongoDB database has been established.");
         } catch(MongoException ex) {
