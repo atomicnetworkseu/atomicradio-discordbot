@@ -46,8 +46,7 @@ public class InfoCommand {
                 + "Playing: {2}\n"
                 + "\n** **", this.discord.getBackendManager().getGuildCount(), this.discord.getBackendManager().getUserCount(), String.valueOf(this.discord.getBackendManager().getConnectionCount())), true);
         embed.addField("Connection", MessageFormat.format("Uptime: {0}\n"
-                + "Ping: {1}ms\n"
-                + "Ram: {2}%\n\n** **", getOnlineTime(), getPing(), getMemory()), true);
+                + "Ping: {1}ms\n\n** **", getOnlineTime(), getPing()), true);
         this.discord.getBackendManager().sendMessage(event, embed.build());
     } 
     
@@ -56,10 +55,6 @@ public class InfoCommand {
             return "https://listen.atomicradio.eu/one/highquality";
         }
         return "https://listen.atomicradio.eu/" + this.discord.getBackendManager().getMusic(guild) + "/highquality";
-    }
-    
-    private long getMemory() {
-        return ((Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory()) * 100 / Runtime.getRuntime().totalMemory());
     }
     
     private long getPing() {
