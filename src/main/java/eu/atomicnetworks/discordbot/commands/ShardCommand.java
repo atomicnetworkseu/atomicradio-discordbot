@@ -30,7 +30,7 @@ public class ShardCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
 
-        if (event.getAuthor().getId().equals("223891083724193792") || event.getAuthor().getId().equals("425706045453893642")) {
+        if (event.getAuthor().getId().equals("223891083724193792") || event.getAuthor().getId().equals("425706045453893642") || event.getAuthor().getId().equals("394586910065950723")) {
             embed.setAuthor("Shardsystem", null, "https://cdn.atomicnetworks.eu/discord/icon.png");
             if (args.length == 1) {
                 String description = MessageFormat.format("This guild is assigned to the **shard {0}**.\n\n", event.getJDA().getShardInfo().getShardId());
