@@ -1,6 +1,7 @@
 package eu.atomicnetworks.discordbot;
 
 import com.google.gson.Gson;
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import eu.atomicradio.AtomicClient;
 import eu.atomicnetworks.discordbot.handler.EventHandler;
 import eu.atomicnetworks.discordbot.handler.ServerListHandler;
@@ -71,6 +72,7 @@ public class DiscordBot {
         builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER));
         builder.setLargeThreshold(50);
         builder.setActivity(Activity.listening("atomicradio.eu"));
+        builder.setAudioSendFactory(new NativeAudioSendFactory());
         builder.addEventListeners(new EventHandler(this));
         try {
             builder.setShardsTotal(6);
