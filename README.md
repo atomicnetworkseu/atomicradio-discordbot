@@ -66,5 +66,8 @@
 ## Invite your bot to a guild 📨
 To add the bot to your guild, you have to get an oauth link. This <a href="https://finitereality.github.io/permissions-calculator/?v=0">page</a> can help you generate a full oauth link.
 
+## Credits 🔥
+This project uses some other projects like <a href="https://github.com/DV8FromTheWorld/JDA">JDA</a> by <a href="https://github.com/DV8FromTheWorld">DV8FromTheWorld</a> and <a href="https://github.com/sedmelluq/lavaplayer">lavaplayer</a> & <a href="https://github.com/sedmelluq/jda-nas">jda-nas</a> by <a href="https://github.com/sedmelluq">sedmelluq</a>. Be sure to check out their work on GitHub.
+
 ## License 📑
 This code is available under the <a href="https://github.com/atomicnetworkseu/discord-bot/blob/master/LICENSE">Mozilla Public License Version 2.0</a>.
