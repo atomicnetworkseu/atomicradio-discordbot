@@ -6,7 +6,6 @@ updates:
       interval: "daily"
     reviewers:
       - "VocalZero"
-      - "InstabilSpielt"
     commit-message:
       prefix: "⚠️"
       prefix-development: "⚠️"
