@@ -30,9 +30,9 @@
     
     <dependencies>
         <dependency>
-            <groupId>net.dv8tion</groupId>
+            <groupId>com.github.DV8FromTheWorld</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.1_261</version>
+            <version>5492d1d2eb</version>
         </dependency>
         <dependency>
             <groupId>com.sedmelluq</groupId>
