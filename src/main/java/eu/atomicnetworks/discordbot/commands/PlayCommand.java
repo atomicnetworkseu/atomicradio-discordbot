@@ -73,7 +73,7 @@ public class PlayCommand {
         }
 
         if (args.length != 2) {
-            embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
+            embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **gamig** or **rap** a station from which you want to play!");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
@@ -106,8 +106,8 @@ public class PlayCommand {
                     }
                 }
                 break;
-            case "dance":
-                if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("dance")) {
+            case "gaming":
+                if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("gaming")) {
                     if (this.discord.getBackendManager().getPlaying(event.getGuild())) {
                         embed.setDescription("The station is already being played.");
                         this.discord.getBackendManager().sendMessage(event, embed.build());
@@ -119,22 +119,22 @@ public class PlayCommand {
                     AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                     audioHandler.stop();
                 }
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/gaming/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "dance");
+                this.discord.getBackendManager().setMusic(event.getGuild(), "gaming");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
 
-                embed.setDescription("Now **atr.dance** is played.");
+                embed.setDescription("Now **atr.gaming** is played.");
                 this.discord.getBackendManager().sendMessage(event, embed.build());
 
                 if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                     if(this.discord.getBackendManager().getTag(event.getGuild())) {
-                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.gaming").queue();
                     }
                 }
                 break;
-            case "trap":
-                if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("trap")) {
+            case "rap":
+                if (this.discord.getBackendManager().getMusic(event.getGuild()).equalsIgnoreCase("rap")) {
                     if (this.discord.getBackendManager().getPlaying(event.getGuild())) {
                         embed.setDescription("The station is already being played.");
                         this.discord.getBackendManager().sendMessage(event, embed.build());
@@ -146,22 +146,22 @@ public class PlayCommand {
                     AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                     audioHandler.stop();
                 }
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/rap/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "trap");
+                this.discord.getBackendManager().setMusic(event.getGuild(), "rap");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
 
-                embed.setDescription("Now **atr.trap** is played.");
+                embed.setDescription("Now **atr.rap** is played.");
                 this.discord.getBackendManager().sendMessage(event, embed.build());
 
                 if(event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                     if(this.discord.getBackendManager().getTag(event.getGuild())) {
-                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.rap").queue();
                     }
                 }
                 break;
             default:
-                embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
+                embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **gaming** or **rap** a station from which you want to play!");
                 this.discord.getBackendManager().sendMessage(event, embed.build());
                 break;
         }

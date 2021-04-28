@@ -66,11 +66,11 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
             case "one":
                 this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");
                 break;
-            case "dance":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality");
+            case "gaming":
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/gaming/highquality");
                 break;
-            case "trap":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality");
+            case "rap":
+                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/rap/highquality");
                 break;
             default:
                 this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");

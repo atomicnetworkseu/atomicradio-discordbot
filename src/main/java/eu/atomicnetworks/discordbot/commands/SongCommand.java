@@ -54,11 +54,11 @@ public class SongCommand {
             case "one":
                 targetChannel = this.discord.getAtomicClient().getChannelOne();
                 break;
-            case "dance":
-                targetChannel = this.discord.getAtomicClient().getChannelDance();
+            case "gaming":
+                targetChannel = this.discord.getAtomicClient().getChannelGaming();
                 break;
-            case "trap":
-                targetChannel = this.discord.getAtomicClient().getChannelTrap();
+            case "rap":
+                targetChannel = this.discord.getAtomicClient().getChannelRap();
                 break;
         }
         

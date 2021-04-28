@@ -78,16 +78,16 @@ public class JoinCommand {
                 this.discord.getBackendManager().setMusic(event.getGuild(), "one");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
                 break;
-            case "dance":
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
+            case "gaming":
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/gaming/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "dance");
+                this.discord.getBackendManager().setMusic(event.getGuild(), "gaming");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
                 break;
-            case "trap":
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
+            case "rap":
+                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/rap/highquality");
                 this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "trap");
+                this.discord.getBackendManager().setMusic(event.getGuild(), "rap");
                 this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
                 break;
             default:

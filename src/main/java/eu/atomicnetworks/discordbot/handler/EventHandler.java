@@ -98,27 +98,27 @@ public class EventHandler extends ListenerAdapter {
                                             }
                                         }
                                         break;
-                                    case "dance":
-                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality");
+                                    case "gaming":
+                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/gaming/highquality");
                                         this.discordBot.getBackendManager().setPlaying(guild, true);
-                                        this.discordBot.getBackendManager().setMusic(guild, "dance");
+                                        this.discordBot.getBackendManager().setMusic(guild, "gaming");
                                         this.discordBot.getBackendManager().setChannelId(guild, voiceChannel.getId());
-                                        this.discordBot.consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.dance.");
+                                        this.discordBot.consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.gaming.");
                                         if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                             if (this.discordBot.getBackendManager().getTag(guild)) {
-                                                guild.getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                                                guild.getSelfMember().modifyNickname("atomicradio » atr.gaming").queue();
                                             }
                                         }
                                         break;
-                                    case "trap":
-                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality");
+                                    case "rap":
+                                        this.discordBot.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/rap/highquality");
                                         this.discordBot.getBackendManager().setPlaying(guild, true);
-                                        this.discordBot.getBackendManager().setMusic(guild, "trap");
+                                        this.discordBot.getBackendManager().setMusic(guild, "rap");
                                         this.discordBot.getBackendManager().setChannelId(guild, voiceChannel.getId());
-                                        this.discordBot.consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.trap.");
+                                        this.discordBot.consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Restarting stream on " + guild.getName() + " with atr.rap.");
                                         if (guild.getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                             if (this.discordBot.getBackendManager().getTag(guild)) {
-                                                guild.getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                                                guild.getSelfMember().modifyNickname("atomicradio » atr.rap").queue();
                                             }
                                         }
                                         break;
@@ -223,23 +223,23 @@ public class EventHandler extends ListenerAdapter {
                                 }
                             }
                             break;
-                        case "dance":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
+                        case "gaming":
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/gaming/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
-                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "dance");
+                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "gaming");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                 if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.gaming").queue();
                                 }
                             }
                             break;
-                        case "trap":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
+                        case "rap":
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/rap/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
-                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "trap");
+                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "rap");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                 if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.rap").queue();
                                 }
                             }
                             break;
@@ -296,23 +296,23 @@ public class EventHandler extends ListenerAdapter {
                                     }
                                 }
                                 break;
-                            case "dance":
-                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
+                            case "gaming":
+                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/gaming/highquality");
                                 this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
-                                this.discordBot.getBackendManager().setMusic(event.getGuild(), "dance");
+                                this.discordBot.getBackendManager().setMusic(event.getGuild(), "gaming");
                                 if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                     if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.gaming").queue();
                                     }
                                 }
                                 break;
-                            case "trap":
-                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
+                            case "rap":
+                                this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/rap/highquality");
                                 this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
-                                this.discordBot.getBackendManager().setMusic(event.getGuild(), "trap");
+                                this.discordBot.getBackendManager().setMusic(event.getGuild(), "rap");
                                 if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                     if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                                        event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.rap").queue();
                                     }
                                 }
                                 break;
@@ -354,23 +354,23 @@ public class EventHandler extends ListenerAdapter {
                                 }
                             }
                             break;
-                        case "dance":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
+                        case "gaming":
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/gaming/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
-                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "dance");
+                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "gaming");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                 if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.dance").queue();
+                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.gaming").queue();
                                 }
                             }
                             break;
-                        case "trap":
-                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
+                        case "rap":
+                            this.discordBot.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/rap/highquality");
                             this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
-                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "trap");
+                            this.discordBot.getBackendManager().setMusic(event.getGuild(), "rap");
                             if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
                                 if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.trap").queue();
+                                    event.getGuild().getSelfMember().modifyNickname("atomicradio » atr.rap").queue();
                                 }
                             }
                             break;
