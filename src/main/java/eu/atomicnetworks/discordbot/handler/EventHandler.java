@@ -152,33 +152,60 @@ public class EventHandler extends ListenerAdapter {
         if (!message.getContentRaw().toLowerCase().startsWith(prefix)) {
             return;
         }
-
-        if (message.getContentRaw().toLowerCase().startsWith(prefix + "help")) {
-            helpCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "info") || message.getContentRaw().toLowerCase().startsWith(prefix + "invite")) {
-            infoCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "join")) {
-            joinCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "leave")) {
-            leaveCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "play")) {
-            playCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "setup")) {
-            setupCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "vol") || message.getContentRaw().toLowerCase().startsWith(prefix + "volume")) {
-            volumeCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "settings")) {
-            settingsCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "report")) {
-            reportCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "song")) {
-            songCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "bass")) {
-            bassCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "shard")) {
-            shardCommand.execute(event);
-        } else {
-            return;
+        String command = (message.getContentDisplay().toLowerCase().split(" ")[0]).substring(prefix.length());
+        
+        switch(command) {
+            case "help":
+            case "h":
+                helpCommand.execute(event);
+                break;
+            case "info":
+            case "invite":
+            case "i":
+                infoCommand.execute(event);
+                break;
+            case "join":
+            case "j":
+                joinCommand.execute(event);
+                break;
+            case "leave":
+            case "l":
+                leaveCommand.execute(event);
+                break;
+            case "play":
+            case "p":
+                playCommand.execute(event);
+                break;
+            case "setup":
+            case "s":
+                setupCommand.execute(event);
+                break;
+            case "volume":
+            case "vol":
+            case "v":
+                volumeCommand.execute(event);
+                break;
+            case "settings":
+                settingsCommand.execute(event);
+                break;
+            case "report":
+            case "r":
+                reportCommand.execute(event);
+                break;
+            case "song":
+            case "nowplaying":
+            case "np":
+                songCommand.execute(event);
+                break;
+            case "bass":
+            case "b":
+                bassCommand.execute(event);
+                break;
+            case "shard":
+                shardCommand.execute(event);
+                break;
+            default:
+                return;
         }
         this.discordBot.consoleInfo(MessageFormat.format("[SHARD {0}] {1} ({2}) ran command {3} in {4} (#{5})", event.getJDA().getShardInfo().getShardId(), event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
     }
