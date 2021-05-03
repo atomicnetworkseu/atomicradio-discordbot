@@ -100,7 +100,7 @@
         <dependency>
 	    <groupId>com.github.atomicnetworkseu</groupId>
 	    <artifactId>atomicradio-library</artifactId>
-	    <version>1.0.4</version>
+	    <version>1.0.5</version>
 	</dependency>
     </dependencies>
     
