@@ -10,6 +10,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import eu.atomicnetworks.discordbot.DiscordBot;
+import eu.atomicnetworks.discordbot.enums.StationChannnel;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -62,19 +63,11 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     @Override
     public void onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, FriendlyException exception) {
         this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
-        switch(this.discord.getBackendManager().getMusic(guild)) {
-            case "one":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");
-                break;
-            case "dance":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/dance/highquality");
-                break;
-            case "trap":
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/trap/highquality");
-                break;
-            default:
-                this.discord.getBackendManager().startStream(guild, "https://listen.atomicradio.eu/one/highquality");
-                break;
+        try {
+            StationChannnel stationChannnel = StationChannnel.valueOf(this.discord.getBackendManager().getMusic(guild));
+            this.discord.getBackendManager().startStream(guild, stationChannnel.getUrl());
+        } catch(IllegalArgumentException ex) {
+            this.discord.getBackendManager().startStream(guild, StationChannnel.ONE.getUrl());
         }
     }
 

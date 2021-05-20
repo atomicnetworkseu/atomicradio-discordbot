@@ -1,9 +1,11 @@
 package eu.atomicnetworks.discordbot.commands;
 
 import eu.atomicnetworks.discordbot.DiscordBot;
+import eu.atomicnetworks.discordbot.enums.StationChannnel;
 import eu.atomicnetworks.discordbot.handler.AudioHandler;
 import java.awt.Color;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -71,31 +73,17 @@ public class JoinCommand {
             return;
         }
         
-        switch(this.discord.getBackendManager().getMusic(event.getGuild())) {
-            case "one":
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality");
-                this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "one");
-                this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
-                break;
-            case "dance":
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/dance/highquality");
-                this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "dance");
-                this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
-                break;
-            case "trap":
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/trap/highquality");
-                this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "trap");
-                this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
-                break;
-            default:
-                this.discord.getBackendManager().startStream(event.getGuild(), "https://listen.atomicradio.eu/one/highquality");
-                this.discord.getBackendManager().setPlaying(event.getGuild(), true);
-                this.discord.getBackendManager().setMusic(event.getGuild(), "one");
-                this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
-                break;
+        try {
+            StationChannnel stationChannnel = StationChannnel.valueOf(this.discord.getBackendManager().getMusic(event.getGuild()));
+            this.discord.getBackendManager().startStream(event.getGuild(), stationChannnel.getUrl());
+            this.discord.getBackendManager().setPlaying(event.getGuild(), true);
+            this.discord.getBackendManager().setMusic(event.getGuild(), stationChannnel.getName());
+            this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
+        } catch(IllegalArgumentException ex) {
+            this.discord.getBackendManager().startStream(event.getGuild(), StationChannnel.ONE.getUrl());
+            this.discord.getBackendManager().setPlaying(event.getGuild(), true);
+            this.discord.getBackendManager().setMusic(event.getGuild(), StationChannnel.ONE.getName());
+            this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
         }
         
         embed.setDescription("The bot has successfully joined the channel,\nthe last played stream will be loaded which you can change with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play**.");

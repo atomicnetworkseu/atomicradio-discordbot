@@ -1,6 +1,7 @@
 package eu.atomicnetworks.discordbot.commands;
 
 import eu.atomicnetworks.discordbot.DiscordBot;
+import eu.atomicnetworks.discordbot.enums.StationChannnel;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -52,9 +53,14 @@ public class InfoCommand {
     
     private String getChannel(Guild guild) {
         if(this.discord.getBackendManager().getMusic(guild).isEmpty()) {
-            return "https://listen.atomicradio.eu/one/highquality";
+            return StationChannnel.ONE.getUrl();
         }
-        return "https://listen.atomicradio.eu/" + this.discord.getBackendManager().getMusic(guild) + "/highquality";
+        try {
+            StationChannnel stationChannnel = StationChannnel.valueOf(this.discord.getBackendManager().getMusic(guild));
+            return stationChannnel.getUrl();
+        } catch(IllegalArgumentException ex) {
+            return StationChannnel.ONE.getUrl();
+        }
     }
     
     private long getPing() {
