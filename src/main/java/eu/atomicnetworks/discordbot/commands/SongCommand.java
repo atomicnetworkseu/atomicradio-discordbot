@@ -1,6 +1,7 @@
 package eu.atomicnetworks.discordbot.commands;
 
 import eu.atomicnetworks.discordbot.DiscordBot;
+import eu.atomicnetworks.discordbot.enums.StationChannnel;
 import eu.atomicradio.objects.Channel;
 import eu.atomicradio.objects.Channel.Song;
 import eu.atomicradio.objects.Channels;
@@ -47,43 +48,28 @@ public class SongCommand {
         
         String channel = this.discord.getBackendManager().getMusic(event.getGuild());
         if (channel.isEmpty()) {
-            channel = "one";
+            channel = "ONE";
         }
         
-        Channel targetChannel = null;
-        switch(channel.toLowerCase()) {
-            case "one":
-                targetChannel = this.discord.getAtomicClient().getChannel(Channels.ONE);
-                break;
-            case "dance":
-                targetChannel = this.discord.getAtomicClient().getChannel(Channels.DANCE);
-                break;
-            case "trap":
-                targetChannel = this.discord.getAtomicClient().getChannel(Channels.TRAP);
-                break;
-        }
-        
-        if(targetChannel == null) {
-            return;
-        }
-
         try {
-            InputStream inputStream = null;
-            if (args.length == 1) {
-                try {
-                    URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(targetChannel.getSong().getStart_at(), targetChannel.getSong().getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
-                    inputStream = url.openStream();
-                    event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+            Channel targetChannel = this.discord.getAtomicClient().getChannel(Channels.valueOf(channel));
+            try {
+                InputStream inputStream = null;
+                if (args.length == 1) {
+                    try {
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(targetChannel.getSong().getStart_at(), targetChannel.getSong().getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
+                        inputStream = url.openStream();
+                        event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    return;
                 }
-                return;
-            }
 
-            switch (args[1].toLowerCase()) {
-                case "last":
+                switch (args[1].toLowerCase()) {
+                    case "last":
                     try {
                         Song lastSong = targetChannel.getHistory().stream().findFirst().orElse(null);
                         URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(lastSong.getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(lastSong.getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(lastSong.getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(lastSong.getStart_at(), lastSong.getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "last", URLEncoder.encode(lastSong.getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
@@ -94,9 +80,9 @@ public class SongCommand {
                     } catch (IOException ex) {
                         Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                break;
-                
-                case "next":
+                    break;
+
+                    case "next":
                     try {
                         Song nextSong = targetChannel.getSchedule().stream().findFirst().orElse(null);
                         URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(nextSong.getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(nextSong.getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(nextSong.getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(nextSong.getStart_at(), nextSong.getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "next", URLEncoder.encode(nextSong.getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
@@ -107,9 +93,9 @@ public class SongCommand {
                     } catch (IOException ex) {
                         Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                break;
+                    break;
 
-                case "now":
+                    case "now":
                     try {
                         URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(targetChannel.getSong().getStart_at(), targetChannel.getSong().getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
@@ -119,13 +105,16 @@ public class SongCommand {
                     } catch (IOException ex) {
                         Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                break;
+                    break;
 
+                }
+            } catch (InsufficientPermissionException ex) {
+                embed.setDescription("I do not have permission to **attach files**, please contact an administrator.");
+                this.discord.getBackendManager().sendMessage(event, embed.build());
             }
-        } catch (InsufficientPermissionException ex) {
-            embed.setDescription("I do not have permission to **attach files**, please contact an administrator.");
-            this.discord.getBackendManager().sendMessage(event, embed.build());
+        } catch(IllegalArgumentException ex) {
         }
+
     }
     
     public String getDurationTimestamp(Long start_at, Long end_at) {
