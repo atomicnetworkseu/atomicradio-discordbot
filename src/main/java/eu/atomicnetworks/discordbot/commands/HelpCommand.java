@@ -33,7 +33,6 @@ public class HelpCommand {
             embed.setDescription(MessageFormat.format("** **\n"
                 + ":gear: | **Commands**\n\n"
                 + "**{0}help**  • Informs you about all available commands.\n"
-                + "**{0}join**  • Connects the bot to the specified channel.\n"
                 + "**{0}play**  • Changes the currently playing station in your channel.\n"
                 + "**{0}song**  • Informs you about the currently playing song.\n"
                 + "**{0}vol**  • Lets you adjust the current volume.\n"
@@ -44,7 +43,6 @@ public class HelpCommand {
             embed.setDescription(MessageFormat.format("** **\n"
                 + ":gear: | **Commands**\n\n"
                 + "**{0}help**  • Informs you about all available commands.\n"
-                + "**{0}join**  • Connects the bot to the specified channel.\n"
                 + "**{0}play**  • Changes the currently playing station in your channel.\n"
                 + "**{0}song**  • Informs you about the currently playing song.\n"
                 + "**{0}vol**  • Lets you adjust the current volume.\n"
@@ -54,9 +52,9 @@ public class HelpCommand {
                 + ":hammer_pick: | ** Extended commands**\n"
                 + "Which can only be used by members with the `administrator` authorization.\n"
                 + "** **\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "join**  • Connects the bot to the specified channel.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**  • Disconnects the bot from the channel.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "bass** • With this setting, you can finally enjoy your songs with more bass.\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**  • Defines the channel where the bot should join automatically.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "settings**  • With this command you can make advanced adjustments.\n\n"
                 + "** **\n", this.discord.getBackendManager().getPrefix(event.getGuild())));
         }

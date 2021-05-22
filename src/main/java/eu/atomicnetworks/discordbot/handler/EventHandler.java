@@ -9,7 +9,6 @@ import eu.atomicnetworks.discordbot.commands.LeaveCommand;
 import eu.atomicnetworks.discordbot.commands.PlayCommand;
 import eu.atomicnetworks.discordbot.commands.ReportCommand;
 import eu.atomicnetworks.discordbot.commands.SettingsCommand;
-import eu.atomicnetworks.discordbot.commands.SetupCommand;
 import eu.atomicnetworks.discordbot.commands.ShardCommand;
 import eu.atomicnetworks.discordbot.commands.SongCommand;
 import eu.atomicnetworks.discordbot.commands.VolumeCommand;
@@ -44,7 +43,6 @@ public class EventHandler extends ListenerAdapter {
     private final JoinCommand joinCommand;
     private final LeaveCommand leaveCommand;
     private final PlayCommand playCommand;
-    private final SetupCommand setupCommand;
     private final VolumeCommand volumeCommand;
     private final SettingsCommand settingsCommand;
     private final ReportCommand reportCommand;
@@ -59,7 +57,6 @@ public class EventHandler extends ListenerAdapter {
         this.joinCommand = new JoinCommand(this.discordBot);
         this.leaveCommand = new LeaveCommand(this.discordBot);
         this.playCommand = new PlayCommand(this.discordBot);
-        this.setupCommand = new SetupCommand(this.discordBot);
         this.volumeCommand = new VolumeCommand(this.discordBot);
         this.settingsCommand = new SettingsCommand(this.discordBot);
         this.reportCommand = new ReportCommand(this.discordBot);
@@ -164,10 +161,6 @@ public class EventHandler extends ListenerAdapter {
             case "play":
             case "p":
                 playCommand.execute(event);
-                break;
-            case "setup":
-            case "s":
-                setupCommand.execute(event);
                 break;
             case "volume":
             case "vol":

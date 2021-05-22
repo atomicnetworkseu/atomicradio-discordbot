@@ -42,7 +42,7 @@ public class PlayCommand {
         }
         
         if (this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
-            embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**.");
+            embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "join**.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
@@ -63,11 +63,19 @@ public class PlayCommand {
             return;
         }
         
-        if(!event.getGuild().getAudioManager().isConnected()) {
-            try {
-                event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
-            } catch (InsufficientPermissionException ex) {
-                embed.setDescription("I do not have permission to **join** the voice channel, please contact an administrator.");
+        if(this.discord.getBackendManager().checkForPermissions(event.getMember())) {
+            if(!event.getGuild().getAudioManager().isConnected()) {
+                try {
+                    event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
+                } catch (InsufficientPermissionException ex) {
+                    embed.setDescription("I do not have permission to **join** the voice channel, please contact an administrator.");
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
+                    return;
+                }
+            }
+        } else {
+            if(!event.getGuild().getAudioManager().isConnected()) {
+                embed.setDescription("Currently the musicbot is not connected to the voice channel, please ask a person with **administrator**-right to execute the **.join** command.");
                 this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
@@ -107,7 +115,7 @@ public class PlayCommand {
                 }
             }
         } catch(IllegalArgumentException ex) {
-            embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
+            embed.setDescription("The specified station was not found!");
             this.discord.getBackendManager().sendMessage(event, embed.build());
         }
 

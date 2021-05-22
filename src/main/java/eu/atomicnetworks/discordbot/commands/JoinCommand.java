@@ -32,23 +32,31 @@ public class JoinCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(149, 79, 180));
         
-        if(this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild())) {
-            if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
-                embed.setTitle("Insufficient Rights");
-                embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
-                this.discord.getBackendManager().sendMessage(event, embed.build());
-                return;
-            }
-        }
-        
-        if(this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
-            embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**.");
+        if(!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
+            embed.setTitle("Insufficient Rights");
+            embed.setDescription("Only members with the **administrator**-right can execute this command.\n\nYou do not have enough rights to execute this command,\nif you think this is a bug please contact a team member.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
         
+        if(this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
+            if(!event.getMember().getVoiceState().inVoiceChannel()) {
+                embed.setDescription("You must join a channel in which the bot can also join to create a link.");
+                this.discord.getBackendManager().sendMessage(event, embed.build());
+                return;
+            }
+            
+            this.discord.getBackendManager().setChannelId(event.getGuild(), event.getMember().getVoiceState().getChannel().getId());
+        }
+        
+        if(event.getMember().getVoiceState().inVoiceChannel()) {
+            if(!this.discord.getBackendManager().getChannelId(event.getGuild()).equals(event.getMember().getVoiceState().getChannel().getId())) {
+                this.discord.getBackendManager().setChannelId(event.getGuild(), event.getMember().getVoiceState().getChannel().getId());
+            }
+        }
+        
         if(event.getGuild().getAudioManager().isConnected()) {
-            embed.setDescription("**The bot is already in a channel**,\nbut a member with the permission **administrator** can disconnect the bot from the channel with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**.");
+            embed.setDescription("The bot is already in a channel, but you can disconnect it with **.leave**.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
