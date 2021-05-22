@@ -10,6 +10,7 @@ import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
 import eu.atomicnetworks.discordbot.managers.MongoManager;
 import eu.atomicnetworks.discordbot.webapi.ApiServer;
+import eu.atomicradio.objects.Channels;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,25 +100,25 @@ public class DiscordBot {
                                 shard.getPresence().setActivity(Activity.listening("atr.one, dance & trap"));
                                 break;
                             case 3:
-                                String artistOne = this.atomicClient.getChannelOne().getSong().getArtist();
+                                String artistOne = this.atomicClient.getChannel(Channels.ONE).getSong().getArtist();
                                 if(artistOne.contains("FEAT.")) {
                                     artistOne = artistOne.split("FEAT.")[0];
                                 }
-                                shard.getPresence().setActivity(Activity.listening(artistOne + " - " + this.atomicClient.getChannelOne().getSong().getTitle() + " on atr.one"));
+                                shard.getPresence().setActivity(Activity.listening(artistOne + " - " + this.atomicClient.getChannel(Channels.ONE).getSong().getTitle() + " on atr.one"));
                                 break;
                             case 4:
-                                String artistDance = this.atomicClient.getChannelDance().getSong().getArtist();
+                                String artistDance = this.atomicClient.getChannel(Channels.DANCE).getSong().getArtist();
                                 if(artistDance.contains("FEAT.")) {
                                     artistDance = artistDance.split("FEAT.")[0];
                                 }
-                                shard.getPresence().setActivity(Activity.listening(artistDance + " - " + this.atomicClient.getChannelDance().getSong().getTitle() + " on atr.dance"));
+                                shard.getPresence().setActivity(Activity.listening(artistDance + " - " + this.atomicClient.getChannel(Channels.DANCE).getSong().getTitle() + " on atr.dance"));
                                 break;
                             case 5:
-                                String artistTrap = this.atomicClient.getChannelTrap().getSong().getArtist();
+                                String artistTrap = this.atomicClient.getChannel(Channels.TRAP).getSong().getArtist();
                                 if(artistTrap.contains("FEAT.")) {
                                     artistTrap = artistTrap.split("FEAT.")[0];
                                 }
-                                shard.getPresence().setActivity(Activity.listening(artistTrap + " - " + this.atomicClient.getChannelTrap().getSong().getTitle() + " on atr.trap"));
+                                shard.getPresence().setActivity(Activity.listening(artistTrap + " - " + this.atomicClient.getChannel(Channels.TRAP).getSong().getTitle() + " on atr.trap"));
                                 break;
                             case 6:
                                 shard.getPresence().setActivity(Activity.listening(".help"));

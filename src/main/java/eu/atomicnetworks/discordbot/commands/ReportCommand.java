@@ -5,6 +5,7 @@ import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
 import eu.atomicnetworks.discordbot.DiscordBot;
 import eu.atomicradio.objects.Channel;
+import eu.atomicradio.objects.Channels;
 import java.awt.Color;
 import java.util.HashMap;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -69,14 +70,14 @@ public class ReportCommand {
                 }
                 if(args[2].equalsIgnoreCase("now")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.one!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getAtomicClient().getChannelOne().getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannelOne().getSong().getTitle() + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannel(Channels.ONE).getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannel(Channels.ONE).getSong().getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
                     this.sendReportToTeam("one", "now", event);
                 } else if(args[2].equalsIgnoreCase("last")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.one!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getAtomicClient().getChannelOne().getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannelOne().getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannel(Channels.ONE).getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannel(Channels.ONE).getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
@@ -95,14 +96,14 @@ public class ReportCommand {
                 }
                 if(args[2].equalsIgnoreCase("now")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.dance!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getAtomicClient().getChannelDance().getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannelDance().getSong().getTitle() + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannel(Channels.DANCE).getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannel(Channels.DANCE).getSong().getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
                     this.sendReportToTeam("dance", "now", event);
                 } else if(args[2].equalsIgnoreCase("last")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.dance!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getAtomicClient().getChannelDance().getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannelDance().getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannel(Channels.DANCE).getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannel(Channels.DANCE).getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                    this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
@@ -112,14 +113,14 @@ public class ReportCommand {
             case "trap":
                 if(args[2].equalsIgnoreCase("now")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.trap!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getAtomicClient().getChannelTrap().getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannelTrap().getSong().getTitle() + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannel(Channels.TRAP).getSong().getArtist() + " - " + this.discord.getAtomicClient().getChannel(Channels.TRAP).getSong().getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
                     this.sendReportToTeam("trap", "now", event);
                 } else if(args[2].equalsIgnoreCase("last")) {
                     embed.setDescription("**Thank you for reporting this Song at atr.trap!**\nPlease note that it may take 24 hours before **"
-                        + this.discord.getAtomicClient().getChannelTrap().getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannelTrap().getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
+                        + this.discord.getAtomicClient().getChannel(Channels.TRAP).getHistory().stream().findFirst().orElse(null).getArtist() + " - " + this.discord.getAtomicClient().getChannel(Channels.TRAP).getHistory().stream().findFirst().orElse(null).getTitle() + "** checked and deleted if necessary.");
                     embed.setFooter("You can report Songs only every 15 Minutes.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.memberCooldown.put(event.getMember().getId(), System.currentTimeMillis()+900000);
@@ -136,13 +137,13 @@ public class ReportCommand {
         Channel targetChannel = null;
         switch(channel.toLowerCase()) {
             case "one":
-                targetChannel = this.discord.getAtomicClient().getChannelOne();
+                targetChannel = this.discord.getAtomicClient().getChannel(Channels.ONE);
                 break;
             case "dance":
-                targetChannel = this.discord.getAtomicClient().getChannelDance();
+                targetChannel = this.discord.getAtomicClient().getChannel(Channels.DANCE);
                 break;
             case "trap":
-                targetChannel = this.discord.getAtomicClient().getChannelTrap();
+                targetChannel = this.discord.getAtomicClient().getChannel(Channels.TRAP);
                 break;
         }
         

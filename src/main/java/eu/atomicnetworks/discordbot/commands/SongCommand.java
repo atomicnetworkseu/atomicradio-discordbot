@@ -3,6 +3,7 @@ package eu.atomicnetworks.discordbot.commands;
 import eu.atomicnetworks.discordbot.DiscordBot;
 import eu.atomicradio.objects.Channel;
 import eu.atomicradio.objects.Channel.Song;
+import eu.atomicradio.objects.Channels;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,13 +53,13 @@ public class SongCommand {
         Channel targetChannel = null;
         switch(channel.toLowerCase()) {
             case "one":
-                targetChannel = this.discord.getAtomicClient().getChannelOne();
+                targetChannel = this.discord.getAtomicClient().getChannel(Channels.ONE);
                 break;
             case "dance":
-                targetChannel = this.discord.getAtomicClient().getChannelDance();
+                targetChannel = this.discord.getAtomicClient().getChannel(Channels.DANCE);
                 break;
             case "trap":
-                targetChannel = this.discord.getAtomicClient().getChannelTrap();
+                targetChannel = this.discord.getAtomicClient().getChannel(Channels.TRAP);
                 break;
         }
         

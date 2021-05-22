@@ -104,11 +104,11 @@ public class BackendManager {
     }
     
     public String getMusic(Guild guild) {
-        return this.getGuild(guild).getMusic();
+        return this.getGuild(guild).getMusic().toUpperCase();
     }
     
     public void setMusic(Guild guild, String music) {
-        this.getGuild(guild).setMusic(music);
+        this.getGuild(guild).setMusic(music.toUpperCase());
         this.discord.getGuildManager().saveGuild(this.getGuild(guild));
     }
     
