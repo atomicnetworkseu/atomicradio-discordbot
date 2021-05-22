@@ -63,6 +63,12 @@ public class PlayCommand {
             return;
         }
         
+        if (args.length != 2) {
+            embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
+            this.discord.getBackendManager().sendMessage(event, embed.build());
+            return;
+        }
+        
         if(this.discord.getBackendManager().checkForPermissions(event.getMember())) {
             if(!event.getGuild().getAudioManager().isConnected()) {
                 try {
@@ -79,12 +85,6 @@ public class PlayCommand {
                 this.discord.getBackendManager().sendMessage(event, embed.build());
                 return;
             }
-        }
-
-        if (args.length != 2) {
-            embed.setDescription("Please choose with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "play** **one**, **dance** or **trap** a station from which you want to play!");
-            this.discord.getBackendManager().sendMessage(event, embed.build());
-            return;
         }
         
         try {
