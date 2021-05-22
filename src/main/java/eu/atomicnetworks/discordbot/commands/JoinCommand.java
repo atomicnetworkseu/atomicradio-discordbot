@@ -56,7 +56,7 @@ public class JoinCommand {
         }
         
         if(event.getGuild().getAudioManager().isConnected()) {
-            embed.setDescription("The bot is already in a channel, but you can disconnect it with **.leave**.");
+            embed.setDescription("The bot is already in a channel, but you can disconnect it with **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "leave**.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
