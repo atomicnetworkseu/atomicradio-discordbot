@@ -80,12 +80,12 @@ public class SettingsCommand {
             case "rights":
                 if (this.discord.getBackendManager().isMusicCommandsDenied(event.getGuild())) {
                     this.discord.getBackendManager().setMusicCommands(event.getGuild(), false);
-                    embed.setDescription("**Successful**, the commands `.play`, `.vol` & `.join` can now be executed by all users again.");
+                    embed.setDescription("**Successful**, the commands `.play` & `.vol` can now be executed by all users again.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     return;
                 } else {
                     this.discord.getBackendManager().setMusicCommands(event.getGuild(), true);
-                    embed.setDescription("**Successful**, the commands `.play`, `.vol` & `.join` can now only be used by users with the administrator authorisation.");
+                    embed.setDescription("**Successful**, the commands `.play` & `.vol` can now only be used by users with the administrator authorisation.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     return;
                 }
