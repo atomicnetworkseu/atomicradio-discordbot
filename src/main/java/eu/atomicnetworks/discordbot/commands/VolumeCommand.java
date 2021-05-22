@@ -39,7 +39,7 @@ public class VolumeCommand {
         }
         
         if (this.discord.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
-            embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "setup**.");
+            embed.setDescription("You don't have a default channel yet to do this and let the bot connect to the channel write **" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "join**.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
