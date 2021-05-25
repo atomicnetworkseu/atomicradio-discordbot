@@ -1,4 +1,4 @@
-name: Check pull request
+name: Action on pull
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 jobs:
   compile:
     runs-on: ubuntu-latest
-    name: Running Java ${{ matrix.java }} compile
+    name: Running compile 📦
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
@@ -24,7 +24,7 @@ jobs:
       run: mvn compile --file pom.xml
   test:
     runs-on: ubuntu-latest
-    name: Running tests
+    name: Running tests 🔨
     needs: compile
     steps:
     - uses: actions/checkout@v2
@@ -42,7 +42,7 @@ jobs:
       run: mvn test --file pom.xml
   build:
     runs-on: ubuntu-latest
-    name: Running maven build
+    name: Running build 🌸
     needs: test
     steps:
     - uses: actions/checkout@v2
