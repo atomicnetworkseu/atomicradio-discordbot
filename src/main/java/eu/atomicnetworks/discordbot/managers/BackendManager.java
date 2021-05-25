@@ -17,7 +17,6 @@ import eu.atomicnetworks.discordbot.object.GuildData;
 import eu.atomicnetworks.discordbot.object.Listeners;
 import java.awt.Color;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +28,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.ContextException;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 
@@ -266,7 +266,7 @@ public class BackendManager {
                         } catch (InsufficientPermissionException ex2) {
                         }
                     });
-                } catch (InsufficientPermissionException ex2) {
+                } catch (ErrorResponseException ex2) {
                 }
             }
         }
