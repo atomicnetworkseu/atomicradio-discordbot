@@ -2,6 +2,7 @@ package eu.atomicnetworks.discordbot.webapi.context;
 
 import com.sun.net.httpserver.HttpServer;
 import eu.atomicnetworks.discordbot.webapi.ApiServer;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -33,9 +34,16 @@ public class ListenerContext {
                 return;
             }
             
+            JSONArray array = new JSONArray();
+            this.apiServer.getDiscordBot().getBackendManager().getListeners().getListener().entrySet().forEach(x -> {
+                JSONObject json = new JSONObject(this.apiServer.getDiscordBot().getGson().toJson(x.getValue()));
+                array.put(json);
+            });
+            
             JSONObject json = new JSONObject(this.apiServer.getDiscordBot().getGson().toJson(this.apiServer.getDiscordBot().getBackendManager().getListeners()));
             int listener = this.apiServer.getDiscordBot().getBackendManager().getListeners().getListener().size();
             json.put("listeners", listener);
+            json.put("listener", array);
             this.apiServer.sendResponseJson(he, 200, json);
         });
     }
