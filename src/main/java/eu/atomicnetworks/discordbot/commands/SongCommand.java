@@ -1,7 +1,6 @@
 package eu.atomicnetworks.discordbot.commands;
 
 import eu.atomicnetworks.discordbot.DiscordBot;
-import eu.atomicnetworks.discordbot.enums.StationChannnel;
 import eu.atomicradio.objects.Channel;
 import eu.atomicradio.objects.Channel.Song;
 import eu.atomicradio.objects.Channels;
@@ -57,7 +56,7 @@ public class SongCommand {
                 InputStream inputStream = null;
                 if (args.length == 1) {
                     try {
-                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(targetChannel.getSong().getStart_at(), targetChannel.getSong().getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at().getTime()/1000), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp((targetChannel.getSong().getStart_at().getTime()/1000), (targetChannel.getSong().getEnd_at().getTime()/1000)), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -72,7 +71,7 @@ public class SongCommand {
                     case "last":
                     try {
                         Song lastSong = targetChannel.getHistory().stream().findFirst().orElse(null);
-                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(lastSong.getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(lastSong.getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(lastSong.getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(lastSong.getStart_at(), lastSong.getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "last", URLEncoder.encode(lastSong.getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(lastSong.getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(lastSong.getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(lastSong.getStart_at().getTime()/1000), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp((lastSong.getStart_at().getTime()/1000), (lastSong.getEnd_at().getTime()/1000)), StandardCharsets.UTF_8.toString()), channel, "last", URLEncoder.encode(lastSong.getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -85,7 +84,7 @@ public class SongCommand {
                     case "next":
                     try {
                         Song nextSong = targetChannel.getSchedule().stream().findFirst().orElse(null);
-                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(nextSong.getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(nextSong.getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(nextSong.getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(nextSong.getStart_at(), nextSong.getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "next", URLEncoder.encode(nextSong.getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(nextSong.getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(nextSong.getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(nextSong.getStart_at().getTime()/1000), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp((nextSong.getStart_at().getTime()/1000), (nextSong.getEnd_at().getTime()/1000)), StandardCharsets.UTF_8.toString()), channel, "next", URLEncoder.encode(nextSong.getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
@@ -97,7 +96,7 @@ public class SongCommand {
 
                     case "now":
                     try {
-                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at()), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp(targetChannel.getSong().getStart_at(), targetChannel.getSong().getEnd_at()), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
+                        URL url = new URL(MessageFormat.format("https://api.atomicradio.eu/cards?author={0}&title={1}&start_at=00:{2}&end_at=00:{3}&station={4}&playing={5}&image={6}", URLEncoder.encode(targetChannel.getSong().getArtist(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(targetChannel.getSong().getTitle(), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestampNow(targetChannel.getSong().getStart_at().getTime()/1000), StandardCharsets.UTF_8.toString()), URLEncoder.encode(this.getDurationTimestamp((targetChannel.getSong().getStart_at().getTime()/1000), (targetChannel.getSong().getEnd_at().getTime()/1000)), StandardCharsets.UTF_8.toString()), channel, "now", URLEncoder.encode(targetChannel.getSong().getArtworks().getArt500(), StandardCharsets.UTF_8.toString())));
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {

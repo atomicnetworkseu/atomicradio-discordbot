@@ -10,8 +10,8 @@ package eu.atomicnetworks.discordbot.enums;
 public enum StationChannnel {
 
     ONE("one", "https://listen.atomicradio.eu/one/highquality"),
-    DANCE("dance", "https://listen.atomicradio.eu/dance/highquality"),
-    TRAP("trap", "https://listen.atomicradio.eu/trap/highquality");
+    GAMING("gaming", "https://listen.atomicradio.eu/gaming/highquality"),
+    RAP("rap", "https://listen.atomicradio.eu/rap/highquality");
     
     private String name;
     private String url;

@@ -107,18 +107,18 @@ public class DiscordBot {
                                 shard.getPresence().setActivity(Activity.listening(artistOne + " - " + this.atomicClient.getChannel(Channels.ONE).getSong().getTitle() + " on atr.one"));
                                 break;
                             case 4:
-                                String artistDance = this.atomicClient.getChannel(Channels.DANCE).getSong().getArtist();
+                                String artistDance = this.atomicClient.getChannel(Channels.GAMING).getSong().getArtist();
                                 if(artistDance.contains("FEAT.")) {
                                     artistDance = artistDance.split("FEAT.")[0];
                                 }
-                                shard.getPresence().setActivity(Activity.listening(artistDance + " - " + this.atomicClient.getChannel(Channels.DANCE).getSong().getTitle() + " on atr.dance"));
+                                shard.getPresence().setActivity(Activity.listening(artistDance + " - " + this.atomicClient.getChannel(Channels.GAMING).getSong().getTitle() + " on atr.gaming"));
                                 break;
                             case 5:
-                                String artistTrap = this.atomicClient.getChannel(Channels.TRAP).getSong().getArtist();
+                                String artistTrap = this.atomicClient.getChannel(Channels.RAP).getSong().getArtist();
                                 if(artistTrap.contains("FEAT.")) {
                                     artistTrap = artistTrap.split("FEAT.")[0];
                                 }
-                                shard.getPresence().setActivity(Activity.listening(artistTrap + " - " + this.atomicClient.getChannel(Channels.TRAP).getSong().getTitle() + " on atr.trap"));
+                                shard.getPresence().setActivity(Activity.listening(artistTrap + " - " + this.atomicClient.getChannel(Channels.RAP).getSong().getTitle() + " on atr.rap"));
                                 break;
                             case 6:
                                 shard.getPresence().setActivity(Activity.listening(".help"));
