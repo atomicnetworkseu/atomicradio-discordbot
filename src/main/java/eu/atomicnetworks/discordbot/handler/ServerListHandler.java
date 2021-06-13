@@ -25,7 +25,7 @@ import org.discordbots.api.client.DiscordBotListAPI;
 public class ServerListHandler {
 
     private final DiscordBot discord;
-    private DiscordBotListAPI discordBotListAPI;
+    private final DiscordBotListAPI discordBotListAPI;
 
     public ServerListHandler(DiscordBot discord) {
         this.discord = discord;

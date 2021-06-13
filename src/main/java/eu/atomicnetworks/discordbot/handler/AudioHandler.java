@@ -29,8 +29,8 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
 
     private final DiscordBot discord;
     private final AudioPlayer player;
+    private final Guild guild;
     private AudioFrame lastFrame;
-    private Guild guild;
 
     public AudioHandler(DiscordBot discord, AudioPlayer player, Guild guild) {
         this.discord = discord;
@@ -99,7 +99,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
             for (int i = 0; i < gainFrequency.length; i++) {
                 equalizer.setGain(i, gainFrequency[i]*multiplier);
             }
-            floatPcmAudioFilter = equalizer;
+            // floatPcmAudioFilter = equalizer;
             audioFilterList.add(equalizer);
             return audioFilterList;
         });

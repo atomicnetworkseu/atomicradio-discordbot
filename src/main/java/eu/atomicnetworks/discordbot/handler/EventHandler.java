@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -70,9 +69,7 @@ public class EventHandler extends ListenerAdapter {
     public void onReady(ReadyEvent event) {
         for (Guild guild : event.getJDA().getGuilds()) {
             if (this.discordBot.getBackendManager().getPlaying(guild)) {
-                if (this.discordBot.getBackendManager().getChannelId(guild).isEmpty() || this.discordBot.getBackendManager().getChannelId(guild) == null) {
-                    return;
-                }
+                if (this.discordBot.getBackendManager().getChannelId(guild).isEmpty() || this.discordBot.getBackendManager().getChannelId(guild) == null) return;
                 VoiceChannel voiceChannel = guild.getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(guild));
                 if (voiceChannel != null) {
                     try {
@@ -86,7 +83,6 @@ public class EventHandler extends ListenerAdapter {
 
                         if (voiceChannel.getMembers().size() >= 1) {
                             if (guild.getAudioManager().getSendingHandler() == null) {
-                                
                                 try {
                                     StationChannnel stationChannnel = StationChannnel.valueOf(this.discordBot.getBackendManager().getMusic(guild));
                                     this.discordBot.getBackendManager().startStream(guild, stationChannnel.getUrl());
@@ -138,9 +134,7 @@ public class EventHandler extends ListenerAdapter {
             return;
         }
 
-        if (!message.getContentRaw().toLowerCase().startsWith(prefix)) {
-            return;
-        }
+        if (!message.getContentRaw().toLowerCase().startsWith(prefix)) return;
         String command = (message.getContentDisplay().toLowerCase().split(" ")[0]).substring(prefix.length());
         
         switch(command) {
@@ -201,9 +195,7 @@ public class EventHandler extends ListenerAdapter {
             VoiceChannel voiceChannel = event.getGuild().getAudioManager().getConnectedChannel();
             if (voiceChannel == null) {
                 try {
-                    if(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())) == null) {
-                        return;
-                    }
+                    if(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())) == null) return;
                     event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild())));
                     voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                 } catch (InsufficientPermissionException ex) {
@@ -214,17 +206,11 @@ public class EventHandler extends ListenerAdapter {
             if (event.getChannelJoined().getId().equals(voiceChannel.getId())) {
                 if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
                     event.getChannelJoined().getMembers().stream().forEach(t -> {
-                        if(!t.getUser().isBot()) {
-                            this.discordBot.getBackendManager().addListener(t, event.getChannelJoined().getId());
-                        }
+                        if(!t.getUser().isBot()) this.discordBot.getBackendManager().addListener(t, event.getChannelJoined().getId());
                     });
                     return;
                 }
-
-                if(!event.getMember().getUser().isBot()) {
-                    this.discordBot.getBackendManager().addListener(event.getMember(), event.getChannelJoined().getId());
-                }
-
+                if(!event.getMember().getUser().isBot()) this.discordBot.getBackendManager().addListener(event.getMember(), event.getChannelJoined().getId());
                 if (event.getGuild().getAudioManager().getSendingHandler() == null) {
                     try {
                         event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
@@ -252,9 +238,7 @@ public class EventHandler extends ListenerAdapter {
     public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
         if (this.discordBot.getBackendManager().getPlaying(event.getGuild())) {
             VoiceChannel voiceChannel = event.getGuild().getAudioManager().getConnectedChannel();
-            if (voiceChannel == null) {
-                return;
-            }
+            if (voiceChannel == null) return;
             
             if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
                 voiceChannel.getMembers().stream().forEach(t -> {
@@ -268,7 +252,7 @@ public class EventHandler extends ListenerAdapter {
                 if (event.getChannelLeft().getMembers().size() == 1) {
                     if (event.getGuild().getAudioManager().getSendingHandler() != null) {
                         AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                        audioHandler.stop();
+                        if(audioHandler != null) audioHandler.stop();
                         event.getGuild().getAudioManager().setSendingHandler(null);
                     }
                 }
@@ -301,7 +285,7 @@ public class EventHandler extends ListenerAdapter {
                 if (voiceChannel.getMembers().size() == 1) {
                     if (event.getGuild().getAudioManager().getSendingHandler() != null) {
                         AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                        audioHandler.stop();
+                        if(audioHandler != null) audioHandler.stop();
                         event.getGuild().getAudioManager().setSendingHandler(null);
                     }
                 } else {
@@ -342,20 +326,15 @@ public class EventHandler extends ListenerAdapter {
                 if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
                     return;
                 }
-                if(!event.getMember().getUser().isBot()) {
-                    this.discordBot.getBackendManager().addListener(event.getMember(), event.getChannelJoined().getId());
-                }
+                if(!event.getMember().getUser().isBot()) this.discordBot.getBackendManager().addListener(event.getMember(), event.getChannelJoined().getId());
                 if (event.getGuild().getAudioManager().getSendingHandler() == null) {
-                    
                     try {
                         StationChannnel stationChannnel = StationChannnel.valueOf(this.discordBot.getBackendManager().getMusic(event.getGuild()));
                         this.discordBot.getBackendManager().startStream(event.getGuild(), stationChannnel.getUrl());
                         this.discordBot.getBackendManager().setPlaying(event.getGuild(), true);
                         this.discordBot.getBackendManager().setMusic(event.getGuild(), stationChannnel.getName());
                         if (event.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_CHANGE)) {
-                            if (this.discordBot.getBackendManager().getTag(event.getGuild())) {
-                                event.getGuild().getSelfMember().modifyNickname("atomicradio » atr." + stationChannnel.getName()).queue();
-                            }
+                            if (this.discordBot.getBackendManager().getTag(event.getGuild())) event.getGuild().getSelfMember().modifyNickname("atomicradio » atr." + stationChannnel.getName()).queue();
                         }
                     } catch (IllegalArgumentException ex) {
                     }
@@ -365,7 +344,7 @@ public class EventHandler extends ListenerAdapter {
                 if (event.getChannelLeft().getMembers().size() == 1) {
                     if (event.getGuild().getAudioManager().getSendingHandler() != null) {
                         AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                        audioHandler.stop();
+                        if(audioHandler != null) audioHandler.stop();
                         event.getGuild().getAudioManager().setSendingHandler(null);
                     }
                 }

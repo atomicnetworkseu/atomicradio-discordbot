@@ -23,8 +23,7 @@ public class ApiServer {
     private final DiscordBot discordBot;
     private final int port;
     private HttpServer httpServer;
-    
-    private ListenerContext listenerContext;
+    private final ListenerContext listenerContext;
 
     public ApiServer(DiscordBot discordBot, int port) {
         this.discordBot = discordBot;
@@ -49,6 +48,10 @@ public class ApiServer {
 
     public int getPort() {
         return port;
+    }
+
+    public ListenerContext getListenerContext() {
+        return listenerContext;
     }
 
     public DiscordBot getDiscordBot() {
