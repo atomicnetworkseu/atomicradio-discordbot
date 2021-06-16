@@ -10,5 +10,5 @@ updates:
       prefix: "⚠️"
       prefix-development: "⚠️"
     labels:
-      - "enhancement"
+      - "Type: Dependency"
     open-pull-requests-limit: 10
