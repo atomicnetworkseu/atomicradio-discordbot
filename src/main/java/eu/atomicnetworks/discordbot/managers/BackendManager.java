@@ -256,18 +256,14 @@ public class BackendManager {
             try {
                 event.getChannel().sendMessage("I do not have permissions for **" + ex.getPermission().getName().toLowerCase() + "**, please contact an administrator.").queue();
             } catch (InsufficientPermissionException ex1) {
-                try {
-                    event.getAuthor().openPrivateChannel().queue((channel) -> {
-                        EmbedBuilder embed = new EmbedBuilder();
-                        embed.setColor(new Color(149, 79, 180));
-                        embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.");
-                        try {
-                            channel.sendMessage(embed.build()).queue();
-                        } catch (InsufficientPermissionException ex2) {
-                        }
-                    });
-                } catch (ErrorResponseException ex2) {
-                }
+                event.getAuthor().openPrivateChannel().queue((channel) -> {
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(new Color(149, 79, 180));
+                    embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.");
+                    channel.sendMessage(embed.build()).queue();
+                }, (error) -> {
+                    this.discord.consoleWarning("Private message could not be sent to " + event.getAuthor().getName() + " (" + event.getAuthor().getId() + ").");
+                });
             }
         }
     }
