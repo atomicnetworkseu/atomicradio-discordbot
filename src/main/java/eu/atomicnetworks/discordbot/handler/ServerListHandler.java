@@ -5,6 +5,7 @@ import eu.atomicnetworks.discordbot.DiscordBot;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
@@ -58,8 +59,12 @@ public class ServerListHandler {
                     .addHeader("Authorization", "I2zTsNS7kjIHlEVqoMiw4U09vdNmJ5Z3xLD2XLdYv8F6zzGnjgYbdJh8VE8Ntn9CTSEYU1iLFN3T6EMGU6MUlyeW3iiUoamTEL9Vty2uVwIz19tYm0iwOcGxYT4H941hFgfMIVAATYcAHKlIeDNexSbhmS9")
                     .addHeader("Content-Type", "application/json")
                     .build();
-            Response response = client.newCall(request).execute();
-            response.close();
+            try {
+                Response response = client.newCall(request).execute();
+                response.close();
+            } catch(SocketTimeoutException ex) {
+                this.discord.consoleError("Statistics could not be updated at discord.boats.");
+            }
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ServerListHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -83,8 +88,12 @@ public class ServerListHandler {
                     .addHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjY5NzUxNzEwNjI4NzM0NTczNyIsImlhdCI6MTYwNTk5MjEyOX0.E0OgUw6YZxZDs-UEZaF3EmIeXVR8xl7-pDHONwJxIxg")
                     .addHeader("Content-Type", "application/json")
                     .build();
-            Response response = client.newCall(request).execute();
-            response.close();
+            try {
+                Response response = client.newCall(request).execute();
+                response.close();
+            } catch(SocketTimeoutException ex) {
+                this.discord.consoleError("Statistics could not be updated at discordbotlist.com.");
+            }
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ServerListHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
