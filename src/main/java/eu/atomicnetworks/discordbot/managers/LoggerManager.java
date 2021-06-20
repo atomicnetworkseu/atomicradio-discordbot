@@ -28,7 +28,7 @@ public class LoggerManager {
     
     private String getTimestamp(Long timemillies) {
         Date date = new Date(timemillies);
-        DateFormat format = new SimpleDateFormat("HH:mm:ss");
+        DateFormat format = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
         format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
         String formatted = format.format(date);
         return formatted;
