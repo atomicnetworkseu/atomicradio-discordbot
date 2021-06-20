@@ -30,7 +30,7 @@ public class ServerListHandler {
 
     public ServerListHandler(DiscordBot discord) {
         this.discord = discord;
-        this.discordBotListAPI = new DiscordBotListAPI.Builder().token("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzUxNzEwNjI4NzM0NTczNyIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1OTg5OTM2fQ.hNdZ62yqdjDDHHhIXXftbNfFrLUbRiaGJKlxwa14kEk").botId("697517106287345737").build();
+        this.discordBotListAPI = new DiscordBotListAPI.Builder().token(this.discord.getConfig().getServerLists().getTopggToken()).botId("697517106287345737").build();
         Timer timer = new Timer(3600000, (ActionEvent e) -> {
             sendTopGGUpdate();
             sendDiscordBotList();
@@ -56,7 +56,7 @@ public class ServerListHandler {
             Request request = new Request.Builder()
                     .url("https://discord.boats/api/bot/697517106287345737")
                     .method("POST", body)
-                    .addHeader("Authorization", "I2zTsNS7kjIHlEVqoMiw4U09vdNmJ5Z3xLD2XLdYv8F6zzGnjgYbdJh8VE8Ntn9CTSEYU1iLFN3T6EMGU6MUlyeW3iiUoamTEL9Vty2uVwIz19tYm0iwOcGxYT4H941hFgfMIVAATYcAHKlIeDNexSbhmS9")
+                    .addHeader("Authorization", this.discord.getConfig().getServerLists().getDiscordBoats())
                     .addHeader("Content-Type", "application/json")
                     .build();
             try {
@@ -85,7 +85,7 @@ public class ServerListHandler {
             Request request = new Request.Builder()
                     .url("https://discordbotlist.com/api/v1/bots/697517106287345737/stats")
                     .method("POST", body)
-                    .addHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjY5NzUxNzEwNjI4NzM0NTczNyIsImlhdCI6MTYwNTk5MjEyOX0.E0OgUw6YZxZDs-UEZaF3EmIeXVR8xl7-pDHONwJxIxg")
+                    .addHeader("Authorization", this.discord.getConfig().getServerLists().getDblToken())
                     .addHeader("Content-Type", "application/json")
                     .build();
             try {
