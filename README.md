@@ -45,23 +45,24 @@
 .leave • Let the bot disconnect with this command.
 ````
 ```
-.setup • Define the channel where the bot should join automatically.
-````
-```
 .settings • With this command you can make advanced adjustments.
 ````
 ```
 .bass • With this setting, you can finally enjoy your songs with more bass.
 ````
 
-## Getting Started ✨
-#### Prerequisites
+## Installation ✨
+#### Requirements
 * Make sure that you have Java v8.x or later installed.
 * You also need your bot's token. Check this <a href="https://anidiots.guide/getting-started/getting-started-long-version">Guide</a> for more informations.
 
-#### Installation:
+#### Installation
 1. Download our build discord bot jar from here <a href="https://github.com/atomicnetworkseu/discord-bot/releases">https://github.com/atomicnetworkseu/discord-bot/releases</a>
 2. Run `java -jar DiscordBot-X.X.X-dependencies.jar` from the project folder to start the bot.
+
+#### Configuration
+The `config.json` will be created when the bot is starting. In the `config.json` file you need your bot token that was mentioned in the prerequisites.<br>
+`⚠️ The data in the config.json should not be published publicly otherwise third parties can gain access to all services that are used here. `
 
 ## Invite your bot to a guild 📨
 To add the bot to your guild, you have to get an oauth link. This <a href="https://finitereality.github.io/permissions-calculator/?v=0">page</a> can help you generate a full oauth link.
