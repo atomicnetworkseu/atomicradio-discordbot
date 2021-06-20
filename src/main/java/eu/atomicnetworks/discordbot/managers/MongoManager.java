@@ -7,6 +7,7 @@ import com.mongodb.async.client.MongoClients;
 import com.mongodb.async.client.MongoCollection;
 import com.mongodb.async.client.MongoDatabase;
 import eu.atomicnetworks.discordbot.DiscordBot;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
@@ -27,11 +28,14 @@ public class MongoManager {
 
     public MongoManager(DiscordBot discord) {
         this.discord = discord;
-        Logger mongoLogger = Logger.getLogger( "com.mongodb" );
-        mongoLogger.setLevel(Level.SEVERE);
         try {
-            this.client = MongoClients.create(new ConnectionString("mongodb://10.10.10.108"));
-            this.database = client.getDatabase("atomicradio-discordbot");
+            if(this.discord.getConfig().getMongoDB() == null) this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
+            if(this.discord.getConfig().getMongoDB().getUser().isEmpty() || this.discord.getConfig().getMongoDB().getPassword().isEmpty()) {
+                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}", this.discord.getConfig().getMongoDB().getHost(), this.discord.getConfig().getMongoDB().getPort())));
+            } else {
+                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}@{2}:{3}/?authSource={0}", this.discord.getConfig().getMongoDB().getUser(), this.discord.getConfig().getMongoDB().getPassword(), this.discord.getConfig().getMongoDB().getHost(), this.discord.getConfig().getMongoDB().getPort())));
+            }
+            this.database = client.getDatabase(this.discord.getConfig().getMongoDB().getDatabase());
             this.guilds = this.database.getCollection("guilds");
             this.discord.consoleInfo("The connection to the MongoDB database has been established.");
         } catch(MongoException ex) {

@@ -1,14 +1,17 @@
 package eu.atomicnetworks.discordbot;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import eu.atomicradio.AtomicClient;
 import eu.atomicnetworks.discordbot.handler.EventHandler;
 import eu.atomicnetworks.discordbot.handler.ServerListHandler;
 import eu.atomicnetworks.discordbot.managers.BackendManager;
+import eu.atomicnetworks.discordbot.managers.ConfigManager;
 import eu.atomicnetworks.discordbot.managers.GuildManager;
 import eu.atomicnetworks.discordbot.managers.LoggerManager;
 import eu.atomicnetworks.discordbot.managers.MongoManager;
+import eu.atomicnetworks.discordbot.object.BotConfig;
 import eu.atomicnetworks.discordbot.webapi.ApiServer;
 import eu.atomicradio.objects.Channels;
 import java.awt.event.ActionEvent;
@@ -17,6 +20,7 @@ import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
 import javax.swing.Timer;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
@@ -38,6 +42,7 @@ public class DiscordBot {
     private long startTimeMillis;
 
     private LoggerManager loggerManager;
+    private ConfigManager configManager;
     private MongoManager mongoManager;
     private GuildManager guildManager;
     private BackendManager backendManager;
@@ -51,24 +56,24 @@ public class DiscordBot {
     }
 
     private void init() {        
-        this.gson = new Gson();
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.atomicClient = new AtomicClient();
         this.startTimeMillis = System.currentTimeMillis();
-                
-        Logger jdaLogger = Logger.getLogger( "net.dv8tion" );
-        jdaLogger.setLevel(Level.SEVERE);
 
         this.loggerManager = new LoggerManager();
+        this.configManager = new ConfigManager(this);
         this.mongoManager = new MongoManager(this);
         this.guildManager = new GuildManager(this);
         this.backendManager = new BackendManager(this);
         
         this.apiServer = new ApiServer(this, 9091);
 
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("Njk3NTE3MTA2Mjg3MzQ1NzM3.Xo4bbQ.54Yw6XMf12AUUGg5cpGEu9XpckY");
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(getConfig().getToken());
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
         builder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE);
+        builder.disableIntents(GatewayIntent.DIRECT_MESSAGES, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.GUILD_BANS,
+            GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_INVITES, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_WEBHOOKS);
         builder.setBulkDeleteSplittingEnabled(true);
         builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER));
         builder.setLargeThreshold(50);
@@ -76,8 +81,8 @@ public class DiscordBot {
         builder.setAudioSendFactory(new NativeAudioSendFactory());
         builder.addEventListeners(new EventHandler(this));
         try {
-            builder.setShardsTotal(6);
-            builder.setShards(0, 5);
+            builder.setShardsTotal(2);
+            builder.setShards(0, 1);
             this.shardManager = builder.build();
             
             Timer timer = new Timer(15000, (ActionEvent e) -> {
@@ -178,6 +183,14 @@ public class DiscordBot {
 
     public void consoleError(String text) {
         this.loggerManager.sendError(text);
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+    
+    public BotConfig getConfig() {
+        return configManager.getConfig();
     }
 
     public MongoManager getMongoManager() {

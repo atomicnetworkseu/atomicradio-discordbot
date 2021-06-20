@@ -60,9 +60,11 @@ public class SongCommand {
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     } catch (IOException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     }
                     return;
                 }
@@ -75,9 +77,11 @@ public class SongCommand {
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     } catch (IOException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     }
                     break;
 
@@ -88,9 +92,11 @@ public class SongCommand {
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     } catch (IOException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     }
                     break;
 
@@ -100,9 +106,11 @@ public class SongCommand {
                         inputStream = url.openStream();
                         event.getChannel().sendFile(inputStream, "song.png", new AttachmentOption[0]).queue();
                     } catch (MalformedURLException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     } catch (IOException ex) {
-                        Logger.getLogger(SongCommand.class.getName()).log(Level.SEVERE, null, ex);
+                        embed.setDescription("Something went wrong. The image could not be built.");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
                     }
                     break;
 

@@ -112,7 +112,7 @@ public class EventHandler extends ListenerAdapter {
                         }
 
                     } catch (InsufficientPermissionException ex) {
-                        this.discordBot.consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
+                        this.discordBot.consoleWarning("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Missing rights on " + guild.getName() + ". (" + guild.getId() + ")");
                     }
                     this.discordBot.consoleInfo("[SHARD " + event.getJDA().getShardInfo().getShardId() + "] Joined channel " + voiceChannel.getName() + " on guild " + guild.getName() + ". (" + guild.getId() + ")");
                 }
