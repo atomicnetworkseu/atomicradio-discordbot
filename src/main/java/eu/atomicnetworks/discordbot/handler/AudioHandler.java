@@ -15,6 +15,8 @@ import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -63,6 +65,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     @Override
     public void onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, FriendlyException exception) {
         this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, exception);
         try {
             StationChannnel stationChannnel = StationChannnel.valueOf(this.discord.getBackendManager().getMusic(guild));
             this.discord.getBackendManager().startStream(guild, stationChannnel.getUrl());

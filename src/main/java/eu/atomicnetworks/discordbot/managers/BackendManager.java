@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -27,8 +29,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.exceptions.ContextException;
-import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 
@@ -206,6 +206,7 @@ public class BackendManager {
             @Override
             public void loadFailed(FriendlyException fe) {
                 discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream failed to loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
+                Logger.getLogger(BackendManager.class.getName()).log(Level.SEVERE, null, fe);
             }
         });
     }
