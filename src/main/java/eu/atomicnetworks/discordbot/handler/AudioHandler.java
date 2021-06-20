@@ -58,25 +58,28 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
 
     @Override
     public void onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        this.discord.consoleInfo("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream reached end on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        this.discord.consoleInfo("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream reached end on guild " + guild.getName() + ". (" + endReason.toString() + ")");
         this.discord.consoleInfo(MessageFormat.format("[SHARD {0}] Playing now on {1} guilds.", guild.getJDA().getShardInfo().getShardId(), (this.discord.getBackendManager().getPlayingCount()-1)));
     }
 
     @Override
     public void onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, FriendlyException exception) {
-        this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + guild.getId() + ")");
+        this.discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream error on guild " + guild.getName() + ". (" + exception.getMessage() + ")");
         Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, exception);
-        try {
-            StationChannnel stationChannnel = StationChannnel.valueOf(this.discord.getBackendManager().getMusic(guild));
-            this.discord.getBackendManager().startStream(guild, stationChannnel.getUrl());
-        } catch(IllegalArgumentException ex) {
-            this.discord.getBackendManager().startStream(guild, StationChannnel.ONE.getUrl());
+        
+        if(this.discord.getBackendManager().getPlaying(guild)) {
+            try {
+                StationChannnel stationChannnel = StationChannnel.valueOf(this.discord.getBackendManager().getMusic(guild));
+                this.discord.getBackendManager().startStream(guild, stationChannnel.getUrl());
+            } catch (IllegalArgumentException ex) {
+                this.discord.getBackendManager().startStream(guild, StationChannnel.ONE.getUrl());
+            }
         }
     }
 
     @Override
     public void onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer player, AudioTrack track, long thresholdMs) {
-        System.out.println("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream stuck! " + thresholdMs + "ms.");
+        this.discord.consoleWarning("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream stuck on guild " + guild.getName() + ". " + thresholdMs + "ms.");
     }
 
     @Override
@@ -104,6 +107,8 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
             }
             floatPcmAudioFilter = equalizer;
             audioFilterList.add(equalizer);
+            
+            this.discord.consoleInfo("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Audio Bass Filter was activated on guild " + guild.getName() + ". " + percentage + "%");
             return audioFilterList;
         });
     }
