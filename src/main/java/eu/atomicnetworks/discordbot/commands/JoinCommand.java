@@ -87,7 +87,7 @@ public class JoinCommand {
             this.discord.getBackendManager().setPlaying(event.getGuild(), true);
             this.discord.getBackendManager().setMusic(event.getGuild(), stationChannnel.getName());
             this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
-        } catch(IllegalArgumentException ex) {
+        } catch(IllegalArgumentException | NullPointerException ex) {
             this.discord.getBackendManager().startStream(event.getGuild(), StationChannnel.ONE.getUrl());
             this.discord.getBackendManager().setPlaying(event.getGuild(), true);
             this.discord.getBackendManager().setMusic(event.getGuild(), StationChannnel.ONE.getName());
