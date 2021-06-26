@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.github.DV8FromTheWorld</groupId>
             <artifactId>JDA</artifactId>
-            <version>5492d1d2eb</version>
+            <version>9475f8cace</version>
             <exclusions>
                 <exclusion>
                     <groupId>club.minnced</groupId>
