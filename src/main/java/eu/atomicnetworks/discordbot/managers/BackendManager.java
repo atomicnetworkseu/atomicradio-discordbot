@@ -206,7 +206,6 @@ public class BackendManager {
             @Override
             public void loadFailed(FriendlyException fe) {
                 discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream failed to loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
-                Logger.getLogger(BackendManager.class.getName()).log(Level.SEVERE, null, fe);
                 if(getPlaying(guild)) startStream(guild, url);
             }
         });
