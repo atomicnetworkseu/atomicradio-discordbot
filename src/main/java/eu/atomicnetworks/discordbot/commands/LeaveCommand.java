@@ -35,10 +35,8 @@ public class LeaveCommand {
             return;
         }
         
-        if(event.getGuild().getAudioManager().getSendingHandler() != null) {
-            AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-            audioHandler.stop();
-        }
+        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+        if(audioHandler != null) audioHandler.stop();
         this.discord.getBackendManager().setPlaying(event.getGuild(), false);
         event.getGuild().getAudioManager().closeAudioConnection();
         

@@ -68,10 +68,8 @@ public class JoinCommand {
             return;
         }
         
-        if(event.getGuild().getAudioManager().getSendingHandler() != null) {
-            AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-            audioHandler.stop();
-        }
+        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+        if(audioHandler != null) audioHandler.stop();
         
         try {
             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);

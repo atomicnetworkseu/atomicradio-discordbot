@@ -241,7 +241,10 @@ public class EventHandler extends ListenerAdapter {
                                 event.getGuild().getSelfMember().modifyNickname("atomicradio » atr." + stationChannnel.getName()).queue();
                             }
                         }
-                    } catch(IllegalArgumentException ex) {}
+                    } catch(IllegalArgumentException ex) {
+                        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+                        if(audioHandler != null) audioHandler.stop();
+                    }
                 }
             }
         }
@@ -265,8 +268,8 @@ public class EventHandler extends ListenerAdapter {
             if (event.getChannelLeft().getId().equals(voiceChannel.getId())) {
                 this.discordBot.getBackendManager().removeListener(event.getMember());
                 if (event.getChannelLeft().getMembers().size() == 1) {
-                    if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+                    AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+                    if (audioHandler != null) {
                         audioHandler.stop();
                         event.getGuild().getAudioManager().setSendingHandler(null);
                     }
@@ -296,15 +299,15 @@ public class EventHandler extends ListenerAdapter {
             
             if (this.discordBot.getBackendManager().getPlaying(event.getGuild())) {
                 VoiceChannel voiceChannel = event.getChannelJoined();
+                AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
                 
                 if (voiceChannel.getMembers().size() == 1) {
-                    if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+                    if (audioHandler != null) {
                         audioHandler.stop();
                         event.getGuild().getAudioManager().setSendingHandler(null);
                     }
                 } else {
-                    if (event.getGuild().getAudioManager().getSendingHandler() == null) {
+                    if (audioHandler == null) {
                         try {
                             StationChannnel stationChannnel = StationChannnel.valueOf(this.discordBot.getBackendManager().getMusic(event.getGuild()));
                             this.discordBot.getBackendManager().startStream(event.getGuild(), stationChannnel.getUrl());
@@ -315,7 +318,8 @@ public class EventHandler extends ListenerAdapter {
                                     event.getGuild().getSelfMember().modifyNickname("atomicradio » atr." + stationChannnel.getName()).queue();
                                 }
                             }
-                        } catch (IllegalArgumentException ex) {
+                        } catch(IllegalArgumentException ex) {
+                            if(audioHandler != null) audioHandler.stop();
                         }
                     }
                 }
@@ -337,6 +341,7 @@ public class EventHandler extends ListenerAdapter {
                 }
             }
 
+            AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
             if (event.getChannelJoined().getId().equals(voiceChannel.getId())) {
                 if (event.getMember().getId().equals(event.getGuild().getSelfMember().getId())) {
                     return;
@@ -344,8 +349,8 @@ public class EventHandler extends ListenerAdapter {
                 if(!event.getMember().getUser().isBot()) {
                     this.discordBot.getBackendManager().addListener(event.getMember(), event.getChannelJoined().getId());
                 }
-                if (event.getGuild().getAudioManager().getSendingHandler() == null) {
-                    
+                
+                if (audioHandler == null) {
                     try {
                         StationChannnel stationChannnel = StationChannnel.valueOf(this.discordBot.getBackendManager().getMusic(event.getGuild()));
                         this.discordBot.getBackendManager().startStream(event.getGuild(), stationChannnel.getUrl());
@@ -356,17 +361,14 @@ public class EventHandler extends ListenerAdapter {
                                 event.getGuild().getSelfMember().modifyNickname("atomicradio » atr." + stationChannnel.getName()).queue();
                             }
                         }
-                    } catch (IllegalArgumentException ex) {
+                    } catch(IllegalArgumentException ex) {
+                        if(audioHandler != null) audioHandler.stop();
                     }
                 }
             } else if (event.getChannelLeft().getId().equals(voiceChannel.getId())) {
                 this.discordBot.getBackendManager().removeListener(event.getMember());
                 if (event.getChannelLeft().getMembers().size() == 1) {
-                    if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                        audioHandler.stop();
-                        event.getGuild().getAudioManager().setSendingHandler(null);
-                    }
+                    if (audioHandler != null) audioHandler.stop();
                 }
             }
         }

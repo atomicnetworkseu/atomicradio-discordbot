@@ -158,6 +158,9 @@ public class BackendManager {
     }
     
     public void startStream(Guild guild, String url) {
+        AudioHandler audioHandler = (AudioHandler) guild.getAudioManager().getSendingHandler();
+        if(audioHandler != null) audioHandler.stop();
+        
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         playerManager.getConfiguration().setFilterHotSwapEnabled(true);

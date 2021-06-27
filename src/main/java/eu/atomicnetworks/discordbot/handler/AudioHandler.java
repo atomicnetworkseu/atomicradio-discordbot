@@ -91,6 +91,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler 
     public void stop() {
         player.stopTrack();
         player.destroy();
+        guild.getAudioManager().setSendingHandler(null);
     }
     
     public void bassFilter(float percentage) {
