@@ -81,8 +81,8 @@ public class DiscordBot {
         builder.setAudioSendFactory(new NativeAudioSendFactory());
         builder.addEventListeners(new EventHandler(this));
         try {
-            builder.setShardsTotal(2);
-            builder.setShards(0, 1);
+            builder.setShardsTotal(6);
+            builder.setShards(0, 5);
             this.shardManager = builder.build();
             
             Timer timer = new Timer(15000, (ActionEvent e) -> {

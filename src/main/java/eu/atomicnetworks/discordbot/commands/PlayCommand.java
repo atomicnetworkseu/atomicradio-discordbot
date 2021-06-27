@@ -97,10 +97,8 @@ public class PlayCommand {
                 }
             }
 
-            if (event.getGuild().getAudioManager().getSendingHandler() != null) {
-                AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-                audioHandler.stop();
-            }
+            AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+            if (audioHandler != null) audioHandler.stop();
             this.discord.getBackendManager().startStream(event.getGuild(), stationChannnel.getUrl());
             this.discord.getBackendManager().setPlaying(event.getGuild(), true);
             this.discord.getBackendManager().setMusic(event.getGuild(), stationChannnel.getName());

@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -43,11 +41,17 @@ import net.dv8tion.jda.internal.utils.PermissionUtil;
 public class BackendManager {
     
     private final DiscordBot discord;
+    private final AudioPlayerManager playerManager;
     private LoadingCache<String, GuildData> guildCache;
     private final Listeners listeners;
 
     public BackendManager(DiscordBot discord) {
         this.discord = discord;
+        
+        this.playerManager = new DefaultAudioPlayerManager();
+        AudioSourceManagers.registerRemoteSources(playerManager);
+        playerManager.getConfiguration().setFilterHotSwapEnabled(true);
+        
         this.listeners = new Listeners();
         this.listeners.setListener(new HashMap<>());
         initCache();
@@ -159,9 +163,9 @@ public class BackendManager {
     }
     
     public void startStream(Guild guild, String url) {
-        AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-        AudioSourceManagers.registerRemoteSources(playerManager);
-        playerManager.getConfiguration().setFilterHotSwapEnabled(true);
+        AudioHandler audioHandler = (AudioHandler) guild.getAudioManager().getSendingHandler();
+        if(audioHandler != null) audioHandler.stop();
+        
         AudioPlayer player = playerManager.createPlayer();
         AudioHandler trackScheduler = new AudioHandler(this.discord, player, guild);
         player.addListener(trackScheduler);
@@ -207,7 +211,6 @@ public class BackendManager {
             @Override
             public void loadFailed(FriendlyException fe) {
                 discord.consoleError("[SHARD " + guild.getJDA().getShardInfo().getShardId() + "] Stream failed to loaded on guild " + guild.getName() + ". (" + guild.getId() + ")");
-                Logger.getLogger(BackendManager.class.getName()).log(Level.SEVERE, null, fe);
                 if(getPlaying(guild)) startStream(guild, url);
             }
         });

@@ -68,10 +68,8 @@ public class JoinCommand {
             return;
         }
         
-        if(event.getGuild().getAudioManager().getSendingHandler() != null) {
-            AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
-            audioHandler.stop();
-        }
+        AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
+        if(audioHandler != null) audioHandler.stop();
         
         try {
             event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
@@ -87,7 +85,7 @@ public class JoinCommand {
             this.discord.getBackendManager().setPlaying(event.getGuild(), true);
             this.discord.getBackendManager().setMusic(event.getGuild(), stationChannnel.getName());
             this.discord.getBackendManager().setChannelId(event.getGuild(), voiceChannel.getId());
-        } catch(IllegalArgumentException ex) {
+        } catch(IllegalArgumentException | NullPointerException ex) {
             this.discord.getBackendManager().startStream(event.getGuild(), StationChannnel.ONE.getUrl());
             this.discord.getBackendManager().setPlaying(event.getGuild(), true);
             this.discord.getBackendManager().setMusic(event.getGuild(), StationChannnel.ONE.getName());
