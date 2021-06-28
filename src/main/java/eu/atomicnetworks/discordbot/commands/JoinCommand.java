@@ -7,6 +7,7 @@ import java.awt.Color;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.StageChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
@@ -66,6 +67,13 @@ public class JoinCommand {
             embed.setDescription("The channel has been deleted or the bot no longer has permission to enter it.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
+        }
+        
+        StageChannel stageChannel = event.getChannel().getJDA().getStageChannelById(this.discord.getBackendManager().getChannelId(event.getGuild()));
+        if(stageChannel != null) {
+            stageChannel.createStageInstance("TEST").queue(success -> {
+                event.getGuild().requestToSpeak();
+            });
         }
         
         AudioHandler audioHandler = (AudioHandler) event.getGuild().getAudioManager().getSendingHandler();
