@@ -73,6 +73,8 @@ public class JoinCommand {
         if(stageChannel != null) {
             stageChannel.createStageInstance("TEST").queue(success -> {
                 event.getGuild().requestToSpeak();
+            }, (error) -> {
+                event.getGuild().requestToSpeak();
             });
         }
         

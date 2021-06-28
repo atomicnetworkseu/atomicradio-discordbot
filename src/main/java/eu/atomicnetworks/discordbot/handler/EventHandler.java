@@ -82,6 +82,8 @@ public class EventHandler extends ListenerAdapter {
                         if (stageChannel != null) {
                             stageChannel.createStageInstance("TEST").queue(success -> {
                                 guild.requestToSpeak();
+                            }, (error) -> {
+                                guild.requestToSpeak();
                             });
                         }
 
@@ -217,6 +219,8 @@ public class EventHandler extends ListenerAdapter {
                     if (stageChannel != null) {
                         stageChannel.createStageInstance("TEST").queue(success -> {
                             event.getGuild().requestToSpeak();
+                        }, (error) -> {
+                            event.getGuild().requestToSpeak();
                         });
                     }
                 } catch (InsufficientPermissionException ex) {
@@ -244,6 +248,8 @@ public class EventHandler extends ListenerAdapter {
                         StageChannel stageChannel = event.getGuild().getJDA().getStageChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                         if (stageChannel != null) {
                             stageChannel.createStageInstance("TEST").queue(success -> {
+                                event.getGuild().requestToSpeak();
+                            }, (error) -> {
                                 event.getGuild().requestToSpeak();
                             });
                         }
@@ -363,6 +369,8 @@ public class EventHandler extends ListenerAdapter {
                     StageChannel stageChannel = event.getGuild().getJDA().getStageChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                     if (stageChannel != null) {
                         stageChannel.createStageInstance("TEST").queue(success -> {
+                            event.getGuild().requestToSpeak();
+                        }, (error) -> {
                             event.getGuild().requestToSpeak();
                         });
                     }
