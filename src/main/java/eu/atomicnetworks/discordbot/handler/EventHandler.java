@@ -80,7 +80,7 @@ public class EventHandler extends ListenerAdapter {
 
                         StageChannel stageChannel = guild.getJDA().getStageChannelById(this.discordBot.getBackendManager().getChannelId(guild));
                         if (stageChannel != null) {
-                            stageChannel.createStageInstance("TEST").queue(success -> {
+                            stageChannel.createStageInstance("atomicradio").queue(success -> {
                                 guild.requestToSpeak();
                             }, (error) -> {
                                 guild.requestToSpeak();
@@ -217,7 +217,7 @@ public class EventHandler extends ListenerAdapter {
                     voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                     StageChannel stageChannel = event.getGuild().getJDA().getStageChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                     if (stageChannel != null) {
-                        stageChannel.createStageInstance("TEST").queue(success -> {
+                        stageChannel.createStageInstance("atomicradio").queue(success -> {
                             event.getGuild().requestToSpeak();
                         }, (error) -> {
                             event.getGuild().requestToSpeak();
@@ -247,7 +247,7 @@ public class EventHandler extends ListenerAdapter {
                         event.getGuild().getAudioManager().openAudioConnection(voiceChannel);
                         StageChannel stageChannel = event.getGuild().getJDA().getStageChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                         if (stageChannel != null) {
-                            stageChannel.createStageInstance("TEST").queue(success -> {
+                            stageChannel.createStageInstance("atomicradio").queue(success -> {
                                 event.getGuild().requestToSpeak();
                             }, (error) -> {
                                 event.getGuild().requestToSpeak();
@@ -368,7 +368,7 @@ public class EventHandler extends ListenerAdapter {
                     voiceChannel = event.getGuild().getVoiceChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                     StageChannel stageChannel = event.getGuild().getJDA().getStageChannelById(this.discordBot.getBackendManager().getChannelId(event.getGuild()));
                     if (stageChannel != null) {
-                        stageChannel.createStageInstance("TEST").queue(success -> {
+                        stageChannel.createStageInstance("atomicradio").queue(success -> {
                             event.getGuild().requestToSpeak();
                         }, (error) -> {
                             event.getGuild().requestToSpeak();

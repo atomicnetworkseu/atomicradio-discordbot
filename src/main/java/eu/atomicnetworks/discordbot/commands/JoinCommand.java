@@ -71,7 +71,7 @@ public class JoinCommand {
         
         StageChannel stageChannel = event.getChannel().getJDA().getStageChannelById(this.discord.getBackendManager().getChannelId(event.getGuild()));
         if(stageChannel != null) {
-            stageChannel.createStageInstance("TEST").queue(success -> {
+            stageChannel.createStageInstance("atomicradio").queue(success -> {
                 event.getGuild().requestToSpeak();
             }, (error) -> {
                 event.getGuild().requestToSpeak();
