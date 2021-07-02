@@ -9,9 +9,9 @@ package eu.atomicnetworks.discordbot.enums;
  */
 public enum StationChannnel {
 
-    ONE("one", "https://listen.atomicradio.eu/one/highquality"),
-    DANCE("dance", "https://listen.atomicradio.eu/dance/highquality"),
-    TRAP("trap", "https://listen.atomicradio.eu/trap/highquality");
+    ONE("original", "https://reyfm-stream07.radiohost.de/reyfm-original_mp3-320"),
+    DANCE("nightlife", "https://reyfm-stream07.radiohost.de/reyfm-nightlife_mp3-320"),
+    TRAP("raproyal", "https://reyfm-stream06.radiohost.de/reyfm-raproyal_mp3-320");
     
     private String name;
     private String url;
