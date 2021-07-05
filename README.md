@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://atomicnetworks.eu">
-    <img alt="atomicnetworks" src="https://cdn.atomicnetworks.eu/logo/coloured.png" width="150" />
+    <img alt="atomicnetworks" src="https://i.imgur.com/7ugs4Iz.png" width="150" />
   </a>
 </p>
 <h1 align="center">
